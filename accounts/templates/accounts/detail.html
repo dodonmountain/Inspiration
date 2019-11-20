@@ -11,6 +11,15 @@
 {% for review in userinfo.review_set.all %}
 <p>{{ review.movie.title }} - {{ review.content }}</p>
 {% endfor %}
-  
+<h4>팔로잉</h4>
+{{ userinfo.followings.all.count }}
+{% for user in userinfo.followings.all %}
+{{ user }}
+{% endfor %}
+<h4>팔로워</h4>
+{{ userinfo.followers.all.count }}
+{% for user in userinfo.followers.all %}
+{{ user }}
+{% endfor %}
 </div>
 {% endblock %}

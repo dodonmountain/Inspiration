@@ -5,6 +5,7 @@
     <a href="{% url 'accounts:logout' %}">로그아웃</a>
   {% else %}
     <a href="{% url 'accounts:login' %}">로그인</a>
+    <a href="{% url 'accounts:signup' %}">회원가입</a>
   {% endif %}
   <div>
     <h1> {{ movie.title}} </h1>
