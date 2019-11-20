@@ -4,8 +4,11 @@
 <div class="signup">
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_table}}
+    {{ form.as_table }}
     <button typ="submit">확인</button>
 </form>
 </div>
 {% endblock %}
+
+{% block script %}
+{% endblock script %}
