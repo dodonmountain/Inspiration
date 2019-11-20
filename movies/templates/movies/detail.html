@@ -7,6 +7,12 @@
   <title>Document</title>
 </head>
 <body>
+  {% if user.is_authenticated %}
+    <a href="{%url 'accounts: %}">{{ user }}</a>
+    <a href="{% url 'accounts:logout' %}">로그아웃</a>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">로그인</a>
+  {% endif %}
   <div>
     <h1> {{ movie.title}} </h1>
     <hr>
