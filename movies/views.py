@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import requests
 from IPython import embed
+from tmdbv3api import TMDb
+from tmdbv3api import Movie as film
 from .models import Movie
 # Create your views here.
 def index(request):
@@ -12,10 +14,16 @@ def index(request):
     if movies.count():
         print('있음')
     else:
-        url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
-        response = requests.get(url).json()
-        movies = response.get('results')
-        Movie = movies
+        # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
+        # response = requests.get(url).json()
+        # movies = response.get('results')
+        tmdb = TMDb()
+        tmdb.api_key = 'f115f7077bf79f6f7fd3227c5ba7f281'
+        tmdb.language = 'ko'
+        movies = film()
+        movie = movies.search('겨울왕국')
+        recommendations = movies.recommendations(movie_id=496243)
+        print(recommendations)
         embed()
     return render(request,'movies/index.html',{
         'movies':movies
