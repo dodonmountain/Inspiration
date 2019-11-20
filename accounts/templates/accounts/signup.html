@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+{% endblock css %}
+
+{% block body %}
+<img class='logoBoy' src="{% static 'img/operator.svg' %}" alt="">
+<h1 class='logoic' style="font-family: 'Sunflower', sans-serif;">영감<span style="font-family: Arial, Helvetica, sans-serif;serif;font-size: small;">영화를 감상하고 싶을때? 불러줘요 내 이름</span></h1>
+<img class="login-background" src="{% static 'img/alien.jpg' %}">
+<div class="container-fluid p-3">
+	<div class="row">
+		<form method="POST" class="mt-5 col-5 mx-auto text-center loginBox">
+			<h2 style="font-family: 'Sunflower', sans-serif;" class="text-left mb-4 mt-4 text-white">회원 가입</h2>
+			<hr class="border-light mb-4">
+			{% csrf_token %}
+			{{ form }}
+			<button type="submit" class="btn btn-block btn-outline-danger">회원 가입</button>
+			<div class="text-right text-muted copyright">
+				copyright (c) 2019. SSAFY DJ-py-02-01
+			</div>
+		</form>
+	</div>
+
+{% endblock %}

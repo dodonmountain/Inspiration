@@ -15,13 +15,13 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             auth_login(request, form.save())
-            return redirect('movies:index')
+            return redirect('accounts:login')
     else:
         form = CustomUserCreationForm()
     context = {
         'form': form
     }
-    return render(request, 'accounts/form.html', context)
+    return render(request, 'accounts/signup.html', context)
 
 def login(request):
     if request.user.is_authenticated:
