@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from .models import User
 
 # def my_page(request):
     
@@ -68,3 +69,12 @@ def update_password(request):
         'form': form
     }
     return render(request, 'accounts/form.html', context)
+
+@login_required
+def userDetail(request, user_id):
+    if user_id == request.user.id:
+        user = get_object_or_404(User, pk=user_id)
+        return render(request, 'accounts/detail.html', {'userinfo':user})
+    return redirect('accounts:login')
+    
+

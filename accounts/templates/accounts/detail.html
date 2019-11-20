@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+{% for review in userinfo.review_set.all %}
+<p>{{ review.content }}</p>
+{% endfor %}
+{% for like_movie in userinfo.like_movies_users.all %}
+<p>{{ like_movie.title }}</p>
+{% endfor %}
+
+</div>
+{% endblock %}
