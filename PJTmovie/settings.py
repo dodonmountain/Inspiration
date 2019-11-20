@@ -16,7 +16,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'indexes',
     'accounts',
-
+    'movies',
 
     # -장고 + 외부 라이브러리------------------------
     'django.contrib.admin',
