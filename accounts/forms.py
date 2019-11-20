@@ -9,7 +9,7 @@ class CustomUserCreationForm(UserCreationForm):
         widgets = {
             'username': forms.TextInput(
                 attrs={
-                    'class': 'm-5',
+                    'class': 'm-5 ',
                     }),
         }
 
