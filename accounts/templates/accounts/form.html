@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body %}
 <div class="signup">
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_table }}
-    <button typ="submit">확인</button>
-</form>
+    <form>
+        <div class="form-group">
+					{% form %}
+				</div>
+		</form>
+		<button type="submit" class="btn btn-primary">Submit</button>
 </div>
 {% endblock %}
 
