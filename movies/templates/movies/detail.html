@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h1> {{ movie.title}} </h1>
+    <hr>
+    <h4>좋아요 : {{movie.like_user.count }}</h4>
+      <form action="{% url 'movies:like' movie.pk %}" method="post">
+        {% csrf_token %}
+        {% if user not in movie.like_user.all %}
+        <button type="submit">좋아요</button>
+        {% else %}
+        <button type="submit">좋아요취소</button>
+        {% endif %}
+      </form>
+  </div>
+  <h3>관객 : {{ movie.audience }}</h3>
+  <h3>장르 : {{ movie.genre.name}}</h3>
+  <p>{{ movie.description}}</p>
+  
+  {% if user.is_authenticated %}
+  <form action="{% url 'movies:review' movie.pk %}" method="post">
+    {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">등록</button>
+  </form>
+  {% endif %}
+  <hr>
+  리뷰
+  <hr>
+  {% for r in movie.review_set.all %}
+  {{ r.user.username }} - <{{ r.score }}점> {{ r.content }}
+  {% if r.user == user %}
+  <form action="{% url 'movies:review_delete' movie.pk r.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">삭제</button>
+  </form>
+  {% endif %}
+  <br>
+  
+  {% endfor %}
+  
+</body>
+</html>
