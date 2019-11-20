@@ -120,3 +120,5 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = 'indexes:index'
 '''
 
+# DateField 설정
+DATE_INPUT_FORMATS = ['%Y-%m-%d']
