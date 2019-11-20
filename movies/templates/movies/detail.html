@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
  {% block body %}
   {% if user.is_authenticated %}
-
-  {{user}}
+  <a href="{% url 'accounts:detail' user.pk %}">{{user}}</a>
     <a href="{% url 'accounts:logout' %}">로그아웃</a>
   {% else %}
     <a href="{% url 'accounts:login' %}">로그인</a>
   {% endif %}
   <div>
     <h1> {{ movie.title}} </h1>
+    <img src="{{movie.poster_url }}" width=200px alt="{{movie.title}}">
     <hr>
     <h4>좋아요 : {{movie.like_user.count }}</h4>
       <form action="{% url 'movies:like' movie.pk %}" method="post">
