@@ -1,17 +1,21 @@
-
 <div class="navbar">
-  <div>
-    <a href="{% url 'movies:index' %}">홈</a>
+    <div>
+      <a href="{% url 'movies:index' %}">홈</a>
+    </div>
+    <div class="userdropdown">
+      {% if user.is_authenticated %}
+        <div class="dropdown">
+          <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{user}}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">회원정보</a>
+            <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+          </div>
+        </div>
+      {% else %}
+        <a href="{% url 'accounts:login' %}">로그인</a>
+        <a href="{% url 'accounts:signup' %}">회원가입</a>
+      {% endif %}
+    </div>
   </div>
-  <div>
-    {% if user.is_authenticated %}
-      <div class="dropdown" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">{{user}}</a>
-        <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
-      </div>
-    {% else %}
-      <a href="{% url 'accounts:login' %}">로그인</a>
-      <a href="{% url 'accounts:signup' %}">회원가입</a>
-    {% endif %}
-  </div>
-</div>

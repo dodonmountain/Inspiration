@@ -1,0 +1,10 @@
+.userdropdown {
+    position: relative;
+    left : auto;
+    padding : 0.5rem
+}
+.userdropdown:hover {
+    background : rgba(0,0,0,0.5);
+    color : rgba(255,233,225);
+    cursor : pointer;
+}
