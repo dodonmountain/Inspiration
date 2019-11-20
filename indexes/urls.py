@@ -6,4 +6,5 @@ app_name = 'indexes'
 
 urlpatterns = [
     path('',views.index,name="index")
+    
 ]
