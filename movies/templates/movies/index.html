@@ -3,7 +3,7 @@
   {% for movie in movies %}
     <h2>{{ movie.title }}</h2>    
     <a href="{% url 'movies:detail' movie.pk %}">
-      <img style="width:100px;"src="{{ movie.poster_url }}" alt="{{movie.title}}">
+      <img style="width:100px;"src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"" alt="{{movie.title}}">
     </a>
   {% endfor %}
  {% endblock %}
