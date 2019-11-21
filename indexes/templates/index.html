@@ -1,16 +1,27 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %}{% load static %}
 {% block css %}
-{% endblock css %}
-<!-- ---------------------------- -->
+
+{% endblock %}
+
 {% block body %}
+<div class="container-fluid" id="app">
+    
+</div>
+{% endblock %}
 
-<h1>Hello, World?</h1>
-
-
-
-
-
-{% endblock body %}{% block script %}
-
-{% endblock script %}
+{% block script %}
+<script src="{% static 'vue/vue.js' %}"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            movies: [],
+            quote: '안녕하십니까',
+        },
+        methods: {},
+        computed: {},
+        updated: {},
+        mounted: {}
+    })
+</script>
+{% endblock %}

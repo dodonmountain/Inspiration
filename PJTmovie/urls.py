@@ -5,6 +5,7 @@ from accounts import urls
 
 
 urlpatterns = [
+    path('', include('indexes.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('movies/',include('movies.urls'))
