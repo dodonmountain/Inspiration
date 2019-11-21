@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
+  <br>
+  <h1>등록된 영화 : {{ movies.count }}개</h1>
   {% for movie in movies %}
     <h2>{{ movie.title }}</h2>    
     <a href="{% url 'movies:detail' movie.pk %}">

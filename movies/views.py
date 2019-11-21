@@ -9,6 +9,7 @@ from tmdbv3api import TMDb
 from tmdbv3api import Movie as film
 from .models import Movie,Genre
 from django.core import serializers
+import pprint
 
 def genres_data():
     genres_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
@@ -16,40 +17,45 @@ def genres_data():
     for r in response:
         genre = Genre(**r)
         genre.save()
+
 def movies_data(page_num):
-    movies_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
+    movies_url = f'https://api.themoviedb.org/3/movie/popular?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
     response = requests.get(movies_url).json().get('results')
     for r in response:
         id = r.get('id')
-        detail_url = f'https://api.themoviedb.org/3/movie/{id}?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
-        response = requests.get(movies_url).json()
-        movie = Movie.objects.create(
-            adult = response.get('adult'),
-            backdrop_path = response.get('backdrop_path'),
-            budget = response.get('budget'),
-            genres = response.get('genres'),
-            id = response.get('id'),
-            original_language = response.get('original_language'),
-            overview = response.get('overview'),
-            popularity = response.get('popularity'),
-            poster_path = response.get('poster_path'),
-            release_date = response.get('release_date'),
-            revenue = response.get('revenue'),
-            runtime = response.get('runtime'),
-            status = response.get('status'),
-            tagline = response.get('tagline'),
-            title = response.get('title'),
-            video = response.get('video'),
-            vote_average = response.get('vote_average'),
-            vote_count = response.get('vote_count'),
-        )
-
+        if not Movie.objects.filter(pk=id):
+            detail_url = f'https://api.themoviedb.org/3/movie/{id}?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
+            detail = requests.get(detail_url).json()
+            
+            movie = Movie.objects.create(
+                adult = detail.get('adult'),
+                backdrop_path = detail.get('backdrop_path'),
+                budget = detail.get('budget'),
+                id = detail.get('id'),
+                original_language = detail.get('original_language'),
+                overview = detail.get('overview'),
+                popularity = detail.get('popularity'),
+                poster_path = detail.get('poster_path'),
+                release_date = detail.get('release_date'),
+                revenue = detail.get('revenue'),
+                runtime = detail.get('runtime'),
+                status = detail.get('status'),
+                tagline = detail.get('tagline'),
+                title = detail.get('title'),
+                video = detail.get('video'),
+                vote_average = detail.get('vote_average'),
+                vote_count = detail.get('vote_count')
+            )
+            for r in detail.get('genres'):
+                genre = Genre.objects.get(pk=r.get('id'))
+                movie.genres.add(genre)
+            movie.save()
 
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
-    # genres_data()
-    movies_data(1)
+    for i in range(1,11):
+        movies_data(i)
         # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
         # response = requests.get(url).json()
         # movies = response.get('results')
