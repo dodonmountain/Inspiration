@@ -19,11 +19,14 @@ def genres_data():
         genre.save()
 
 def movies_data(page_num):
-    movies_url = f'https://api.themoviedb.org/3/movie/popular?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
+    movies_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
     response = requests.get(movies_url).json().get('results')
+    print('총 ' ,len(response) , '개')
+    tmp = 0
     for r in response:
         id = r.get('id')
         if not Movie.objects.filter(pk=id):
+            tmp += 1
             detail_url = f'https://api.themoviedb.org/3/movie/{id}?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
             detail = requests.get(detail_url).json()
             
@@ -50,30 +53,29 @@ def movies_data(page_num):
                 genre = Genre.objects.get(pk=r.get('id'))
                 movie.genres.add(genre)
             movie.save()
+    print('등록 ',tmp , '개')
 
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
-    for i in range(1,11):
-        movies_data(i)
-        # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
-        # response = requests.get(url).json()
-        # movies = response.get('results')
-        # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page=3&region=KR'
-        # response = requests.get(url).json().get('results')
-        # print(requests.get(url))
-        # for r in response:
-        #     movie = Movie(**r)
-        #     movie.save()
-        # serialized_queryset = serializers.serialize('json', [results])
-        # print(serialized_queryset)
-        # tmdb = TMDb()
-        # tmdb.api_key = 'f115f7077bf79f6f7fd3227c5ba7f281'
-        # tmdb.language = 'ko'
-        # movies = film()
-        # movie = movies.search('겨울왕국')
-        # recommendations = movies.recommendations(movie_id=496243)
-        # embed()
+    # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
+    # response = requests.get(url).json()
+    # movies = response.get('results')
+    # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page=3&region=KR'
+    # response = requests.get(url).json().get('results')
+    # print(requests.get(url))
+    # for r in response:
+    #     movie = Movie(**r)
+    #     movie.save()
+    # serialized_queryset = serializers.serialize('json', [results])
+    # print(serialized_queryset)
+    # tmdb = TMDb()
+    # tmdb.api_key = 'f115f7077bf79f6f7fd3227c5ba7f281'
+    # tmdb.language = 'ko'
+    # movies = film()
+    # movie = movies.search('겨울왕국')
+    # recommendations = movies.recommendations(movie_id=496243)
+    # embed()
     return render(request,'movies/index.html',{
         'movies':movies
     })

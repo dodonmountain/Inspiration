@@ -1,33 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}">
+
+{% endblock %}
  {% block body %}
+ <div class="navbar">
   <div>
+    <a href="{% url 'movies:index' %}">홈</a>
+  </div>
+  <div class="userdropdown">
+    {% if user.is_authenticated %}
+      <div class="dropdown">
+        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{user}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">회원정보</a>
+          <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </div>
+      </div>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">로그인</a>
+      <a href="{% url 'accounts:signup' %}">회원가입</a>
+    {% endif %}
+  </div>
+</div>
+ <div>
     <h1> {{ movie.title}} </h1>
     <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" width=200px alt="{{movie.title}}">
+    <p>{{movie.tagline}}</p>
+    <p>{{ movie.runtime }} 분</p>
     <hr>
     <h4>좋아요 : {{movie.like_user.count }}</h4>
       <form action="{% url 'movies:like' movie.pk %}" method="post">
         {% csrf_token %}
-        {% if user not in movie.like_user.all %}
-        <button type="submit">좋아요</button>
-        {% else %}
-        <button type="submit">좋아요취소</button>
-        {% endif %}
+          {% if not movie.like_user or user not in movie.like_user.all %}
+          <button type="submit">좋아요</button>
+          {% else %}
+          <button type="submit">좋아요취소</button>
+          {% endif %}
       </form>
   </div>
-  <h3>관객 : {{ movie.audience }}</h3>
-  <h3>장르 : {{ movie.genre.name}}</h3>
-  <p>{{ movie.description}}</p>
+  <h3>관객 : {{ movie }}</h3>
+  <h3>장르 : 
+    {% for genre in movie.genres.all %}
+    {{ genre.name }}
+    {% endfor %}
+  </h3>
+  <p>{{ movie.overview}}</p>
   
   {% if user.is_authenticated %}
   <form action="{% url 'movies:review' movie.pk %}" method="post">
     {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">등록</button>
-  </form>
+    <fieldset class="score">
+      <input type="radio" id="star5" name="score" value="10" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+      <input type="radio" id="star4half" name="score" value="9" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+      <input type="radio" id="star4" name="score" value="8" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+      <input type="radio" id="star3half" name="score" value="7" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+      <input type="radio" id="star3" name="score" value="6" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+      <input type="radio" id="star2half" name="score" value="5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+      <input type="radio" id="star2" name="score" value="4" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+      <input type="radio" id="star1half" name="score" value="3" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+      <input type="radio" id="star1" name="score" value="2" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+      <input type="radio" id="starhalf" name="score" value="1" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+    </fieldset> 
+    
+      <label for="content"> content: </label>
+      <input type="text" id="content">
+     <button type="submit">등록</button>
+    </form>
   {% endif %}
   <hr>
   리뷰
   <hr>
+ <br>
+
   {% for r in movie.review_set.all %}
   {{ r.user.username }} - <{{ r.score }}점> {{ r.content }}
   {% if r.user == user %}
@@ -40,3 +88,4 @@
   
   {% endfor %}
   {% endblock %}
+

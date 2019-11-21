@@ -7,3 +7,4 @@ class User(AbstractUser):
     followings = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='followers', blank=True)
+

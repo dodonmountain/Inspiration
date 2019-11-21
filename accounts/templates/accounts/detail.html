@@ -3,9 +3,13 @@
 <div class="container">
 <h2>{{ userinfo }} 님의 정보 </h2>
 <h3>영화</h3>
-  {% for like_movie in userinfo.like_movies_user.all %}
-  <p>{{ like_movie.title }}</p>
+  {% for like_movie in userinfo.like_movies.all %}
+    <p>{{ like_movie.title }}</p>
+    {% for genre in like_movie.genres.all %}
+      {{ genre.name }}
+    {% endfor %}
   {% endfor %}
+
 <hr>
 <h3>리뷰</h3>
 {% for review in userinfo.review_set.all %}

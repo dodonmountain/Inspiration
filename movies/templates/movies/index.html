@@ -1,11 +1,40 @@
 {% extends 'base.html' %}
+{% block css%}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+{% endblock %}
+
 {% block body %}
-  <br>
-  <h1>등록된 영화 : {{ movies.count }}개</h1>
-  {% for movie in movies %}
-    <h2>{{ movie.title }}</h2>    
-    <a href="{% url 'movies:detail' movie.pk %}">
-      <img style="width:100px;"src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"" alt="{{movie.title}}">
-    </a>
-  {% endfor %}
- {% endblock %}
+<div class="navbar">
+  <div>
+    <a href="{% url 'movies:index' %}">홈</a>
+  </div>
+  <div class="userdropdown">
+    {% if user.is_authenticated %}
+      <div class="dropdown">
+        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{user}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">회원정보</a>
+          <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </div>
+      </div>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">로그인</a>
+      <a href="{% url 'accounts:signup' %}">회원가입</a>
+    {% endif %}
+  </div>
+</div>
+  <div id="app">
+    <h1>{{text}}</h1>
+    <h1>등록된 영화 : {{ movies.count }}개</h1>
+    {% for movie in movies %}
+    <div>
+        <h2>{{ movie.title }}</h2>
+        <a href="{% url 'movies:detail' movie.id %}">
+          <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="">
+        </a>
+      </div>
+      {% endfor %}
+  </div>
+{% endblock %}
