@@ -10,11 +10,11 @@ from .models import User
     
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('movies:index')
+        return redirect('indexes:index')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            auth_login(request, form.save())
+            form.save()
             return redirect('accounts:login')
     else:
         form = CustomUserCreationForm()
@@ -25,12 +25,12 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('movies:index')
+        return redirect('indexes:index')
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'indexes:index')
+            return redirect('indexes:index')
     else:
         form = CustomAuthenticationForm()
     context = {
@@ -40,7 +40,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect('movies:index')
+    return redirect('accounts:login')
 
 @login_required
 def update(request):
