@@ -1,0 +1,45 @@
+body {
+background: linear-gradient(270deg, #3f51f8, #000000, #4d04ad);
+background-size: 400%;
+
+animation: BackgroundScroll 50s ease infinite;
+}
+
+@keyframes BackgroundScroll {
+    0%{background-position:85% 0%}
+    25%{background-position:18% 100%}
+    50%{background-position:83% 0%}
+    75%{background-position:18% 100%}
+    100%{background-position:85% 0%}
+}
+
+.logoic {
+    background: linear-gradient(45deg,orange,yellow,green);
+    position: absolute;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: LogoQuoteMove 5s ease;
+}
+
+.shine {
+    background: linear-gradient(45deg,orange,yellow,green);
+    position: absolute;
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: LogoQuoteScroll 4s ease infinite;
+}
+@keyframes LogoQuoteScroll {
+    0%{background-position:83% 0%}
+    50%{background-position:18% 100%}
+    100%{background-position:83% 0%}
+}
+@keyframes LogoQuoteMove {
+    0%{margin: 25vw 25vh;font-size:25rem}
+    50%{margin: 25vw 25vh;font-size:12.5rem}
+    100%{margin: 0 0;font-size:2.5em}
+}
+.logoBoy {
+    width: 8rem;
+    height: 8rem;
+}

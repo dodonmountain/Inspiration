@@ -30,7 +30,7 @@ def login(request):
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'movies:index')
+            return redirect(request.GET.get('next') or 'indexes:index')
     else:
         form = CustomAuthenticationForm()
     context = {

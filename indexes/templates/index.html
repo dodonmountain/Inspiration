@@ -1,27 +1,73 @@
-{% extends 'base.html' %}{% load static %}
+{% extends 'base.html' %}
+{% load static %}
 {% block css %}
-
+<link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap"
+  rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="app">
-    
-</div>
+<!-- Nav -->
+<nav
+  class="navbar navbar-sticky-top navbar-expand-lg navbar-dark bg-transparent table-hover">
+  <h1 id="logoic" class='logoic' style="font-family: 'Gugi', cursive;">영감</h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+      </li>
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+          role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1"
+          aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search"
+        aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0"
+        type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'vue/vue.js' %}"></script>
 <script>
-    const app = new Vue({
-        el: '#app',
-        data: {
-            movies: [],
-            quote: '안녕하십니까',
-        },
-        methods: {},
-        computed: {},
-        updated: {},
-        mounted: {}
-    })
+  const logo = document.querySelector('#logoic')
+  setTimeout(() => {
+    logo.classList.add("shine")
+  }, 5000);
+
 </script>
 {% endblock %}

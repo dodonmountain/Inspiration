@@ -23,8 +23,6 @@ def index(request):
         movies = film()
         movie = movies.search('겨울왕국')
         recommendations = movies.recommendations(movie_id=496243)
-        print(recommendations)
-        embed()
     return render(request,'movies/index.html',{
         'movies':movies
     })
