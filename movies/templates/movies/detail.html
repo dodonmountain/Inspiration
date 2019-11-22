@@ -1,86 +1,122 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}">
-
 {% endblock %}
- {% block body %}
- {% include 'movie_navbar.html' %}
 
- <div>
-    <h1> {{ movie.title}} </h1>
-    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" width=200px alt="{{movie.title}}">
-    <p>{{movie.tagline}}</p>
-    <p>{{ movie.runtime }} 분</p>
-    <hr>
-    <h4>좋아요 : {{movie.like_user.count }}</h4>
-      <form action="{% url 'movies:like' movie.pk %}" method="post">
-        {% csrf_token %}
-          {% if not movie.like_user or user not in movie.like_user.all %}
-          <button type="submit">좋아요</button>
-          {% else %}
-          <button type="submit">좋아요취소</button>
-          {% endif %}
-      </form>
-  </div>
-  <h3>관객 : {{ movie }}</h3>
-  <h3>장르 : 
-    {% for genre in movie.genres.all %}
-    {{ genre.name }}
-    {% endfor %}
-  </h3>
-  <p>{{ movie.overview}}</p>
-  
-  {% if user.is_authenticated %}
-  {% if review %}
-    <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
-    {% csrf_token %}
-      {{ form }}
-    <button type="submit">리뷰 수정</button>
-  {% else %}
-    <form action="{% url 'movies:review' movie.pk %}" method="post">
-    {% csrf_token %}
-      {{ form }}
-    <button type="submit">리뷰 등록</button>
-  {% endif %}
-    </form >
+{% block body %}
+{% include 'movie_navbar.html' %}
+
+<div>
+  <h1> {{ movie.title}} </h1>
+  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" width=200px
+    alt="{{movie.title}}">
+  <p>{{movie.tagline}}</p>
+  <p>{{ movie.runtime }} 분</p>
   <hr>
-<form action="{% url 'movies:review' movie.pk %}" method="post">
+  <h4>좋아요 : {{movie.like_user.count }}</h4>
+  <form action="{% url 'movies:like' movie.pk %}" method="post">
     {% csrf_token %}
+    {% if not movie.like_user or user not in movie.like_user.all %}
+    <button type="submit">좋아요</button>
+    {% else %}
+    <button type="submit">좋아요취소</button>
+    {% endif %}
+  </form>
+</div>
+<h3>관객 : {{ movie }}</h3>
+<h3>장르 :
+  {% for genre in movie.genres.all %}
+  {{ genre.name }}
+  {% endfor %}
+</h3>
+<p>{{ movie.overview}}</p>
 
+{% if user.is_authenticated %}
+{% if review %}
+<form action="{% url 'movies:review_update' movie.pk review.pk %}"
+  method="post">
+  {% csrf_token %}
+  <fieldset class="score review_score_{{review.score}}">
+    <input type="radio" id="star10" name="score" value="10" /><label
+      class="full" for="star10" title="Awesome - 5 stars"></label>
+    <input type="radio" id="star9" name="score" value="9" /><label class="half"
+      for="star9" title="Pretty good - 4.5 stars"></label>
+    <input type="radio" id="star8" name="score" value="8" /><label class="full"
+      for="star8" title="Pretty good - 4 stars"></label>
+    <input type="radio" id="star7" name="score" value="7" /><label class="half"
+      for="star7" title="Meh - 3.5 stars"></label>
+    <input type="radio" id="star6" name="score" value="6" /><label class="full"
+      for="star6" title="Meh - 3 stars"></label>
+    <input type="radio" id="star5" name="score" value="5" /><label class="half"
+      for="star5" title="Kinda bad - 2.5 stars"></label>
+    <input type="radio" id="star4" name="score" value="4" /><label class="full"
+      for="star4" title="Kinda bad - 2 stars"></label>
+    <input type="radio" id="star3" name="score" value="3" /><label class="half"
+      for="star3" title="Meh - 1.5 stars"></label>
+    <input type="radio" id="star2" name="score" value="2" /><label class="full"
+      for="star2" title="Sucks big time - 1 star"></label>
+    <input type="radio" id="star1" name="score" value="1" /><label class="half"
+      for="star1" title="Sucks big time - 0.5 stars"></label>
+  </fieldset>
+  <input value="{{review.content}}" name="content" type="text">
+  <button type="submit">리뷰 수정</button>
+  {% else %}
+  <form action="{% url 'movies:review' movie.pk %}" method="post">
+    {% csrf_token %}
     <fieldset class="score">
-      <input type="radio" id="star5" name="score" value="10" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-      <input type="radio" id="star4half" name="score" value="9" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+      <input type="radio" id="star5" name="score" value="10" /><label
+        class="full" for="star5" title="Awesome - 5 stars"></label>
+      <input type="radio" id="star4half" name="score" value="9" /><label
+        class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+      <input type="radio" id="star4" name="score" value="8" /><label
+        class="full" for="star4" title="Pretty good - 4 stars"></label>
+      <input type="radio" id="star3half" name="score" value="7" /><label
+        class="half" for="star3half" title="Meh - 3.5 stars"></label>
+      <input type="radio" id="star3" name="score" value="6" /><label
+        class="full" for="star3" title="Meh - 3 stars"></label>
+      <input type="radio" id="star2half" name="score" value="5" /><label
+        class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+      <input type="radio" id="star2" name="score" value="4" /><label
+        class="full" for="star2" title="Kinda bad - 2 stars"></label>
+      <input type="radio" id="star1half" name="score" value="3" /><label
+        class="half" for="star1half" title="Meh - 1.5 stars"></label>
+      <input type="radio" id="star1" name="score" value="2" /><label
+        class="full" for="star1" title="Sucks big time - 1 star"></label>
+      <input type="radio" id="starhalf" name="score" value="1" /><label
+        class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+    </fieldset>
+    <input name="content" type="text">
+    <button type="submit">리뷰 등록</button>
+    {% endif %}
+  </form>
+  <hr>
 
-      <input type="radio" id="star4" name="score" value="8" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-      <input type="radio" id="star3half" name="score" value="7" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-      <input type="radio" id="star3" name="score" value="6" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-      <input type="radio" id="star2half" name="score" value="5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-      <input type="radio" id="star2" name="score" value="4" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-      <input type="radio" id="star1half" name="score" value="3" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-      <input type="radio" id="star1" name="score" value="2" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-      <input type="radio" id="starhalf" name="score" value="1" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-    </fieldset> 
-    
-      <label for="content"> content: </label>
-      <input type="text" id="content">
-     <button type="submit">등록</button>
-    </form>
   {% endif %}
-<hr>
+  <hr>
   {% if review %}
-  <h3>내리뷰</h3>
-  <span> {{ user }} - <{{review.score }} 점> - {{review.content}} </span>
-  <form style="display:inline" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+  <h3>내 리뷰</h3>
+  <span> {{ user }} - < <span id="score">{{review.score }}</span> 점> -
+  {{review.content}} </span>
+  <form style="display:inline"
+    action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
     {% csrf_token %}
     <button type="submit">삭제</button>
   </form>
   {% endif %}
   <h3>전체 리뷰</h3>
   {% for r in movie.review_set.all %}
-    {% if r.user.id != review.user_id %}
-    <p>{{ r.user.username }} - <{{ r.score }}점> {{ r.content }}</p>
-    {% endif %}
+  {% if r.user.id != review.user_id %}
+  <p>{{ r.user.username }} - <{{ r.score }}점> {{ r.content }}</p>
+  {% endif %}
   {% endfor %}
   {% endblock %}
 
+  {% block script %}
+    <script>
+      const score = document.querySelector('#score').innerText
+      const my_star = document.querySelector('#star'+score)
+      my_star.checked = true
+    </script>
+  {% endblock %}

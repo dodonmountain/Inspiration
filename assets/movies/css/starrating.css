@@ -34,9 +34,9 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 .score > input:checked ~ label, /* show gold star when clicked */
 .score:not(:checked) > label:hover, /* hover current star */
-.score:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.score:not(:checked) > label:hover ~ label { color: rgb(255, 228, 73);  } /* hover previous stars in list */
 
 .score > input:checked + label:hover, /* hover current star when changing score */
 .score > input:checked ~ label:hover,
 .score > label:hover ~ input:checked ~ label, /* lighten current selection */
-.score > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+.score > input:checked ~ label:hover ~ label { color: rgb(255, 220, 24);  } 

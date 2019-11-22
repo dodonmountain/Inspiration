@@ -7,7 +7,6 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
 
 # def my_page(request):
-    
 def signup(request):
     if request.user.is_authenticated:
         return redirect('indexes:index')
@@ -70,11 +69,24 @@ def update_password(request):
     }
     return render(request, 'accounts/form.html', context)
 
+def user_like_genre(user):
+    user_genre = {}
+    for review in user.review_set.all():
+        for genre in review.movie.genres.all():
+            if genre.name not in user_genre:
+                user_genre[genre.name] = 0
+            user_genre[genre.name] += review.score-5
+    return user_genre
+
 @login_required
 def userDetail(request, user_id):
     if user_id == request.user.id:
         user = get_object_or_404(User, pk=user_id)
-        return render(request, 'accounts/detail.html', {'userinfo':user})
+        context = {
+            'userinfo' : user,
+            'user_like_genre' : user_like_genre(user)
+        }
+        return render(request, 'accounts/detail.html', context)
     return redirect('accounts:login')
     
 

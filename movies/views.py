@@ -86,31 +86,27 @@ def detail(request,movie_pk):
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
     if reviews:
         review = reviews[0]
-        form = ReviewForm(instance=review)
         context = {
             'movie':movie,
-            'form':form,
             'review' : review
         }
     else:
         movie = get_object_or_404(Movie,pk=movie_pk)
-        form = ReviewForm()
         context = {
             'movie':movie,
-            'form':form,
             'review' : False
         }
     return render(request,'movies/detail.html',context)
 
 @require_POST
 def review(request,movie_pk):
-    form = ReviewForm(request.POST)
-    if form.is_valid():
-        review = form.save(commit=False)
-        review.movie = get_object_or_404(Movie,pk=movie_pk)
-        review.user = request.user
-        review.save()
-        return redirect('movies:detail',movie_pk)
+    review = Review.objects.create(
+        user = request.user,
+        content = request.POST.get('content'),
+        score = request.POST.get('score'),
+        movie = get_object_or_404(Movie,pk=movie_pk)
+    )
+    return redirect('movies:detail',movie_pk)
 
 def review_delete(request,movie_pk, review_pk):
     review = get_object_or_404(Review,pk=review_pk)
@@ -119,16 +115,10 @@ def review_delete(request,movie_pk, review_pk):
 
 def review_update(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    if request.method == 'POST':
-        form = ReviewForm(request.POST, instance=review)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.movie = get_object_or_404(Movie,pk=movie_pk)
-            review.user = request.user
-            review.save()
-            return redirect('movies:detail',movie_pk)
-    form = ReviewForm(instance=review)
-    return render(request, 'accounts/form.html', {'form':form})
+    review.content = request.POST.get('content')
+    review.score = request.POST.get('score')
+    review.save()
+    return redirect('movies:detail',movie_pk)
 
 @login_required
 @require_POST

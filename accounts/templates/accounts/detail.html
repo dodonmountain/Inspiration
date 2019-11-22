@@ -6,19 +6,25 @@
 {% include 'movie_navbar.html' %}
 <div class="container">
 <h2>{{ userinfo }} 님의 정보 </h2>
+ <hr>
 <h3>영화</h3>
   {% for like_movie in userinfo.like_movies.all %}
-    <p>{{ like_movie.title }}</p>
-    {% for genre in like_movie.genres.all %}
-      {{ genre.name }}
-    {% endfor %}
+    <a><a href="{% url 'movies:detail' like_movie.id %}">{{ like_movie.title }}</p></a>
   {% endfor %}
-
+  
+<hr>
+<h3>장르</h3>
+<br>
+  {{ user_like_genre.values.}}
+  {% for i,v in user_like_genre.items %}
+    {{i}} = {{v}}
+  {% endfor %}
 <hr>
 <h3>리뷰</h3>
 {% for review in userinfo.review_set.all %}
-<p>{{ review.movie.title }} - {{review.score}} 점 - {{ review.content }}</p>
+<p><a href="{% url 'movies:detail' review.movie.id %}">{{ review.movie.title }}</a> - {{review.score}} 점 - {{ review.content }}</p>
 {% endfor %}
+<hr>
 <h4>팔로잉</h4>
 {{ userinfo.followings.all.count }}
 {% for user in userinfo.followings.all %}

@@ -6,13 +6,13 @@
 {% include 'movie_navbar.html' %}
 <h1>제목일치</h1>
 {% for movie in title_movies %}
-{{movie.title}}
+<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a>
 <hr>
 <p>{{movie.overview}}</p>
 {% endfor %}
 <h1> 내용일치</h1>
 {% for movie in overview_movies %}
-{{movie.title}}
+<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a>
 <hr>
 <p>{{movie.overview}}</p>
 {% endfor %}
