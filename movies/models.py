@@ -8,6 +8,11 @@ class Genre(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
+# class Cast(models.Model):
+#     id = models.IntergerField(primary_key=True)
+#     credit_id = models.CharField()
+#     characters = models.CharField()
+
 class Movie(models.Model):
     adult = models.BooleanField(null=True)
     backdrop_path = models.CharField(max_length=140,null=True)
@@ -28,6 +33,7 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     vote_count = models.IntegerField()
     like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies',blank=True)
+    # credits = models.ManyToManyField()
 
 class Review(models.Model):
     content = models.CharField(max_length=100)

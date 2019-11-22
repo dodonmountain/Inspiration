@@ -83,11 +83,23 @@ def index(request):
 
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
-    form = ReviewForm()
-    context = {
-        'movie':movie,
-        'form':form
-    }
+    reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
+    if reviews:
+        review = reviews[0]
+        form = ReviewForm(instance=review)
+        context = {
+            'movie':movie,
+            'form':form,
+            'review' : review
+        }
+    else:
+        movie = get_object_or_404(Movie,pk=movie_pk)
+        form = ReviewForm()
+        context = {
+            'movie':movie,
+            'form':form,
+            'review' : False
+        }
     return render(request,'movies/detail.html',context)
 
 @require_POST
@@ -127,3 +139,15 @@ def like(request,movie_pk):
     else:
         movie.like_user.add(request.user)
     return redirect('movies:detail',movie_pk)
+
+def search(request):
+    query = request.GET.get('q')
+    title_movies = Movie.objects.filter(title__contains=query)
+
+    asdf_movies = Movie.objects.filter(overview__contains=query)
+    overview_movies = asdf_movies.difference(title_movies)
+    context = {
+        "title_movies" : title_movies,
+        "overview_movies" : overview_movies
+    }
+    return render(request,'movies/search.html',context)

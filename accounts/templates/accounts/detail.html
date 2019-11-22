@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
+{% block css %}
+{% endblock %}
+
 {% block body %}
+{% include 'movie_navbar.html' %}
 <div class="container">
 <h2>{{ userinfo }} 님의 정보 </h2>
 <h3>영화</h3>
@@ -13,7 +17,7 @@
 <hr>
 <h3>리뷰</h3>
 {% for review in userinfo.review_set.all %}
-<p>{{ review.movie.title }} - {{ review.content }}</p>
+<p>{{ review.movie.title }} - {{review.score}} 점 - {{ review.content }}</p>
 {% endfor %}
 <h4>팔로잉</h4>
 {{ userinfo.followings.all.count }}

@@ -2,6 +2,14 @@
     <div>
       <a href="{% url 'movies:index' %}">홈</a>
     </div>
+    <div>
+    <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
+      <input name="q" class="form-control mr-sm-2 bg-transparent text-dark searchField"
+        type="search" placeholder="영화명, 장르, 배우">
+      <button class="btn btn-outline-dark px-5 my-2 my-sm-0"
+        type="submit">찾아줘!</button>
+    </form>
+    </div>
     <div class="userdropdown">
       {% if user.is_authenticated %}
         <div class="dropdown">
