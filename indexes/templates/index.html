@@ -10,7 +10,7 @@
 <div id="app">
   <nav
     class="navbar navbar-sticky-top navbar-expand-lg navbar-dark bg-transparent table-hover">
-    <h1 id="logoic" class='logoic' style="font-family: 'Gugi', cursive;">영감</h1>
+    <h1 id="logoic" class='logoic' style="font-family: 'Gugi', cursive;"><a href="{% url 'indexes:index' %}">영감</a></h1>
     <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
       data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -50,10 +50,10 @@
         </li>
         {% endif %}
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
         <input
           class="form-control mr-sm-2 bg-transparent text-white searchField"
-          type="search" placeholder="영화명, 장르, 배우">
+          type="search" name="q" placeholder="영화명, 장르, 배우">
         <button class="btn btn-outline-light px-5 my-2 my-sm-0"
           type="submit">찾아줘!</button>
       </form>
