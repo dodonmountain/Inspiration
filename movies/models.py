@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django_mysql.models import ListCharField
 from django.conf import settings
 
 # Create your models here.

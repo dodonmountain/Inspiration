@@ -4,9 +4,6 @@ from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import requests
-from IPython import embed
-from tmdbv3api import TMDb
-from tmdbv3api import Movie as film
 from .models import Movie,Genre
 from django.core import serializers
 import pprint
