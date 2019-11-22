@@ -1,5 +1,5 @@
 .vscode/
-
+./movies/fixtures/movie_ids_11_20_2019.json
 # Created by https://www.gitignore.io/api/vue,vuejs,react,django,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=vue,vuejs,react,django,visualstudiocode
 
@@ -159,6 +159,5 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# End of https://www.gitignore.io/api/vue,vuejs,react,django,visualstudiocode
-venv/pyvenv.cfg
+.vscode/settings.json
 venv/pyvenv.cfg

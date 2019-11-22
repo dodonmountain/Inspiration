@@ -1,52 +1,99 @@
 body {
-background: linear-gradient(270deg, #3f51f8, #000000, #4d04ad);
-background-size: 400%;
+  background: linear-gradient(270deg, #3f51f8, #000000, #4d04ad);
+  background-size: 400%;
 
-animation: BackgroundScroll 50s ease infinite;
+  animation: BackgroundScroll 50s ease infinite;
 }
-
+#app {
+  height: 95vh;
+}
 @keyframes BackgroundScroll {
-    0%{background-position:85% 0%}
-    25%{background-position:18% 100%}
-    50%{background-position:83% 0%}
-    75%{background-position:18% 100%}
-    100%{background-position:85% 0%}
+  0% {
+    background-position: 85% 0%
+  }
+
+  25% {
+    background-position: 18% 100%
+  }
+
+  50% {
+    background-position: 83% 0%
+  }
+
+  75% {
+    background-position: 18% 100%
+  }
+
+  100% {
+    background-position: 85% 0%
+  }
 }
 
 .logoic {
-    background: linear-gradient(45deg,orange,yellow,green);
-    position: absolute;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: LogoQuoteMove 5s ease;
+  background: linear-gradient(45deg, orange, yellow, green);
+  position: absolute;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: LogoQuoteMove 5s ease;
 }
 
 .shine {
-    background: linear-gradient(45deg,orange,yellow,green);
-    position: absolute;
-    background-size: 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: LogoQuoteScroll 4s ease infinite;
-}
-@keyframes LogoQuoteScroll {
-    0%{background-position:83% 0%}
-    50%{background-position:18% 100%}
-    100%{background-position:83% 0%}
-}
-@keyframes LogoQuoteMove {
-    0%{margin: 25vw 25vh;font-size:25rem}
-    50%{margin: 25vw 25vh;font-size:12.5rem}
-    100%{margin: 0 0;font-size:2.5em}
-}
-.logoBoy {
-    width: 8rem;
-    height: 8rem;
-}
-.searchField {
-    width: 20rem !important;
+  background: linear-gradient(45deg, orange, yellow, green);
+  position: absolute;
+  background-size: 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: LogoQuoteScroll 4s ease infinite;
 }
 
+@keyframes LogoQuoteScroll {
+  0% {
+    background-position: 83% 0%
+  }
+
+  50% {
+    background-position: 18% 100%
+  }
+
+  100% {
+    background-position: 83% 0%
+  }
+}
+
+@keyframes LogoQuoteMove {
+  0% {
+    margin: 25vw 25vh;
+    font-size: 25rem
+  }
+
+  50% {
+    margin: 25vw 25vh;
+    font-size: 12.5rem
+  }
+
+  100% {
+    margin: 0 0;
+    font-size: 2.5em
+  }
+}
+
+.logoBoy {
+  width: 8rem;
+  height: 8rem;
+}
+
+.searchField {
+  width: 20rem !important;
+}
+
+.fadein {
+  animation: fadein 3s;
+}
+
+@keyframes fadein {
+  from {opacity: 0;};
+  to {opacity: 1;}
+}
 :root {
 
     /* Tile Dimensions */
@@ -75,10 +122,9 @@ animation: BackgroundScroll 50s ease infinite;
 /* Carousel Container */
 .carousel {
     margin: 0;
-    box-sizing: border-box;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 80vh;
 }
 
 /* Carousel Row */
@@ -89,6 +135,10 @@ animation: BackgroundScroll 50s ease infinite;
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     transition: var(--carousel-transition-2);
+}
+.carousel-card {
+    width:18rem;
+    text-overflow: ellipsis;
 }
 
 /* Content Tile */
@@ -112,7 +162,7 @@ animation: BackgroundScroll 50s ease infinite;
 
 /* Ensure All Elements Inside Tile are Block */
 .carousel-tile * {
-    display: block;
+    width: 16rem;
 }
 
 /* Carousel Row on Hover */
@@ -138,12 +188,3 @@ animation: BackgroundScroll 50s ease infinite;
     -webkit-transform: translate3d(var(--carousel-offset-right), 0, 0);
     transform: translate3d(var(--carousel-offset-right), 0, 0);
 }
-
-.fadein{
-    animation: fadein 6.5s;
-}
-
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
