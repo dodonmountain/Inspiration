@@ -17,4 +17,9 @@
 <p>{{movie.overview}}</p>
 {% endfor %}
 
+<h1> 배우 </h1>
+{% for actor in actors %}
+    <a href="{% url 'movies:actor' actor.id %}"><p>{{actor.name }}</p></a>
+{% endfor %}
+
 {% endblock %}
