@@ -6,9 +6,9 @@
 
 {% block body %}
 <div class="container-fluid m-0 p-0 loginWindow">
-		<h1 class='text-white position-absolute' style="z-index:2;font-family: 'Permanent Marker', cursive;">
+		<a href="{% url 'indexes:welcome' %}"><h1 class='text-white position-absolute' style="z-index:2;font-family: 'Permanent Marker', cursive;">
         Inspiration
-    </h1>
+    </h1></a>
   <div class="row">
     <form method="post" class="col-6 text-center loginBox flex-lg-nowrap">
       {% csrf_token %}
@@ -33,7 +33,6 @@
         </div>
       </div>
     </form>
-
 </div>
 
 {% endblock %}

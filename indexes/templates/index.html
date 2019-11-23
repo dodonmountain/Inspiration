@@ -2,72 +2,19 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
-<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<!-- Nav -->
-<div id="app">
-  <nav
-    class="navbar navbar-sticky-top navbar-expand-lg navbar-dark bg-transparent table-hover">
-    <h1 id="logoic" class='logoic' ><a href="{% url 'indexes:index' %}">영감</a></h1>
-    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto flex-nowrap justify-content-between">
-        {% if user.is_authenticated %}
-        <li class="nav-item active mx-4 border-bottom">
-          <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
-        </li>
-        <li class="nav-item dropdown mx-4 border-bottom">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-            role="button" aria-haspopup="true" aria-expanded="false">영감랭킹</a>
-          <div class="dropdown-menu bg-transparent border-white">
-            <a class="dropdown-item my-1 text-white" href="#">1. </a>
-            <a class="dropdown-item my-1 text-white" href="#">2. </a>
-            <a class="dropdown-item my-1 text-white" href="#">3. </a>
-            <a class="dropdown-item my-1 text-white" href="#">4. </a>
-            <a class="dropdown-item my-1 text-white" href="#">5. </a>
-            <a class="dropdown-item my-1 text-white" href="#">6. </a>
-            <a class="dropdown-item my-1 text-white" href="#">7. </a>
-            <a class="dropdown-item my-1 text-white" href="#">8. </a>
-            <a class="dropdown-item my-1 text-white" href="#">9. </a>
-            <a class="dropdown-item my-1 text-white" href="#">10. </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item my-1 text-white" href="#">랭킹 페이지</a>
-          </div>
-        </li>
-        <li class="nav-item mx-4 border-bottom">
-          <a class="nav-link" href="#" tabindex="-1">내가 찜한 영화</a>
-        </li>
-        {% else %}
-        <li class="nav-item active mx-4 border-bottom">
-          <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
-        </li>
-        {% endif %}
-      </ul>
-      <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
-        <input
-          class="form-control mr-sm-2 bg-transparent text-white searchField"
-          type="search" name="q" placeholder="영화명, 장르, 배우">
-        <button class="btn btn-outline-light px-5 my-2 my-sm-0"
-          type="submit">찾아줘!</button>
-      </form>
-    </div>
-  </nav>
+{% include '_navbar.html' %}
   {% if user.is_authenticated %}
-  <div id='car' class="carousel fadein">
-    <h2 class="text-white mx-5 mt-5">{{ user.first_name }} 님의 맞춤 대기열</h2>
+  <div id='car' class="carousel fadein mt-5">
+    <h2 class="queIndicator">{{ user.first_name }} 님의 맞춤 대기열</h2>
     <div class="carousel-row">
       {% for movie in movies %}
-      <div action="{% url 'movies:detail' movie.id %}" class="carousel-tile">
-        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}">
-        <div class="carousel-card text-white text-center mt-3">
-          <p class="border-top pt-4 border-white">{{ movie.title }}</p>
+      <div class="carousel-tile">
+        <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;"></a>
+        <div class="text-white text-center mt-3">
+          <p class="border-top car-body">{{ movie.title }}</p>
           <p>예상 평점:<span class='rand'></span></p>
         </div>
       </div>
@@ -79,7 +26,6 @@
         </h1>
       </div>
   {% endif %}
-      
     </div>
   </div>
 </div>

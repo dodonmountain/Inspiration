@@ -1,12 +1,22 @@
 body {
   /* background: linear-gradient(70deg, #2f2f2f); */
-  background-color: #2f2f2f;
+  background-color: #1f1f1f;
   background-size: 160%;
+  overflow: hidden;
 
   /* animation: BackgroundScroll 50s ease infinite; */
 }
 #app {
   height: 95vh;
+}
+.queIndicator {
+  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  position: fixed;
+  left: 4vw;
+  top: 13vh;
+  margin-bottom: 5vh;
+  color: #fafafa;
 }
 @keyframes BackgroundScroll {
   0% {
@@ -122,7 +132,7 @@ body {
 
 /* Carousel Container */
 .carousel {
-    margin: 0;
+    margin: 5vh 0;
     overflow: hidden;
     white-space: nowrap;
     height: 90vh;
@@ -131,22 +141,22 @@ body {
 /* Carousel Row */
 .carousel-row {
     white-space: nowrap;
-    margin-top: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
+    margin-top: 20vh;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     transition: var(--carousel-transition-2);
 }
 .carousel-card {
-    width:18rem;
-    text-overflow: ellipsis;
+    width: 16vw;
+    height: 40vh;
 }
 
 /* Content Tile */
 .carousel-tile {
     position: relative;
     display: inline-block;
-    width: var(--carousel-tile-width);
+    width: 16vw;
     height: var(--carousel-tile-height);
     margin-right: var(--carousel-tile-spacing);
     transition: var(--carousel-transition-2);
@@ -163,7 +173,7 @@ body {
 
 /* Ensure All Elements Inside Tile are Block */
 .carousel-tile * {
-    width: 16rem;
+    width: 16vw;
 }
 
 /* Carousel Row on Hover */
@@ -188,4 +198,7 @@ body {
 .carousel-tile:hover ~ .carousel-tile {
     -webkit-transform: translate3d(var(--carousel-offset-right), 0, 0);
     transform: translate3d(var(--carousel-offset-right), 0, 0);
+}
+.car-body {
+  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }

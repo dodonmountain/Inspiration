@@ -23,14 +23,32 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 5vw;
   }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    height: 70px;
+    width: 70px;
+    background-size: 100%, 100%;
+    background-image: none;
+  }
+  .carousel-control-next-icon:after
+  {
+    content: '>';
+    font-size: 4vw;
+    color: #fafafa;
+  }
 
+  .carousel-control-prev-icon:after {
+    content: '<';
+    font-size: 4vw;
+    color: #fafafa;
+  }
 </style>
 {% endblock css %}
 {% block body %}
 
 {% include '_navbar.html' %}
 <div class="container-fluid px-0">
-  <div id="carouselExampleControls" class="carousel" data-ride="carousel">
+  <div id="welcomeCarousel" class="carousel" data-ride="carousel">
     <div class="carousel-inner bg-info" role="listbox">
       <div class="carousel-item active">
         <div id="welcome_1"
@@ -62,12 +80,12 @@
         </div>
       </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls"
+    <a class="carousel-control-prev" href="#welcomeCarousel"
       role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleControls"
+    <a class="carousel-control-next" href="#welcomeCarousel"
       role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>

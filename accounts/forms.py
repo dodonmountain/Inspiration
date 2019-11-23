@@ -4,23 +4,23 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Authenti
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control mb-5 text-small',
+        'class': 'form-control customTextInput',
         'placeholder': '아이디'
         }), label='')
     first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control mb-5 text-small',
-        'placeholder': '성명'
+        'class': 'form-control customTextInput',
+        'placeholder': '이름 혹은 별명'
         }), label='')
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control mb-5 text-small',
+        'class': 'form-control customTextInput',
         'placeholder': '이메일'
         }), label='')
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control mb-3 text-small',
+        'class': 'form-control customTextInput',
         'placeholder': '비밀번호'
         }), label='')
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control mb-5 text-small',
+        'class': 'form-control customTextInput',
         'placeholder': '비밀번호 확인'
         }), label='')
     class Meta:

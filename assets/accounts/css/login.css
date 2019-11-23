@@ -1,5 +1,5 @@
 .loginWindow {
-  background: url("/static/img/login.jpg") center center no-repeat;
+  background: url("/static/img/beuty.jpg") center center no-repeat;
   background-size: cover;
   box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.5);
   height: 100vh;
@@ -29,13 +29,12 @@
 
 .loginBox:hover {
   animation: fadein 1s ease-in;
-  background: #2f2f2f;
-  
+  background: rgba(0, 0, 0, 0.5);
 }
 
 @keyframes fadein {
   0% {background: none;}
-  100% {background: #2f2f2f;}
+  100% {background: rgba(0, 0, 0, 0.5);}
 }
 
 .login-background {
