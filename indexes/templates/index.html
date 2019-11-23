@@ -10,7 +10,7 @@
 <div id="app">
   <nav
     class="navbar navbar-sticky-top navbar-expand-lg navbar-dark bg-transparent table-hover">
-    <h1 id="logoic" class='logoic' style="font-family: 'Gugi', cursive;"><a href="{% url 'indexes:index' %}">영감</a></h1>
+    <h1 id="logoic" class='logoic' ><a href="{% url 'indexes:index' %}">영감</a></h1>
     <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
       data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -59,11 +59,12 @@
       </form>
     </div>
   </nav>
-
+  {% if user.is_authenticated %}
   <div id='car' class="carousel fadein">
+    <h2 class="text-white mx-5 mt-5">{{ user.first_name }} 님의 맞춤 대기열</h2>
     <div class="carousel-row">
       {% for movie in movies %}
-      <div class="carousel-tile">
+      <div action="{% url 'movies:detail' movie.id %}" class="carousel-tile">
         <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}">
         <div class="carousel-card text-white text-center mt-3">
           <p class="border-top pt-4 border-white">{{ movie.title }}</p>
@@ -71,6 +72,14 @@
         </div>
       </div>
       {% endfor %}
+  {% else %}
+      <div style="margin-top: 15%;">
+        <h1 class="display-1 font-weight-bolder text-center mt-5 text-white-50">
+          로그인해서 회원님만을 위한 맞춤 리스트를 받아보세요.
+        </h1>
+      </div>
+  {% endif %}
+      
     </div>
   </div>
 </div>
@@ -88,13 +97,13 @@
   let last_known_scroll_position = 0;
   let flag = false;
   window.onload = function(){
-    logoic.classList.add('shine')
+    // logoic.classList.add('shine')
     for (let r in rand){
        rand[r].innerText = (5+(Math.random() * 5)).toFixed(2)
      // rand[r].innerText = "{{ movie.vote_average }}"
     }
     
-    /*
+    
     lst.hidden = true
     setTimeout(function(){
       lst.hidden =false
@@ -102,7 +111,7 @@
     setTimeout(function(){
       logoic.classList.add('shine')
     },5000)
-    */
+    
   };
   
   function scrollLst(scroll_pos) {

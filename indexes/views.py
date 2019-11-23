@@ -9,3 +9,6 @@ def index(request):
         'movies':movies
     }
     return render(request, 'index.html', context)
+
+def welcome(request):
+    return render(request, 'welcome.html')

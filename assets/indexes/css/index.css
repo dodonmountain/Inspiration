@@ -1,8 +1,9 @@
 body {
-  background: linear-gradient(270deg, #3f51f8, #000000, #4d04ad);
-  background-size: 400%;
+  /* background: linear-gradient(70deg, #2f2f2f); */
+  background-color: #2f2f2f;
+  background-size: 160%;
 
-  animation: BackgroundScroll 50s ease infinite;
+  /* animation: BackgroundScroll 50s ease infinite; */
 }
 #app {
   height: 95vh;
@@ -30,7 +31,7 @@ body {
 }
 
 .logoic {
-  background: linear-gradient(45deg, orange, yellow, green);
+  background: linear-gradient(45deg, red, orange);
   position: absolute;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -38,7 +39,7 @@ body {
 }
 
 .shine {
-  background: linear-gradient(45deg, orange, yellow, green);
+  background: linear-gradient(45deg, red, orange);
   position: absolute;
   background-size: 400%;
   -webkit-background-clip: text;
@@ -124,7 +125,7 @@ body {
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
-    height: 80vh;
+    height: 90vh;
 }
 
 /* Carousel Row */
