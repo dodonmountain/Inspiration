@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}">
+{% endblock %}
+
+{% block body %}
+{% include 'movie_navbar.html' %}
+<h1>{{ people.name }}</h1>
+<hr>
+{% for credit in people.credit_set.all %}
+    <a href="{% url 'movies:detail' credit.movie.id %}">{{ credit.movie.title }}</a> - 
+    {{ credit.character }}
+<hr>
+{% endfor %}
+
+{% endblock %}

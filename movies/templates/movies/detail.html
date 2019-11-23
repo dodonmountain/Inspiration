@@ -25,7 +25,29 @@
     {% endif %}
   </form>
 </div>
-<h3>관객 : {{ movie }}</h3>
+<h4>출연진</h4>
+  {% for people in movie.people.all %}
+    {% if people.job == 'Director' %}
+      <img src="https://image.tmdb.org/t/p/w200{{people.profile_path}}" alt="">
+      <p>{{people.name}}  </p>
+    {% endif %}
+  {% endfor %}
+  <hr>
+  {% for credit in credits %}
+  <img src="https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}" alt="">
+  <p><a href="{% url 'movies:actor' credit.people.id %}">{{ credit.people.name }}</a> - {{ credit.character }}</p>
+    <hr>
+  {% endfor %}
+  <!-- {% for people in movie.people.all %}
+    {% if people.job == 'Director' %}
+    {{people}}
+    <p>Director : {{people.name}}  </p>
+
+    {% endif %}
+    {{people}}
+  <p>{{people.name}}  </p>
+  {% endfor %} -->
+<hr>
 <h3>장르 :
   {% for genre in movie.genres.all %}
   {{ genre.name }}

@@ -7,10 +7,11 @@ class Genre(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
-# class Cast(models.Model):
-#     id = models.IntergerField(primary_key=True)
-#     credit_id = models.CharField()
-#     characters = models.CharField()
+class People(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=30)
+    job = models.CharField(max_length=10)
+    profile_path = models.CharField(max_length=140,null=True)
 
 class Movie(models.Model):
     adult = models.BooleanField(null=True)
@@ -32,10 +33,17 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     vote_count = models.IntegerField()
     like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies',blank=True)
-    # credits = models.ManyToManyField()
+    people = models.ManyToManyField(People,blank=True)
 
 class Review(models.Model):
     content = models.CharField(max_length=100)
     score = models.IntegerField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+class Credit(models.Model):
+    credit_id = models.CharField(max_length=30,primary_key=True)
+    character = models.CharField(max_length=50)
+    order = models.IntegerField()
+    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
+    people = models.ForeignKey(People,on_delete=models.CASCADE)
