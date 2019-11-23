@@ -31,12 +31,12 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control mb-3 text-small',
-        'placeholder': '사용자 이름'
+        'class': 'form-control mb-3 text-small customTextInput',
+        'placeholder': '아이디를 입력해주세요.'
         }), label='')
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control mb-5 text-small',
-        'placeholder': '비밀번호'
+        'class': 'form-control mb-5 text-small customTextInput',
+        'placeholder': '비밀번호를 입력해주세요.'
         }), label='')
     class Meta:
         model = get_user_model()

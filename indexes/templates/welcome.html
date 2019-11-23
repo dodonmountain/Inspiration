@@ -23,43 +23,7 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 5vw;
   }
-  button{
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; ;
-  background:#8000ff;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:60px;
-  font-size:1.6em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-}
-button:hover{
-  background:transparent;
-  color:#fff;
-}
-button:before,button:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #8000ff;
-  transition:400ms ease all;
-}
-button:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-button:hover:before,button:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
+
 </style>
 {% endblock css %}
 {% block body %}
@@ -93,7 +57,7 @@ button:hover:before,button:hover:after{
           <div class="text-center">
             <h1 class="welcome_liner">스몰데이터 기술이 꽃피워낸</h1>
             <h1 class="text-center">100µ% 정확도의 추천 시스템</h1>
-            <a href="{% url 'accounts:login' %}"><button class="mt-5">둘러보기</button></a>
+              <a href="{% url 'accounts:login' %}"><button class="mt-5">둘러보기</button></a>
           </div>
         </div>
       </div>
