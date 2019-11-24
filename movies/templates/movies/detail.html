@@ -2,143 +2,274 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}"> -->
+<style>
+body {
+  background: #1f1f1f;
+  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: white;
+}
+.posterBox {
+  height: 50vh;
+  border-radius: 50%;
+  background-size: stretch !important; 
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+.genreIndicator {
+  display: flexbox;
+  padding: 10px;
+  border-bottom-left-radius: 40%;
+  margin: 5px 1vw;
+  height: 50%;
+  box-shadow: seashell 0.2rem 0.2rem;
+  background-color: royalblue;
+  align-content: center;
+  justify-content: center;
+}
+.overview {
+  font-family: 'Noto Serif', serif;
+  text-indent: 1rem;
+  font-size: 1vw;
+}
+.director {
+  border-radius: 50%;
+  height: 9vw;
+  width: 9vw;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+}
+.movieTitle {
+  font-size: 2vw;
+}
+.castActor {
+  height: 25vh;
+  width: 12vh;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+}
+.castActor:hover {
+  box-shadow: inset 0 0 15px 15px #1f1f1f;
+}
+fieldset, label { margin: 0; padding: 0; }
+.score { 
+  border: none;
+  float: left;
+}
+
+.score > input { display: none; } 
+.score > label {
+    float: right;
+}
+.score > label:before { 
+  font-size: 2em; 
+  margin-bottom: .5rem;
+  display: inline-block;
+  font-size: 3vw;
+  padding: .3rem .2rem;
+  margin: 0;
+  cursor: pointer;
+  font-family: FontAwesome;
+  content: "\f005 ";
+}
+
+.score > .half:before { 
+  content: "\f089";
+  position: absolute;
+  padding-right: 0;
+}
+
+.score > label { 
+  color: grey;
+  float: right; 
+}
+
+.score > input:checked ~ label,
+.score:not(:checked) > label:hover,
+.score:not(:checked) > label:hover ~ label { color: rgb(255, 228, 73);  }
+.score > input:checked + label:hover,
+.score > input:checked ~ label:hover,
+.score > label:hover ~ input:checked ~ label,
+.score > input:checked ~ label:hover ~ label { color: rgb(255, 220, 24);  } 
+
+.review-button {
+  height:fit-content;
+  background-color: orange;
+}
+
+.myReview {
+  height: 2vh;
+  width: 100%;
+}
+.deleteButton {
+  height: 1.5vw;
+  font-size: 1vw;
+  text-align: start;
+  padding-left: 1.4vw;
+}
+.myReview > div {
+  font-size: 2vh;
+  width: 98vw;
+  padding: 0.5vh;
+  background: #3f3f3f;
+  overflow: hidden;
+}
+
+</style>
 {% endblock %}
 
 {% block body %}
-{% include '_navbar.html' %}
+{% include '../_navbar.html' %}
+<div class="container-fluid" style="margin-top: 10vh;">
+  <div class="row">
+    <div class="col-4 container">
+      <div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
+      <hr class="border-white">
+      <div class="row mx-auto justify-content-center align-content-center">
+        <h1 class="movieTitle">{{ movie.title }}</h1>
+      </div>
+      <div class="row justify-content-center">
+          <h4>{{ movie.runtime }} 분</h4>
+      </div>
+      <div class="row justify-content-center">
+          <form action="{% url 'movies:like' movie.pk %}" method="post">
+              {% csrf_token %}
+              {% if not movie.like_user or user not in movie.like_user.all %}
+              <button type="submit"><i class="fa fa-thumbs-up"></i> 좋아요</button>
+              {% else %}
+              <button type="submit"><i class="far fa-thumbs-up"></i> 좋아요</button>
+              {% endif %}
+            </form>
+          </div>
+        <div class="row justify-content-center">
+            <small>{{movie.like_user.count }} 명이 좋아합니다.</small>
+        </div>
+      <div class="row justify-content-center mt-2">
+          <p>{{ movie.tagline }}</p>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="row container-fluid">
+        <div class="col-4">
+            <h3 class="display-4">Genre :</h3>
+            <div class="row pl-5">
+                {% for genre in movie.genres.all %}
+                <div class="genreIndicator">
+                  {{ genre.name }}
+                </div>
+                {% endfor %}
+              </div>
+        </div>
+        <div class="col-8">
+            {% for people in movie.people.all %}
+            {% if people.job == 'Director' %}
+            <h3 class="display-4 text-center">Director : <small>{{ people.name }}</small></h3>
+            <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');"></div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+      </div>
 
-<div>
-  <h1> {{ movie.title}} </h1>
-  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" width=200px
-    alt="{{movie.title}}">
-  <p>{{movie.tagline}}</p>
-  <p>{{ movie.runtime }} 분</p>
-  <hr>
-  <h4>좋아요 : {{movie.like_user.count }}</h4>
-  <form action="{% url 'movies:like' movie.pk %}" method="post">
-    {% csrf_token %}
-    {% if not movie.like_user or user not in movie.like_user.all %}
-    <button type="submit">좋아요</button>
-    {% else %}
-    <button type="submit">좋아요취소</button>
-    {% endif %}
-  </form>
+      <div class="row p-5">
+        <h3 class="movieTitle">Overview</h3>
+        <p class="overview p-5">{{ movie.overview }}</p>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </div>
 </div>
-<h4>출연진</h4>
-  {% for people in movie.people.all %}
-    {% if people.job == 'Director' %}
-      <img src="https://image.tmdb.org/t/p/w200{{people.profile_path}}" alt="">
-      <p>{{people.name}}  </p>
+<div class="container" style="font-family: Noto serif serif;">
+    <h3 class="display-4 text-center">Casts</h3>
+    <div class="row">
+    {% for credit in credits %}
+    <a href="{% url 'movies:actor' credit.people.id %}" class="text-decoration-none">
+    <div class="castActor m-2" role="link" style="background-image: url('https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}');">
+    </div>
+    <div class="text-truncate text-white" style="width:12vh;">
+      <p class="text-center">{{ credit.character }}</p>
+      <p class="text-center">{{ credit.people.name }}</p>
+    </div>
+    </a>
+    {% endfor %}
+    </div>
+</div>
+<div class="container">
+    <h3 class="display-4 text-center" style="font-family: Noto serif serif;">Reviews</h3>
+    {% if user.is_authenticated %}
+    {% if review %}
+    <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
+      {% csrf_token %}
+      <div class="row justify-content-center">
+          {% include '_starFieldSet.html' %}
+          </div>
+          <div class="row justify-content-center">
+            <div class="input-group mb-3">
+                <input name="content" value="{{ review.content }}" type="text" class="form-control" placeholder="이 영화는 어떠셨나요?" aaria-describedby="button-review">
+                <div class="input-group-append">
+                  <button class="review-button" type="submit">리뷰 수정</button>
+                </div>
+              </div>
+            </form>
+          </div>
+    {% else %}
+      <form action="{% url 'movies:review' movie.pk %}" method="post">
+      {% csrf_token %}
+      <div class="row justify-content-center">
+      {% include '_starFieldSet.html' %}
+      </div>
+      <div class="row justify-content-center">
+        <div class="input-group mb-3">
+            <input name="content" type="text" class="form-control" placeholder="이 영화는 어떠셨나요?" aaria-describedby="button-review">
+            <div class="input-group-append">
+              <button class="review-button" type="submit">리뷰 등록</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    
     {% endif %}
-  {% endfor %}
-  <hr>
-  {% for credit in credits %}
-  <img src="https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}" alt="">
-  <p><a href="{% url 'movies:actor' credit.people.id %}">{{ credit.people.name }}</a> - {{ credit.character }}</p>
-    <hr>
-  {% endfor %}
-  <!-- {% for people in movie.people.all %}
-    {% if people.job == 'Director' %}
-    {{people}}
-    <p>Director : {{people.name}}  </p>
-
-    {% endif %}
-    {{people}}
-  <p>{{people.name}}  </p>
-  {% endfor %} -->
-<hr>
-<h3>장르 :
-  {% for genre in movie.genres.all %}
-  {{ genre.name }}
-  {% endfor %}
-</h3>
-<p>{{ movie.overview}}</p>
-
-{% if user.is_authenticated %}
-{% if review %}
-<form action="{% url 'movies:review_update' movie.pk review.pk %}"
-  method="post">
-  {% csrf_token %}
-  <fieldset class="score review_score_{{review.score}}">
-    <input type="radio" id="star10" name="score" value="10" /><label
-      class="full" for="star10" title="Awesome - 5 stars"></label>
-    <input type="radio" id="star9" name="score" value="9" /><label class="half"
-      for="star9" title="Pretty good - 4.5 stars"></label>
-    <input type="radio" id="star8" name="score" value="8" /><label class="full"
-      for="star8" title="Pretty good - 4 stars"></label>
-    <input type="radio" id="star7" name="score" value="7" /><label class="half"
-      for="star7" title="Meh - 3.5 stars"></label>
-    <input type="radio" id="star6" name="score" value="6" /><label class="full"
-      for="star6" title="Meh - 3 stars"></label>
-    <input type="radio" id="star5" name="score" value="5" /><label class="half"
-      for="star5" title="Kinda bad - 2.5 stars"></label>
-    <input type="radio" id="star4" name="score" value="4" /><label class="full"
-      for="star4" title="Kinda bad - 2 stars"></label>
-    <input type="radio" id="star3" name="score" value="3" /><label class="half"
-      for="star3" title="Meh - 1.5 stars"></label>
-    <input type="radio" id="star2" name="score" value="2" /><label class="full"
-      for="star2" title="Sucks big time - 1 star"></label>
-    <input type="radio" id="star1" name="score" value="1" /><label class="half"
-      for="star1" title="Sucks big time - 0.5 stars"></label>
-  </fieldset>
-  <input value="{{review.content}}" name="content" type="text">
-  <button type="submit">리뷰 수정</button>
-  {% else %}
-  <form action="{% url 'movies:review' movie.pk %}" method="post">
-    {% csrf_token %}
-    <fieldset class="score">
-      <input type="radio" id="star5" name="score" value="10" /><label
-        class="full" for="star5" title="Awesome - 5 stars"></label>
-      <input type="radio" id="star4half" name="score" value="9" /><label
-        class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-      <input type="radio" id="star4" name="score" value="8" /><label
-        class="full" for="star4" title="Pretty good - 4 stars"></label>
-      <input type="radio" id="star3half" name="score" value="7" /><label
-        class="half" for="star3half" title="Meh - 3.5 stars"></label>
-      <input type="radio" id="star3" name="score" value="6" /><label
-        class="full" for="star3" title="Meh - 3 stars"></label>
-      <input type="radio" id="star2half" name="score" value="5" /><label
-        class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-      <input type="radio" id="star2" name="score" value="4" /><label
-        class="full" for="star2" title="Kinda bad - 2 stars"></label>
-      <input type="radio" id="star1half" name="score" value="3" /><label
-        class="half" for="star1half" title="Meh - 1.5 stars"></label>
-      <input type="radio" id="star1" name="score" value="2" /><label
-        class="full" for="star1" title="Sucks big time - 1 star"></label>
-      <input type="radio" id="starhalf" name="score" value="1" /><label
-        class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-    </fieldset>
-    <input name="content" type="text">
-    <button type="submit">리뷰 등록</button>
-    {% endif %}
-  </form>
-  <hr>
-
   {% endif %}
-  <hr>
   {% if review %}
-  <h3>내 리뷰</h3>
-  <span> {{ user }} - < <span id="score">{{review.score }}</span> 점> -
-  {{review.content}} </span>
-  <form style="display:inline"
-    action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+  <form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
     {% csrf_token %}
-    <button type="submit">삭제</button>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <span class="badge badge-danger badge-pill mx-2"  id="score">{{ review.score }}점</span>
+          <span class="mr-3 pr-3 border-right font-weight-bolder text-warning">{{ user.first_name }}</span>
+          <small>{{ review.content }}</small>
+        </div>
+        <button class="deleteButton col-1" type="submit">삭제</button>
+      </div>
+    </div>
   </form>
   {% endif %}
-  <h3>전체 리뷰</h3>
   {% for r in movie.review_set.all %}
   {% if r.user.id != review.user_id %}
-  <p>{{ r.user.username }} - <{{ r.score }}점> {{ r.content }}</p>
+  <form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+      {% csrf_token %}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <span class="badge badge-danger badge-pill mx-2"  id="score">{{ r.score }}점</span>
+            <span class="mr-3 pr-3 border-right font-weight-bolder">{{ r.user.first_name }}</span>
+            <small>{{ r.content }}</small>
+          </div>
+        </div>
+      </div>
+    </form>
   {% endif %}
   {% endfor %}
   {% endblock %}
 
-  {% block script %}
-    <script>
-      const score = document.querySelector('#score').innerText
-      const my_star = document.querySelector('#star'+score)
-      my_star.checked = true
-    </script>
-  {% endblock %}
+{% block script %}
+  <script>
+    const score = document.querySelector('#score').innerText
+    const my_star = document.querySelector('#star'+score)
+    my_star.checked = true
+  </script>
+{% endblock %}
