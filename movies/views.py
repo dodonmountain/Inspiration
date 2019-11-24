@@ -209,6 +209,7 @@ def search(request):
         "title_movies" : title_movies,
         "overview_movies" : overview_movies,
         'actors' : actors,
+        'query' : query,
     }
     return render(request,'movies/search.html',context)
 

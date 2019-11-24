@@ -23,9 +23,9 @@ nav {
 }
 
 button {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Arial Narrow Bold', sans-serif;
     ;
-    background: #8000ff;
+    background: royalblue;
     color: #fff;
     border: none;
     position: relative;
@@ -38,7 +38,7 @@ button {
 }
 
 button:hover {
-    background: transparent;
+    background: initial;
     color: #fff;
 }
 
@@ -50,7 +50,7 @@ button:after {
     right: 0;
     height: 2px;
     width: 0;
-    background: #8000ff;
+    background: currentColor;
     transition: 400ms ease all;
 }
 
@@ -59,6 +59,7 @@ button:after {
     top: inherit;
     left: 0;
     bottom: 0;
+    background: currentColor;
 }
 
 button:hover:before,
@@ -66,7 +67,23 @@ button:hover:after {
     width: 100%;
     transition: 800ms ease all;
 }
-
+.searchField {
+    width: 10vw;
+}
+.searchField:focus {
+    animation: searchExpand 300ms ease-in;
+    width: 50vw;
+}
+@keyframes searchExpand {
+    from {width: 10vw}
+    to{width: 50vw}
+}
+.navbar {
+    font-family: 'Arial Narrow Bold', sans-serif;
+}
+.nav-link:hover{
+    color: orange !important;
+}
 </style>
 {% block css %}{% endblock css %}
 </head>

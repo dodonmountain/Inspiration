@@ -1,25 +1,138 @@
 {% extends 'base.html' %}
 {% block css%}
+<style>
+	body {
+		background: #1f1f1f;
+		color: white;
+	}
+	button {
+		height: 12vh;
+	}
+	.titleButton {
+		background-color: seagreen;
+	}
+	.overviewButton {
+		background-color: slateblue;
+		float: right;
+	}
+	.actorButton {
+		background-color: royalblue;
+	}
+	.posterBox {
+		height: 30vh;
+		background-position: center bottom !important;
+		background-repeat: no-repeat !important;
+	}
+	.posterBox:hover{
+		box-shadow: 0 0 50px 20px black;
+		background-color: blanchedalmond !important;
+	}
+	.query {
+		color: white;
+		text-shadow: orange 0.2rem 0.1rem;
+	}
+</style>
 {% endblock %}
 
 {% block body %}
-{% include 'movie_navbar.html' %}
-<h1>제목일치</h1>
-{% for movie in title_movies %}
-<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a>
-<hr>
-<p>{{movie.overview}}</p>
-{% endfor %}
-<h1> 내용일치</h1>
-{% for movie in overview_movies %}
-<a href="{% url 'movies:detail' movie.id %}">{{movie.title}}</a>
-<hr>
-<p>{{movie.overview}}</p>
-{% endfor %}
-
-<h1> 배우 </h1>
-{% for actor in actors %}
-    <a href="{% url 'movies:actor' actor.id %}"><p>{{actor.name }}</p></a>
-{% endfor %}
-
-{% endblock %}
+{% include '_navbar.html' %}
+<div class="conainer mt-5 p-5 mx-5">
+	<h1>"{{ query }}" 에 대한 검색결과입니다.</h1>
+	<h4 class="ml-5 text-muted">띄어쓰기를 꼭 해주셔야해요!</h4>
+	<hr>
+	<div class="accordion bg-transparent" id="accordionExample">
+		<div class="card bg-transparent">
+			<div class="card-header" id="headingOne">
+				<h3 class="mb-0">
+					<button class="titleButton" type="button bg-danger" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+						제목에 <span class="query">"{{ query }}"</span>가 들어가는 영화 목록
+					</button>
+				</h3>
+			</div>
+			
+			<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+				<div class="card-body">
+					{% if title_movies %}
+					{% for movie in title_movies %}
+					<div class="row p-5">
+						<div class="col-6 text-center">
+							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
+								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
+								<h3>{{ movie.title }}</h3>
+							</a>
+						</div>
+						<div class="col-6">
+							<p>{{ movie.overview }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{% else %}
+					<h2>검색 결과가 없습니다.</h2>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="card bg-transparent">
+			<div class="card-header" id="headingTwo">
+				<h3 class="mb-0">
+					<button class="overviewButton" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						영화 소개에 <span class="query">"{{ query }}"</span>가 들어가는 영화 목록
+					</button>
+				</h3>
+			</div>
+			
+			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+				<div class="card-body">
+					{% if overview_movies %}
+					{% for movie in overview_movies %}
+					<div class="row p-5">
+						<div class="col-6 text-center">
+							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
+								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
+								<h3>{{ movie.title }}</h3>
+							</a>
+						</div>
+						<div class="col-6">
+							<p>{{ movie.overview }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{% else %}
+					<h2>검색 결과가 없습니다.</h2>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="card bg-transparent">
+			<div class="card-header" id="headingThree">
+				<h3 class="mb-0">
+					<button class="actorButton" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						이름에 <span class="query">"{{ query }}"</span>가 들어가는 배우 목록
+					</button>
+				</h3>
+			</div>
+			
+			<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+				<div class="card-body">
+					{% if actors %}
+					<div class="row p-5">
+						{% for actor in actors %}
+						<div class="col-3 text-center" >
+							<a href="{% url 'movies:actor' actor.id %}" class="text-decoration-none text-white font-weight-bold">
+								<div style="background: url('https://image.tmdb.org/t/p/w200{{actor.profile_path}}');" class="posterBox"></div>
+								<h3>{{ actor.name }}</h3>
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+					{% else %}
+					<h2>검색 결과가 없습니다.</h2>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	{% endblock %}
