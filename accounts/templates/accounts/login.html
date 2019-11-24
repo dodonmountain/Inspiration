@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
+{% load socialaccount %}
 <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
 {% endblock css %}
 
@@ -30,6 +31,8 @@
           <div class="text-right text-muted copyright">
             copyright (c) 2019. SSAFY DJ-py-02-01
           </div>
+          <a href="{% provider_login_url 'kakao' %}"><img src="{% static 'img/kakao_login.png' %}" style="height: 40px;"></a>
+          <a href="{% provider_login_url 'google' %}"><img src="{% static 'img/google_login.png' %}" style="height: 44px;"></a>
         </div>
       </div>
     </form>
