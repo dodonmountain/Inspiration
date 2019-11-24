@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<h1 class="opener">INSPIRATION</h1>
 {% include '_navbar.html' %}
   {% if user.is_authenticated %}
   <div id='car' class="carousel fadein mt-5">
@@ -38,25 +39,23 @@
 <script>
   const lst = document.querySelector('#car')
   const app = document.querySelector('#app')
-  const logoic = document.querySelector('#logoic')
+  const navbar = document.querySelector('#navBar')
   const rand = document.querySelectorAll('.rand')
   let last_known_scroll_position = 0;
   let flag = false;
   window.onload = function(){
-    // logoic.classList.add('shine')
     for (let r in rand){
        rand[r].innerText = (5+(Math.random() * 5)).toFixed(2)
      // rand[r].innerText = "{{ movie.vote_average }}"
     }
     
-    
+    navbar.hidden = true
     lst.hidden = true
     setTimeout(function(){
-      lst.hidden =false
-    }, 3250);
-    setTimeout(function(){
-      logoic.classList.add('shine')
-    },5000)
+      navbar.classList.add('fadein')
+      lst.hidden = false
+      navbar.hidden = false
+    }, 0);
     
   };
   

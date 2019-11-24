@@ -1,11 +1,11 @@
-  <nav class="navbar-expand-xl navbar fixed-top">
+  <nav id="navBar" class="navbar-expand-xl navbar fixed-top">
     <!-- 로고 -->
     {% if user.is_authenticated %}
-    <h1 id="logoic" class='logoic text-white' style="font-family: 'Permanent Marker', cursive;"><a style="text-decoration: none;" href="{% url 'indexes:index' %}">
+    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;"><a style="text-decoration: none;" href="{% url 'indexes:index' %}">
         Inspiration
     </a></h1>
     {% else %}
-    <h1 id="logoic" class='logoic text-white' style="font-family: 'Permanent Marker', cursive;">
+    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
         Inspiration
     </h1>
     {% endif %}

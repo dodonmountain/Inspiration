@@ -11,8 +11,7 @@ body {
 }
 .posterBox {
   height: 50vh;
-  border-radius: 50%;
-  background-size: stretch !important; 
+  background-size: contain !important; 
   background-position: center center !important;
   background-repeat: no-repeat !important;
 }
@@ -26,6 +25,7 @@ body {
   background-color: royalblue;
   align-content: center;
   justify-content: center;
+  text-shadow: black 1px 1px;
 }
 .overview {
   font-family: 'Noto Serif', serif;
@@ -115,6 +115,7 @@ fieldset, label { margin: 0; padding: 0; }
   padding: 0.5vh;
   background: #3f3f3f;
   overflow: hidden;
+  color: 
 }
 
 </style>
@@ -137,9 +138,9 @@ fieldset, label { margin: 0; padding: 0; }
           <form action="{% url 'movies:like' movie.pk %}" method="post">
               {% csrf_token %}
               {% if not movie.like_user or user not in movie.like_user.all %}
-              <button type="submit"><i class="fa fa-thumbs-up"></i> 좋아요</button>
+              <button type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
               {% else %}
-              <button type="submit"><i class="far fa-thumbs-up"></i> 좋아요</button>
+              <button type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
               {% endif %}
             </form>
           </div>
@@ -268,6 +269,15 @@ fieldset, label { margin: 0; padding: 0; }
 
 {% block script %}
   <script>
+
+    let colors = ['royalblue', 'orange', 'darkviolet', 'hotpink', 'tomato', 'crimson', 'khaki', 'seagreen']
+    const indiset = document.querySelectorAll('.genreIndicator')
+    window.onload = function(){
+      for (tag in indiset){
+        let random_color = colors[Math.floor(Math.random() * colors.length)]
+        indiset[tag].style.backgroundColor = random_color;
+      }
+    }
     const score = document.querySelector('#score').innerText
     const my_star = document.querySelector('#star'+score)
     my_star.checked = true
