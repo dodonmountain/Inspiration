@@ -6,7 +6,7 @@
 {% include 'movie_navbar.html' %}
 <div class="container">
 <h2>{{ userinfo }} 님의 정보 </h2>
- <hr>
+<hr>
 <h3>영화</h3>
   {% for like_movie in userinfo.like_movies.all %}
     <a><a href="{% url 'movies:detail' like_movie.id %}">{{ like_movie.title }}</p></a>

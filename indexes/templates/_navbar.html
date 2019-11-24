@@ -1,7 +1,7 @@
   <nav id="navBar" class="navbar-expand-xl navbar fixed-top">
     <!-- 로고 -->
     {% if user.is_authenticated %}
-    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;"><a style="text-decoration: none;" href="{% url 'indexes:index' %}">
+    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;"><a style="opacity:0.8;text-shadow:1px 1px black;color:white;text-decoration: none;" href="{% url 'indexes:index' %}">
         Inspiration
     </a></h1>
     {% else %}

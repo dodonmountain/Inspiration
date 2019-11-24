@@ -29,8 +29,11 @@ body {
 }
 .overview {
   font-family: 'Noto Serif', serif;
-  text-indent: 1rem;
-  font-size: 1vw;
+  text-indent: 2rem;
+  font-size: 1.2rem;
+  background-color: #222222;
+  box-shadow: 0.2rem 0.2rem white;
+  border-top: 3px dotted white;
 }
 .director {
   border-radius: 50%;
@@ -115,15 +118,18 @@ fieldset, label { margin: 0; padding: 0; }
   padding: 0.5vh;
   background: #3f3f3f;
   overflow: hidden;
-  color: 
 }
-
+.likeyButton {
+  width: 12vw;
+  padding: 0;
+  height: 5vh;
+}
 </style>
 {% endblock %}
 
 {% block body %}
 {% include '../_navbar.html' %}
-<div class="container-fluid" style="margin-top: 10vh;">
+<div class="container-fluid p-5" style="margin-top: 10vh;">
   <div class="row">
     <div class="col-4 container">
       <div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
@@ -134,27 +140,24 @@ fieldset, label { margin: 0; padding: 0; }
       <div class="row justify-content-center">
           <h4>{{ movie.runtime }} 분</h4>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-3">
           <form action="{% url 'movies:like' movie.pk %}" method="post">
               {% csrf_token %}
               {% if not movie.like_user or user not in movie.like_user.all %}
-              <button type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
+              <button class="likeyButton" type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
               {% else %}
-              <button type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
+              <button class="likeyButton" type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
               {% endif %}
             </form>
           </div>
         <div class="row justify-content-center">
             <small>{{movie.like_user.count }} 명이 좋아합니다.</small>
         </div>
-      <div class="row justify-content-center mt-2">
-          <p>{{ movie.tagline }}</p>
-      </div>
     </div>
     <div class="col-8">
       <div class="row container-fluid">
         <div class="col-4">
-            <h3 class="display-4">Genre :</h3>
+            <h3>Genre Tags:</h3>
             <div class="row pl-5">
                 {% for genre in movie.genres.all %}
                 <div class="genreIndicator">
@@ -166,17 +169,20 @@ fieldset, label { margin: 0; padding: 0; }
         <div class="col-8">
             {% for people in movie.people.all %}
             {% if people.job == 'Director' %}
-            <h3 class="display-4 text-center">Director : <small>{{ people.name }}</small></h3>
+            <h3 class="text-center">Director</h3>
             <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');"></div>
+            <h3 class="text-center mt-5">{{ people.name }}</h3>
             {% endif %}
             {% endfor %}
         </div>
         
       </div>
 
-      <div class="row p-5">
-        <h3 class="movieTitle">Overview</h3>
-        <p class="overview p-5">{{ movie.overview }}</p>
+      <div class="row p-5 ">
+        <h3 class="movieTitle blockquote">Overview
+        <footer class="blockquote-footer">{{ movie.tagline }}</footer>        
+        </h3>
+        <p class="overview p-4">{{ movie.overview }}</p>
       </div>
       <div class="row">
       </div>
