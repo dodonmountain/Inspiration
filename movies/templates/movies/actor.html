@@ -2,17 +2,66 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}">
+<style>
+  body {
+    background-color: #1f1f1f;
+    color: white;
+  }
+
+  .castActor {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 70vh;
+    border-radius: 2rem;
+  }
+
+  .posterBox {
+    height: 50vh;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+
+</style>
 {% endblock %}
 
 {% block body %}
-{% include 'movie_navbar.html' %}
-<h1>{{ people.name }}</h1>
-<hr>
-{% for credit in people.credit_set.all %}
-    <a href="{% url 'movies:detail' credit.movie.id %}">{{ credit.movie.title }}</a> - 
-    {{ credit.character }}
-<hr>
-{% endfor %}
+{% include '_navbar.html' %}
+<div class="container mt-5">
 
-{% endblock %}
+  <h1 class="text-white p-5">{{ people.name }}</h1>
+  <div class="row">
+    <div class="col-6">
+      <div class="castActor m-2" role="link"
+        style="background-image: url('https://image.tmdb.org/t/p/w500{{people.profile_path}}');">
+      </div>
+    </div>
+    <div class="col-6">
+      <h2>Filmography</h2>
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner">
+						<div class="carousel-item active h-50">
+							<h2 style="height:50vh;padding-top:23vh" class="text-center">{{ people.name }}의 작품 목록</h2>
+						</div>
+            {% for credit in people.credit_set.all %}
+            <div class="carousel-item">
+							<a href="{% url 'movies:detail' credit.movie.id %}">
+              <img src="https://image.tmdb.org/t/p/w500{{ credit.movie.poster_path }}" class="d-block w-50 mx-auto">
+							</a>
+							<h5 class="text-center mt-3">{{ credit.character }} 역</h5>
+            </div>
+            {% endfor %}
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+
+          <a class="carousel-control-next" href="#carouselExampleControls"
+            role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+			</div>
+    </div>
+    {% endblock %}

@@ -1,15 +1,32 @@
 {% extends 'base.html' %}
 {% block css %}
+<style>
+body {
+  background-color: #1f1f1f;
+  color: #fff
+}
+.movieSteel {
+  border-radius: 50%;
+  height: 9vw;
+  width: 9vw;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+}
+</style>
 {% endblock %}
 
 {% block body %}
-{% include 'movie_navbar.html' %}
-<div class="container">
-<h2>{{ userinfo }} 님의 정보 </h2>
-<hr>
+{% include '_navbar.html' %}
+<div class="container mt-5 p-5">
+<div class="row text-white">
+<h1 class="mt-5">{{ userinfo.first_name }} 님의 관심사</h1>
+</div>
 <h3>영화</h3>
   {% for like_movie in userinfo.like_movies.all %}
-    <a><a href="{% url 'movies:detail' like_movie.id %}">{{ like_movie.title }}</p></a>
+    <a href="{% url 'movies:detail' like_movie.id %}">{{ like_movie.title }}
+    <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}')"></div>
+    </a>
   {% endfor %}
   
 <hr>
@@ -25,7 +42,7 @@
 <p><a href="{% url 'movies:detail' review.movie.id %}">{{ review.movie.title }}</a> - {{review.score}} 점 - {{ review.content }}</p>
 {% endfor %}
 <hr>
-<h4>팔로잉</h4>
+{% comment %} <h4>팔로잉</h4>
 {{ userinfo.followings.all.count }}
 {% for user in userinfo.followings.all %}
 {{ user }}
@@ -34,6 +51,6 @@
 {{ userinfo.followers.all.count }}
 {% for user in userinfo.followers.all %}
 {{ user }}
-{% endfor %}
+{% endfor %} {% endcomment %}
 </div>
 {% endblock %}
