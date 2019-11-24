@@ -35,6 +35,7 @@ class Movie(models.Model):
     like_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies',blank=True)
     people = models.ManyToManyField(People,blank=True)
 
+
 class Review(models.Model):
     content = models.CharField(max_length=100)
     score = models.IntegerField()
@@ -47,3 +48,12 @@ class Credit(models.Model):
     order = models.IntegerField()
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
     people = models.ForeignKey(People,on_delete=models.CASCADE)
+
+class Trailer(models.Model):
+    key = models.CharField(max_length=50,primary_key=True)
+    name = models.CharField(max_length=100)
+    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
+
+class MovieImage(models.Model):
+    file_path = models.CharField(max_length=140,primary_key=True)
+    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)

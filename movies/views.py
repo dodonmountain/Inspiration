@@ -92,7 +92,6 @@ def movie_save(id):
         movie.genres.add(genre)
     print(movie.title, '등록완료')
 
-
 def movies_data(page_num): # popular,top_rated 중에서 페이지에 있는 영화 id값 확인
     movies_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
     response = requests.get(movies_url).json().get('results')
@@ -126,24 +125,7 @@ def name_change(en):
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
-    # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&page=1&language=ko-KR'
-    # response = requests.get(url).json()
-    # movies = response.get('results')
-    # url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page=3&region=KR'
-    # response = requests.get(url).json().get('results')
-    # print(requests.get(url))
-    # for r in response:
-    #     movie = Movie(**r)
-    #     movie.save()
-    # serialized_queryset = serializers.serialize('json', [results])
-    # print(serialized_queryset)
-    # tmdb = TMDb()
-    # tmdb.api_key = 'f115f7077bf79f6f7fd3227c5ba7f281'
-    # tmdb.language = 'ko'
-    # movies = film()
-    # movie = movies.search('겨울왕국')
-    # recommendations = movies.recommendations(movie_id=496243)
-    # embed()
+
     return render(request,'movies/index.html',{
         'movies':movies
     })
