@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Movie, Review,Genre , People, Credit
+from .models import Movie, Review,Genre , People, Credit, Trailer, MovieImage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import requests
@@ -8,7 +8,7 @@ import pprint
 
 def translate(q): # 파파고 번역
     request_url = "https://openapi.naver.com/v1/papago/n2mt"
-    headers= {"X-Naver-Client-Id": "1mql_fSo30DYAieQyV_o", "X-Naver-Client-Secret":"sXv8IqV5eH"}
+    headers= {"X-Naver-Client-Id": "fluVcHalFaa3gvtccvyu", "X-Naver-Client-Secret":"5y_p9Q86kf"}
     params = {"source": "en", "target": "ko", "text": q}
     response = requests.post(request_url, headers=headers, data=params)
     result = response.json()
@@ -60,55 +60,53 @@ def credit_save(id):
                     movie = Movie.objects.get(pk=id),
                     people = People.objects.get(id=cast['id'])
                 )
-                print(actor.movie, actor.people)
+                print(actor.people.name)
             except:
                 print('movie',id)
                 print('people',cast['id'])
 ## 영화 저장 , 장르 - 영화 MTM
 def movie_save(id):
-    detail_url = f'https://api.themoviedb.org/3/movie/{id}?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
-    detail = requests.get(detail_url).json()
-    movie = Movie.objects.create(
-        adult = detail.get('adult'),
-        backdrop_path = detail.get('backdrop_path'),
-        budget = detail.get('budget'),
-        id = detail.get('id'),
-        original_language = detail.get('original_language'),
-        overview = detail.get('overview'),
-        popularity = detail.get('popularity'),
-        poster_path = detail.get('poster_path'),
-        release_date = detail.get('release_date'),
-        revenue = detail.get('revenue'),
-        runtime = detail.get('runtime'),
-        status = detail.get('status'),
-        tagline = detail.get('tagline'),
-        title = detail.get('title'),
-        video = detail.get('video'),
-        vote_average = detail.get('vote_average'),
-        vote_count = detail.get('vote_count')
-    )
-    for r in detail.get('genres'):
-        genre = Genre.objects.get(pk=r.get('id'))
-        movie.genres.add(genre)
-    print(movie.title, '등록완료')
+    if not Movie.objects.filter(pk=id):
+        detail_url = f'https://api.themoviedb.org/3/movie/{id}?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
+        detail = requests.get(detail_url).json()
+        movie = Movie.objects.create(
+            adult = detail.get('adult'),
+            backdrop_path = detail.get('backdrop_path'),
+            budget = detail.get('budget'),
+            id = detail.get('id'),
+            original_language = detail.get('original_language'),
+            overview = detail.get('overview'),
+            popularity = detail.get('popularity'),
+            poster_path = detail.get('poster_path'),
+            release_date = detail.get('release_date'),
+            revenue = detail.get('revenue'),
+            runtime = detail.get('runtime'),
+            status = detail.get('status'),
+            tagline = detail.get('tagline'),
+            title = detail.get('title'),
+            video = detail.get('video'),
+            vote_average = detail.get('vote_average'),
+            vote_count = detail.get('vote_count')
+        )
+        for r in detail.get('genres'):
+            genre = Genre.objects.get(pk=r.get('id'))
+            movie.genres.add(genre)
+        print(movie.title, '등록완료')
 
+# f115f7077bf79f6f7fd3227c5ba7f281
 def movies_data(page_num): # popular,top_rated 중에서 페이지에 있는 영화 id값 확인
-    movies_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
+    # movies_url = f'https://api.themoviedb.org/3/movie/top_rated?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&page={page_num}&region=KR'
+    movies_url = f'https://api.themoviedb.org/3/discover/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&sort_by=popularity.desc&page={page_num}&vote_count.gte=10&with_original_language=ko'
     response = requests.get(movies_url).json().get('results')
     print('총 ' ,len(response) , '개')
     tmp = 0
     for r in response:
         id = r.get('id')
-        if not Credit.objects.filter(movie_id=id):
-            credit_save(id)
-        # movies = Movie.objects.filter(pk=id)
-        # if not movies:
-        #     tmp += 1
-        #     movie_save(id)
-        #     credit_save(id)
-        #     # people_save(id)
-        # else:
-        #     print(movies[0].title)        
+        movie_save(id)
+        image_save(id)
+        trailer_save(id)
+        people_save(id)
+        credit_save(id)
     print('등록 ',tmp , '개')
 
 def name_change(en):
@@ -122,10 +120,36 @@ def name_change(en):
         print(en)
         pass
 
+def trailer_save(id):
+    if not Trailer.objects.filter(movie_id=id):
+        trailers_url = f'https://api.themoviedb.org/3/movie/{id}/videos?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
+        trailers = requests.get(trailers_url).json().get('results')
+        for trailer in trailers:
+            if trailer['site'] =='YouTube' and trailer['type'] == 'Trailer':
+                Trailer.objects.create(
+                    key = trailer['key'],
+                    name = trailer['name'],
+                    movie_id = id
+                )
+
+def image_save(id):
+    if not MovieImage.objects.filter(movie_id=id):
+        images_url = f'https://api.themoviedb.org/3/movie/{id}/images?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&include_image_language=ko'
+        posters = requests.get(images_url).json().get('posters')
+        try:
+            for poster in posters:
+                MovieImage.objects.create(
+                    file_path = poster['file_path'],
+                    movie_id = id
+                )
+        except:
+            pass
+
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
-
+    # for i in range(15,18):
+    #     movies_data(i)
     return render(request,'movies/index.html',{
         'movies':movies
     })
@@ -202,3 +226,18 @@ def actor(request,id):
         'people' : people
     }
     return render(request,'movies/actor.html',context)
+
+def movie_create(request,id):
+    if not Movie.objects.filter(pk=id):
+        movie_save(id)
+    image_save(id)
+    trailer_save(id)
+    people_save(id)
+    credit_save(id)
+    return redirect('movies:detail',id)
+
+def name_change(request,people_id):
+    people = get_object_or_404(People, pk=people_id)
+    people.name = request.GET.get('name')
+    people.save()
+    return redirect('movies:actor', people_id )
