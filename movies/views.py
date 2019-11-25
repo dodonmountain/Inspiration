@@ -3,8 +3,8 @@ from .models import Movie, Review,Genre , People, Credit, Trailer, MovieImage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import requests
-from django.core import serializers
-import pprint
+import numpy as np
+from accounts.models import User
 
 def translate(q): # 파파고 번역
     request_url = "https://openapi.naver.com/v1/papago/n2mt"
@@ -154,7 +154,6 @@ def index(request):
         'movies':movies
     })
 
-
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
@@ -206,14 +205,16 @@ def like(request,movie_pk):
 
 def search(request):
     query = request.GET.get('q')
-    title_movies = Movie.objects.filter(title__contains=query)
-
+    # title_movies = Movie.objects.filter(title__contains=query)
+    search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
+    title_movies = requests.get(search_url).json().get('results')
+    
     asdf_movies = Movie.objects.filter(overview__contains=query)
-    overview_movies = asdf_movies.difference(title_movies)
+    # overview_movies = asdf_movies.difference(title_movies)
     actors = People.objects.filter(name__contains=query)
     context = {
         "title_movies" : title_movies,
-        "overview_movies" : overview_movies,
+        "overview_movies" : asdf_movies,
         'actors' : actors,
         'query' : query,
     }
@@ -227,8 +228,9 @@ def actor(request,id):
     }
     return render(request,'movies/actor.html',context)
 
-def movie_create(request,id):
+def create(request,id):
     if not Movie.objects.filter(pk=id):
+        print('없')
         movie_save(id)
     image_save(id)
     trailer_save(id)
@@ -241,3 +243,33 @@ def name_change(request,people_id):
     people.name = request.GET.get('name')
     people.save()
     return redirect('movies:actor', people_id )
+
+def genres(request):
+    genres = Genre.objects.all()
+    return render(request, 'movies/genres.html',{'genres':genres})
+
+def genre_detail(request, genre_id):
+    genre = get_object_or_404(Genre, pk=genre_id)
+    count = User.objects.filter(username__contains=genre.name)
+    return render(request,'movies/genre_detail.html', {'genre':genre,'count':count})
+
+def make_fake(request,genre_id):
+    genre = get_object_or_404(Genre,pk=genre_id)
+    count = User.objects.filter(username__contains=genre.name).count()
+    u = User.objects.create(email=f'{genre.name}{count+1}@inspiration.com',
+        username=f'{genre.name}{count+1}',
+        password='password'
+    )
+    movies = list(genre.genre_movies.all())
+    for movie in np.random.choice(movies,min(30,len(movies)//2)):
+        s = np.random.normal(movie.vote_average, 1)
+        if s > 10:
+            s = 10
+        elif s < 0:
+            s = 0 - s
+        Review.objects.create(
+            score = round(s),
+            movie_id = movie.pk,
+            user_id = u.id
+        )
+    return redirect('movies:genre_detail',genre_id)

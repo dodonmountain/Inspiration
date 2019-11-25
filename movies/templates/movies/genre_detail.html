@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<br>
+    {{ genre.name }} {{count.count}}
+    <a href="{% url 'movies:genres' %}">모든 장르</a>
+    <a href="{% url 'movies:make_fake' genre.id %}">만들기</a>
+    <hr>
+    {% for movie in genre.genre_movies.all %}
+    <p>{{ movie.title }}</p>
+    <br>
+    {% endfor %}
+</body>
+</html>
