@@ -4,333 +4,447 @@
 {% block css %}
 <!-- <link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}"> -->
 <style>
-body {
-  background: #1f1f1f;
-  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  color: white;
-}
+    body {
+        background: #141414;
+        font-family: 'Arial Narrow Bold', sans-serif;
+        color: white;
+    }
 
-.posterBox {
-  height: 50vh;
-  background-size: contain !important; 
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
-}
-.genreIndicator {
-  display: flexbox;
-  padding: 10px;
-  border-bottom-right-radius: 40%;
-  border-top-right-radius: 40%;
-  margin: 5px 1vw;
-  height: 50%;
-  box-shadow: seashell 0.2rem 0.2rem;
-  background-color: transparent;
-  align-content: center;
-  justify-content: center;
-  text-shadow: black 1px 1px;
-}
-.overview {
-  font-family: 'Noto Serif', serif;
-  text-indent: 2rem;
-  font-size: 1.2rem;
-  background-color: #222222;
-  box-shadow: 0.2rem 0.2rem white;
-  border-top: 3px dotted white;
-}
-.director {
-  border-radius: 50%;
-  height: 9vw;
-  width: 9vw;
-  margin: 0;
-  background-size: cover;
-  background-position: center;
-}
-.movieTitle {
-  font-size: 2vw;
-}
-.castActor {
-  height: 25vh;
-  width: 12vh;
-  margin: 0;
-  background-size: cover;
-  background-position: center;
-}
-.castActor:hover {
-  box-shadow: inset 0 0 15px 15px #1f1f1f;
-}
-fieldset, label { margin: 0; padding: 0; }
-.score { 
-  border: none;
-  float: left;
-}
+    .blockquote-footer {
+        font-family: 'Noto Serif KR', serif;
+    }
 
-.score > input { display: none; } 
-.score > label {
-    float: right;
-}
-.score > label:before { 
-  font-size: 2em; 
-  margin-bottom: .5rem;
-  display: inline-block;
-  font-size: 3vw;
-  padding: .3rem .2rem;
-  margin: 0;
-  cursor: pointer;
-  font-family: FontAwesome;
-  content: "\f005 ";
-}
+    .posterBox {
+        height: 58vh !important;
+        background-size: contain !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+    }
 
-.score > .half:before { 
-  content: "\f089";
-  position: absolute;
-  padding-right: 0;
-}
+    .genreIndicator {
+        display: flexbox;
+        padding: 10px;
+        border-bottom-right-radius: 40%;
+        border-top-right-radius: 40%;
+        margin: 5px 1vw;
+        height: 50%;
+        box-shadow: seashell 0.2rem 0.2rem;
+        background-color: transparent;
+        align-content: center;
+        justify-content: center;
+        text-shadow: black 1px 1px;
+    }
 
-.score > label { 
-  color: grey;
-  float: right; 
-}
+    .overview {
+        font-weight: 200;
+        text-indent: 2rem;
+        font-size: 1.2rem;
+        background-color: #222222;
+        box-shadow: 0.2rem 0.2rem white;
+        border-top: 3px dotted white;
+    }
 
-.score > input:checked ~ label,
-.score:not(:checked) > label:hover,
-.score:not(:checked) > label:hover ~ label { color: rgb(255, 228, 73);  }
-.score > input:checked + label:hover,
-.score > input:checked ~ label:hover,
-.score > label:hover ~ input:checked ~ label,
-.score > input:checked ~ label:hover ~ label { color: rgb(255, 220, 24);  } 
+    .director {
+        border-radius: 50%;
+        height: 9vw;
+        width: 9vw;
+        margin: 0;
+        background-size: cover;
+        background-position: center;
+    }
 
-.review-button {
-  height:fit-content;
-  background-color: orange;
-  padding:0 1rem;
-}
+    .movieTitle {
+        font-size: 2vw;
+    }
 
-.myReview {
-  height: 2vh;
-  width: 100%;
-}
-.deleteButton {
-  height: 1.5vw;
-  font-size: 1vw;
-  text-align: start;
-  padding-left: 1.4vw;
-}
-.myReview > div {
-  font-size: 2vh;
-  width: 98vw;
-  padding: 0.5vh;
-  background: #3f3f3f;
-  overflow: hidden;
-}
-.likeyButton {
-  width: 12vw;
-  padding: 0;
-  height: 5vh;
-}
-#myBtn {
-  display: none;
-  background-color: crimson;
-  border-radius: 20%;  
-  position: fixed;
-  bottom: 20px; 
-  right: 30px; 
-  z-index: 99;
-  cursor: pointer;
-  padding: 5px 10px;
-  font-size: 2rem;
-}
+    .castActor {
+        height: 25vh;
+        width: 12vh;
+        margin: 0;
+        background-size: cover;
+        background-position: center;
+    }
 
-#myBtn:hover {
-  background-color: #fff;
-  color:black;
-}
+    .castActor:hover {
+        box-shadow: inset 0 0 15px 15px #1f1f1f;
+    }
 
-.reviewInput {
-  margin-left: 17vw;  
-  width: 35vw;
-  border-radius: 0;
-}
+    fieldset,
+    label {
+        margin: 0;
+        padding: 0;
+    }
 
+    .score {
+        border: none;
+        float: left;
+    }
+
+    .score>input {
+        display: none;
+    }
+
+    .score>label {
+        float: right;
+    }
+
+    .score>label:before {
+        font-size: 2em;
+        margin-bottom: .5rem;
+        display: inline-block;
+        font-size: 3vw;
+        padding: .3rem .2rem;
+        margin: 0;
+        cursor: pointer;
+        font-family: FontAwesome;
+        content: "\f005 ";
+    }
+
+    .score>.half:before {
+        content: "\f089";
+        position: absolute;
+        padding-right: 0;
+    }
+
+    .score>label {
+        color: grey;
+        float: right;
+    }
+
+    .score>input:checked~label,
+    .score:not(:checked)>label:hover,
+    .score:not(:checked)>label:hover~label {
+        color: rgb(255, 228, 73);
+    }
+
+    .score>input:checked+label:hover,
+    .score>input:checked~label:hover,
+    .score>label:hover~input:checked~label,
+    .score>input:checked~label:hover~label {
+        color: rgb(255, 220, 24);
+    }
+
+
+    .myReview {
+        height: 2vh;
+        width: 100%;
+    }
+
+    .deleteButton {
+        height: 1.5vw;
+        font-size: 1vw;
+        text-align: start;
+        padding-left: 1.4vw;
+    }
+
+    .myReview>div {
+        font-size: 2vh;
+        width: 98vw;
+        padding: 0.5vh;
+        background: #3f3f3f;
+        overflow: hidden;
+    }
+
+    .likeyButton {
+        width: 12vw;
+        padding: 0;
+        height: 5vh;
+    }
+
+    #myBtn {
+        display: none;
+        background-color: crimson;
+        border-radius: 20%;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        cursor: pointer;
+        padding: 5px 10px;
+        font-size: 2rem;
+    }
+
+    #myBtn:hover {
+        background-color: #fff;
+        color: black;
+    }
+
+    .reviewInput {
+        width: 100%;
+        height: 4vh;
+        text-align: center;
+        border-radius: 0;
+    }
+
+    .review-button {
+        margin-left: 0;
+        font-size: 1rem;
+        width: 8vw;
+        height: 3.9vh;
+        text-align: center;
+        background-color: #1f1f1f;
+    }
+
+    .charName:hover {
+        transition: 10s;
+        transform: translateX(calc(-200px - 100%));
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 {% include '../_navbar.html' %}
-<div class="container-fluid p-5" style="margin-top: 10vh;">
-  <div class="row">
-    <div class="col-4 container">
-      <div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
-      <hr class="border-white">
-      <div class="row mx-auto justify-content-center align-content-center">
-        <h1 class="movieTitle">{{ movie.title }}</h1>
-      </div>
-      <div class="row justify-content-center">
-          <h4>{{ movie.runtime }} 분</h4>
-      </div>
-      <div class="row justify-content-center mt-3">
-          <form action="{% url 'movies:like' movie.pk %}" method="post">
-              {% csrf_token %}
-              {% if not movie.like_user or user not in movie.like_user.all %}
-              <button class="likeyButton" type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
-              {% else %}
-              <button class="likeyButton" type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
-              {% endif %}
-            </form>
-          </div>
-        <div class="row justify-content-center">
-            <small>{{movie.like_user.count }} 명이 좋아합니다.</small>
-        </div>
-    </div>
-    <div class="col-8">
-      <div class="row container-fluid">
-        <div class="col-4">
-            <h3>Genre Tags:</h3>
-            <div class="row pl-5">
-                {% for genre in movie.genres.all %}
-                <div class="genreIndicator">
-                  {{ genre.name }}
+<div class="container-fluid p-3 " style="margin-top: 10vh;">
+    <div class="row px-5">
+        <div class="col-4 container">
+            <div id="carouselExampleControls" class="carousel slide mb-2" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active h-50">
+                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="d-block row posterBox mx-auto">
+                    </div>
+                    {% for image in movie.movieimage_set.all %}
+                    {% if movie.poster_path != image.file_path %}
+                    <div class="carousel-item">
+                        <a href="{% url 'movies:detail' movie.id %}">
+                            <img src="https://image.tmdb.org/t/p/w500{{ image.file_path }}" class="d-block posterBox mx-auto">
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-              </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                </a>
+            </div>
+            <div class="row mx-auto justify-content-center align-content-center">
+                <h1 id="movieTitle" class="movieTitle">{{ movie.title }}</h1>
+            </div>
+            <div class="row justify-content-center">
+                <h4>{{ movie.runtime }} 분</h4>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <form action="{% url 'movies:like' movie.pk %}" method="post">
+                    {% csrf_token %}
+                    {% if not movie.like_user or user not in movie.like_user.all %}
+                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
+                    {% else %}
+                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="row justify-content-center">
+                <small>{{movie.like_user.count }} 명이 좋아합니다.</small>
+            </div>
         </div>
         <div class="col-8">
-            {% for people in movie.people.all %}
-            {% if people.job == 'Director' %}
-            <h3 class="text-center">Director</h3>
-            <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');"></div>
-            <h3 class="text-center mt-5">{{ people.name }}</h3>
-            {% endif %}
+            <div class="row container-fluid">
+                <div class="col-7">
+                    <h3>Genre Tags:</h3>
+                    <div class="row pl-5">
+                        {% for genre in movie.genres.all %}
+                        <div class="genreIndicator">
+                            {{ genre.name }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <h3 class="mt-3">Rate It:</h3>
+                    <div class="row mt-1">
+                        <div class="col-8">
+                        {% if review %}
+                        <form method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
+                        {% csrf_token %}
+                        {% include '_starFieldSet.html' %}
+                        {% else %}
+                        <form method='post' action="{% url 'movies:review' movie.pk %}">
+                            {% csrf_token %}
+                            {% include '_starFieldSet.html' %}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <p id="yts" hidden>{{ movie.trailer_set.last.key }}</p>
+                        <div class="mt-1" id="ytp"></div>
+                    </div>
+                </div>
+                <div class="col-5 border-left">
+                    {% for people in movie.people.all %}
+                    {% if people.job == 'Director' %}
+                    <h3 class="text-center">Director</h3>
+                    <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');">
+                    </div>
+                    <h3 class="text-center mt-5">{{ people.name }}</h3>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+
+                <div class="row p-5 ">
+                    <h3 class="movieTitle blockquote">Overview
+                        <footer class="blockquote-footer">{{ movie.tagline }}</footer>
+                    </h3>
+                    <p class="overview p-4">{{ movie.overview }}</p>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="font-family: Noto serif serif;">
+        <h2 class="text-center border-bottom">CASTS</h2>
+        <div class="row border-bottom mb-5">
+            {% for credit in credits %}
+            <a href="{% url 'movies:actor' credit.people.id %}" class="text-decoration-none">
+                <div class="castActor m-2" role="link" style="background-image: url('https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}');">
+                </div>
+                <div class="text-truncate text-white" style="width:12vh;">
+                    <p class="text-center charName">{{ credit.character }}</p>
+                    <p class="text-center">{{ credit.people.name }}</p>
+                </div>
+            </a>
             {% endfor %}
         </div>
-        
-      </div>
-
-      <div class="row p-5 ">
-        <h3 class="movieTitle blockquote">Overview
-        <footer class="blockquote-footer">{{ movie.tagline }}</footer>        
-        </h3>
-        <p class="overview p-4">{{ movie.overview }}</p>
-      </div>
-      <div class="row">
-      </div>
     </div>
-  </div>
-</div>
-<div class="container" style="font-family: Noto serif serif;">
-    <h3 class="display-4 text-center">Casts</h3>
-    <div class="row">
-    {% for credit in credits %}
-    <a href="{% url 'movies:actor' credit.people.id %}" class="text-decoration-none">
-    <div class="castActor m-2" role="link" style="background-image: url('https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}');">
-    </div>
-    <div class="text-truncate text-white" style="width:12vh;">
-      <p class="text-center">{{ credit.character }}</p>
-      <p class="text-center">{{ credit.people.name }}</p>
-    </div>
-    </a>
-    {% endfor %}
-    </div>
-</div>
-<div class="container">
-    <h3 class="display-4 text-center" style="font-family: Noto serif serif;">Reviews</h3>
-    {% if user.is_authenticated %}
-    {% if review %}
-    <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
-      {% csrf_token %}
-      <div class="row justify-content-center">
-          {% include '_starFieldSet.html' %}
-          </div>
-          <div class="row justify-content-center">
-            <div class="input-group mb-3">
-                <input name="content" value="{{ review.content }}" type="text" class="form-control reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="button-review">
-                <div class="input-group-append">
-                  <button class="review-button" type="submit">리뷰 수정</button>
-                </div>
-              </div>
-            </form>
-          </div>
-    {% else %}
-      <form action="{% url 'movies:review' movie.pk %}" method="post">
-      {% csrf_token %}
-      <div class="row justify-content-center">
-      {% include '_starFieldSet.html' %}
-      </div>
-      <div class="row justify-content-center">
-        <div class="input-group mb-3">
-            <input class="reviewInput" name="content" type="text" class="form-control" placeholder="이 영화는 어떠셨나요?" aria-describedby="button-review">
-            <div class="input-group-append">
-              <button class="review-button" type="submit">리뷰 등록</button>
-            </div>
-          </div>
+    <div class="container">
+        <h3 class="text-left border-bottom" style="font-family: 'Noto serif' serif;">
+            Reviews</h3>
+        {% if user.is_authenticated %}
+        {% if review %}
+        <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-10 ml-2"><input name="content" value="{{ review.content }}" type="text" class="col reviewInput" aria-describedby="reviewModButton"></div>
+                <div class="col-2"><button class="review-button " id="reviewModButton" type="submit">리뷰 수정</button></div>
         </form>
-      </div>
-    
-    {% endif %}
-  {% endif %}
-  {% if review %}
-  <form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+    </div>
+    {% else %}
+    <form action="{% url 'movies:review' movie.pk %}" method="post">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-10 ml-2"><input name="content" type="text" class="col reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="reviewCButton"></div>
+            <div class="col-2"><button class="review-button" id="reviewCButton" type="submit">리뷰 등록</button></div>
+    </form>
+</div>
+
+{% endif %}
+{% endif %}
+{% if review %}
+<form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
     {% csrf_token %}
     <div class="container-fluid">
-      <div class="row">
-        <div class="col">
-          <span class="badge badge-danger badge-pill mx-2"  id="score">{{ review.score }}점</span>
-          <span class="mr-3 pr-3 border-right font-weight-bolder text-warning">{{ user.first_name }}</span>
-          <small>{{ review.content }}</small>
-        </div>
-        <button class="deleteButton col-1" type="submit">삭제</button>
-      </div>
-    </div>
-  </form>
-  {% endif %}
-  {% for r in movie.review_set.all %}
-  {% if r.user.id != review.user_id %}
-  <form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
-      {% csrf_token %}
-      <div class="container-fluid">
         <div class="row">
-          <div class="col">
-            <span class="badge badge-danger badge-pill mx-2"  id="score">{{ r.score }}점</span>
-            <span class="mr-3 pr-3 border-right font-weight-bolder">{{ r.user.first_name }}</span>
-            <small>{{ r.content }}</small>
-          </div>
+            <div class="col">
+                <span class="badge badge-danger badge-pill mx-2" id="score">{{ review.score }}점</span>
+                <span class="mr-3 pr-3 border-right font-weight-bolder text-warning">{{ user.first_name }}</span>
+                <small>{{ review.content }}</small>
+            </div>
+            <button class="deleteButton col-1" type="submit">삭제</button>
         </div>
-      </div>
-    </form>
-  {% endif %}
-  {% endfor %}
-  <button onclick="topFunction()" id="myBtn" title="Go to top">⬆</button>
-  {% endblock %}
+    </div>
+</form>
+{% endif %}
+{% for r in movie.review_set.all %}
+{% if r.user.id != review.user_id %}
+<form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <span class="badge badge-danger badge-pill mx-2" id="score">{{ r.score }}점</span>
+                <span class="mr-3 pr-3 border-right font-weight-bolder">{{ r.user.first_name }}</span>
+                <small>{{ r.content }}</small>
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endfor %}
+<button onclick="topFunction()" id="myBtn" title="Go to top">⬆</button>
+{% endblock %}
 
 {% block script %}
-  <script>
-
-    let colors = ['royalblue', 'orange', 'darkviolet', 'hotpink', 'tomato', 'crimson', 'khaki', 'seagreen']
-    const indiset = document.querySelectorAll('.genreIndicator')
-    window.onload = function(){
-      for (tag in indiset){
-        let random_color = colors[Math.floor(Math.random() * colors.length)]
-        indiset[tag].style.backgroundColor = random_color;
-      }
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    let colors = ['royalblue', 'orange', 'darkviolet', 'hotpink', 'tomato',
+        'crimson', 'khaki', 'seagreen'
+    ]
+    const starSubmit = document.querySelector('#starSubmit')
+    function submit() {
+        starSubmit.click()
     }
+    var done = false;
+    const APIKEY = 'AIzaSyDPnDtMx0BMQUBJ9XwpImGCHF_a53saP7s'
+    window.onload = function() {
+        let video
+        const indiset = document.querySelectorAll('.genreIndicator')
+
+        for (i in indiset) {
+            let random_color = colors[Math.floor(Math.random() * colors.length)]
+            indiset[i].style.backgroundColor = random_color;
+        }
+    }
+
     mybutton = document.getElementById("myBtn");
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function() {
+        scrollFunction()
+    };
+
     function scrollFunction() {
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        mybutton.style.display = "block";
-        document.getElementById("navBar").style.top = "-200px";
-      } else {
-        mybutton.style.display = "none";
-        document.getElementById("navBar").style.top = "0";
-      }
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop >
+            100) {
+            mybutton.style.display = "block";
+            document.getElementById("navBar").style.top = "-200px";
+        } else {
+            mybutton.style.display = "none";
+            document.getElementById("navBar").style.top = "0";
+        }
+    }
+    axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+            params: {
+                key: APIKEY,
+                part: 'id',
+                q: document.getElementById('movieTitle').innerText + '예고편',
+                maxResults: 1,
+            }
+        })
+        .then(response => {
+            video = response.data.items[0].id.videoId
+            loaded = true
+            let tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            let firstScriptTag = document.getElementsByTagName('script')[3]
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+        })
+
+    function onYouTubeIframeAPIReady() {
+        let player
+        player = new YT.Player('ytp', {
+            height: '276px',
+            width: '100%',
+            videoId: video,
+            events: {
+                'onReady': onPlayerReady,
+                'stop': stopVideo
+            }
+        });
+    }
+    function onPlayerReady(event) {
+        event.target.playVideo();
     }
 
-  function topFunction() {
-    document.body.scrollTop = 0; 
-    document.documentElement.scrollTop = 0;
-  }
+    function stopVideo() {
+        player.stopVideo()
+    }
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
     const score = document.querySelector('#score').innerText
-    const my_star = document.querySelector('#star'+score)
+    const my_star = document.querySelector('#star' + score)
     my_star.checked = true
-  </script>
+</script>
+<script></script>
 {% endblock %}

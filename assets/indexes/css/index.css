@@ -1,8 +1,8 @@
 body {
-  background: radial-gradient( #3f3f3f, #000000);
-  background-size: 160%;
+  background: radial-gradient(#011111, #000000);
+  background-size: 200%;
   overflow: hidden;
-  font-family: Noto serif serif;
+  font-family: 'Noto Serif KR', serif;
   /* animation: BackgroundScroll 50s ease infinite; */
 }
 #app {
@@ -187,6 +187,7 @@ body {
   margin: 15% 5%;
   position: fixed;
   background: linear-gradient(45deg, red, orange);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   opacity: 0;

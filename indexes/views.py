@@ -1,13 +1,14 @@
 from django.shortcuts import render,get_object_or_404
 from movies.models import Movie
 from django.contrib.auth.decorators import login_required
+from random import shuffle
 # Create your views here.
 @login_required
 def index(request):
     movies = Movie.objects.all()
-    movies = movies[:50]
+    movies = movies[457:557]
     context = {
-        'movies':movies
+        'movies': movies
     }
     return render(request, 'index.html', context)
 

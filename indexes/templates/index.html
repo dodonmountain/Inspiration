@@ -7,28 +7,28 @@
 {% block body %}
 <h1 class="opener">INSPIRATION</h1>
 {% include '_navbar.html' %}
-  {% if user.is_authenticated %}
-  <div id='car' class="carousel fadein mt-5">
+{% if user.is_authenticated %}
+<div id='car' class="carousel fadein mt-5">
     <h2 class="queIndicator">{{ user.first_name }} 님의 맞춤 대기열</h2>
     <div class="carousel-row">
-      {% for movie in movies %}
-      <div class="carousel-tile">
-        <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;"></a>
-        <div class="text-white text-center mt-3">
-          <p class="border-top car-body">{{ movie.title }}</p>
-          <p>예상 평점:<span class='rand'></span></p>
+        {% for movie in movies %}
+        <div class="carousel-tile">
+            <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;"></a>
+            <div class="text-white text-center mt-3">
+                <p class="border-top car-body">{{ movie.title }}</p>
+                <p>예상 평점:<span class='rand'></span></p>
+            </div>
         </div>
-      </div>
-      {% endfor %}
-  {% else %}
-      <div style="margin-top: 15%;">
-        <h1 class="display-1 font-weight-bolder text-center mt-5 text-white-50">
-          로그인해서 회원님만을 위한 맞춤 리스트를 받아보세요.
-        </h1>
-      </div>
-  {% endif %}
+        {% endfor %}
+        {% else %}
+        <div style="margin-top: 15%;">
+            <h1 class="display-1 font-weight-bolder text-center mt-5 text-white-50">
+                로그인해서 회원님만을 위한 맞춤 리스트를 받아보세요.
+            </h1>
+        </div>
+        {% endif %}
     </div>
-  </div>
+</div>
 </div>
 
 
@@ -37,45 +37,44 @@
 {% block script %}
 
 <script>
-  const lst = document.querySelector('#car')
-  const app = document.querySelector('#app')
-  const navbar = document.querySelector('#navBar')
-  const rand = document.querySelectorAll('.rand')
-  let last_known_scroll_position = 0;
-  let flag = false;
-  window.onload = function(){
-    for (let r in rand){
-       rand[r].innerText = (5+(Math.random() * 5)).toFixed(2)
-     // rand[r].innerText = "{{ movie.vote_average }}"
+    const lst = document.querySelector('#car')
+    const app = document.querySelector('#app')
+    const navbar = document.querySelector('#navBar')
+    const rand = document.querySelectorAll('.rand')
+    const tiles = document.querySelectorAll('.carousel-tile')
+    let last_known_scroll_position = 0;
+    let flag = false;
+    window.onload = function() {
+        for (let r in rand) {
+            rand[r].innerText = (5 + (Math.random() * 5)).toFixed(2)
+            // rand[r].innerText = "{{ movie.vote_average }}"
+        }
+        navbar.hidden = true
+        lst.hidden = true
+        setTimeout(function() {
+            navbar.classList.add('fadein')
+            lst.hidden = false
+            navbar.hidden = false
+        }, 0);
     }
-    
-    navbar.hidden = true
-    lst.hidden = true
-    setTimeout(function(){
-      navbar.classList.add('fadein')
-      lst.hidden = false
-      navbar.hidden = false
-    }, 0);
-    
-  };
-  
-  function scrollLst(scroll_pos) {
-      lst.scrollLeft= scroll_pos
+
+
+    function scrollLst(scroll_pos) {
+        lst.scrollLeft = scroll_pos
     }
-  
-  
-  window.addEventListener('wheel', function(e) {
-    if (last_known_scroll_position + e.deltaY > -1){
-      last_known_scroll_position += e.deltaY;
-    }
-    if (!flag) {
-      window.requestAnimationFrame(function() {
-        scrollLst(last_known_scroll_position);
-        flag = false;
-      });
-      flag = true;
-    }
-  });
+
+    window.addEventListener('wheel', function(e) {
+        if (last_known_scroll_position + e.deltaY > -1) {
+            last_known_scroll_position += e.deltaY;
+        }
+        if (!flag) {
+            window.requestAnimationFrame(function() {
+                scrollLst(last_known_scroll_position);
+                flag = false;
+            });
+            flag = true;
+        }
+    });
 </script>
 
 {% endblock %}
