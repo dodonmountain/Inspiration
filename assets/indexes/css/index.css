@@ -1,12 +1,12 @@
 body {
-  background: radial-gradient(#011111, #000000);
-  background-size: 200%;
+  background: radial-gradient(#f55121, #000000, #fafafa);
+  background-size: 100%;
   overflow: hidden;
-  font-family: 'Noto Serif KR', serif;
+  font-family: Arial, Helvetica, sans-serif;
   /* animation: BackgroundScroll 50s ease infinite; */
 }
 #app {
-  height: 95vh;
+  height: 100vh;
 }
 .queIndicator {
   font-family: 'Arial Narrow Bold', sans-serif;
@@ -14,7 +14,7 @@ body {
   position: fixed;
   left: 4vw;
   top: 13vh;
-  margin-bottom: 5vh;
+  margin-bottom: 3vh;
   color: #fafafa;
 }
 
@@ -100,10 +100,10 @@ body {
 
 /* Carousel Container */
 .carousel {
-    margin: 5vh 0;
+    margin: 5vh 0 0 0;
     overflow: hidden;
     white-space: nowrap;
-    height: 90vh;
+    height: 100vh;
 }
 
 /* Carousel Row */

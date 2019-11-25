@@ -23,7 +23,7 @@
 
     .genreIndicator {
         display: flexbox;
-        padding: 10px;
+        padding: 7px;
         border-bottom-right-radius: 40%;
         border-top-right-radius: 40%;
         margin: 5px 1vw;
@@ -131,10 +131,11 @@
     }
 
     .deleteButton {
-        height: 1.5vw;
-        font-size: 1vw;
-        text-align: start;
-        padding-left: 1.4vw;
+        height: 1.8vw;
+        font-size: 1rem;
+        margin-left: auto;
+        margin-right: 1rem;
+        background-color: rgba(200,0,0,0.5);
     }
 
     .myReview>div {
@@ -179,10 +180,11 @@
     .review-button {
         margin-left: 0;
         font-size: 1rem;
+        font-weight: bolder;
         width: 8vw;
         height: 3.9vh;
         text-align: center;
-        background-color: #1f1f1f;
+        background-color: orange;
     }
 
     .charName:hover {
@@ -221,7 +223,17 @@
                 <h1 id="movieTitle" class="movieTitle">{{ movie.title }}</h1>
             </div>
             <div class="row justify-content-center">
-                <h4>{{ movie.runtime }} 분</h4>
+                <h4><i class="fa fa-clock-o mr-2"></i>{{ movie.runtime }} 분</h4>
+            </div>
+            <div class="row justify-content-center">
+             <h6><i class="fa fa-calendar mr-2"></i>{{ movie.release_date }} 개봉</h6>
+            </div>
+            <div class="row justify-content-center">
+            {% if movie.budget %}
+            <h6>제작비 <i class="fa fa-money mr-2"></i>{{ movie.budget }} USD</h6>
+            {% else %}
+            <h6>제작비 <i class="fa fa-money mr-2"></i>???? USD</h6>
+            {% endif %}
             </div>
             <div class="row justify-content-center mt-3">
                 <form action="{% url 'movies:like' movie.pk %}" method="post">
@@ -240,40 +252,45 @@
         <div class="col-8">
             <div class="row container-fluid">
                 <div class="col-7">
-                    <h3>Genre Tags:</h3>
+                    <h3>GENRE TAGS</h3>
                     <div class="row pl-5">
                         {% for genre in movie.genres.all %}
                         <div class="genreIndicator">
-                            {{ genre.name }}
+                           <i class="fa fa-tag"></i> {{ genre.name }}
                         </div>
                         {% endfor %}
                     </div>
-                    <h3 class="mt-3">Rate It:</h3>
-                    <div class="row mt-1">
-                        <div class="col-8">
+                    
+                    <div class="row mt-4">
+                        <div class="col-8 align-content-center pl-5">
                         {% if review %}
-                        <form method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
+                        <form class="ml-5" method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
                         {% csrf_token %}
                         {% include '_starFieldSet.html' %}
                         {% else %}
-                        <form method='post' action="{% url 'movies:review' movie.pk %}">
+                        <form class="ml-5" method='post' action="{% url 'movies:review' movie.pk %}">
                             {% csrf_token %}
                             {% include '_starFieldSet.html' %}
                         {% endif %}
                         </div>
+                        <div class="col-4">
+                            <h5 class="mt-4"><i class="fa fa-check mr-3"></i>{{ movie.vote_average }}</h5>
+                            <small class="border-top">TMDB avg rate</small>
+                            {{ movie.status }}
+                        </div>
                     </div>
-                    <div class="row p-3">
+                    <div class="row mt-3 pl-5">
                         <p id="yts" hidden>{{ movie.trailer_set.last.key }}</p>
                         <div class="mt-1" id="ytp"></div>
                     </div>
                 </div>
-                <div class="col-5 border-left">
+                <div class="col-5 ">
                     {% for people in movie.people.all %}
                     {% if people.job == 'Director' %}
-                    <h3 class="text-center">Director</h3>
+                    <h3 class="text-left">DIRECTOR</h3>
                     <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');">
                     </div>
-                    <h3 class="text-center mt-5">{{ people.name }}</h3>
+                    <h3 class="text-right mt-5 border-bottom">{{ people.name }}</h3>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -314,7 +331,7 @@
         <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
             {% csrf_token %}
             <div class="row">
-                <div class="col-10 ml-2"><input name="content" value="{{ review.content }}" type="text" class="col reviewInput" aria-describedby="reviewModButton"></div>
+                <div class="col-10"><input name="content" value="{{ review.content }}" type="text" class="col reviewInput" aria-describedby="reviewModButton"></div>
                 <div class="col-2"><button class="review-button " id="reviewModButton" type="submit">리뷰 수정</button></div>
         </form>
     </div>
@@ -322,7 +339,7 @@
     <form action="{% url 'movies:review' movie.pk %}" method="post">
         {% csrf_token %}
         <div class="row justify-content-center">
-            <div class="col-10 ml-2"><input name="content" type="text" class="col reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="reviewCButton"></div>
+            <div class="col-10"><input name="content" type="text" class="col reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="reviewCButton"></div>
             <div class="col-2"><button class="review-button" id="reviewCButton" type="submit">리뷰 등록</button></div>
     </form>
 </div>
@@ -334,7 +351,7 @@
     {% csrf_token %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col-10">
                 <span class="badge badge-danger badge-pill mx-2" id="score">{{ review.score }}점</span>
                 <span class="mr-3 pr-3 border-right font-weight-bolder text-warning">{{ user.first_name }}</span>
                 <small>{{ review.content }}</small>

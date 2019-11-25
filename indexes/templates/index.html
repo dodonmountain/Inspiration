@@ -2,21 +2,32 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
+<style>
+body {
+  background: radial-gradient(#f55121, #fafafa, #f43598, #f23498, #f34534);
+  background-size: 100%;
+}
+</style>
 {% endblock %}
 
 {% block body %}
 <h1 class="opener">INSPIRATION</h1>
 {% include '_navbar.html' %}
 {% if user.is_authenticated %}
-<div id='car' class="carousel fadein mt-5">
-    <h2 class="queIndicator">{{ user.first_name }} 님의 맞춤 대기열</h2>
+<div id='car' class="carousel fadein mt-3 mb-0">
+    <h2 class="queIndicator">{{ user.first_name }} <small>님의 맞춤 대기열</small></h2>
     <div class="carousel-row">
         {% for movie in movies %}
         <div class="carousel-tile">
             <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;"></a>
-            <div class="text-white text-center mt-3">
-                <p class="border-top car-body">{{ movie.title }}</p>
-                <p>예상 평점:<span class='rand'></span></p>
+            <div class="text-white text-center mt-3 overflow-hidden">
+                <h3 class="car-body">{{ movie.title }}</h3>
+                <!--<p>예상 평점:<span class='rand'></span></p>-->
+                <i class="fa fa-clock-o">{{ movie.runtime }}분</i>
+                <br>
+                {% for genre in movie.genres.all %}
+                <span style="font-family: sans serif" class="p-1 ">| {{ genre.name }} |</span>
+                {% endfor %}
             </div>
         </div>
         {% endfor %}

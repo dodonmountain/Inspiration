@@ -3,156 +3,183 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>영화추천?</title>
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-  <link
-    href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Permanent+Marker&display=swap|Noto+Serif+KR&display=swap"
-    rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Noto Serif KR', serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>영화추천?</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Permanent+Marker&display=swap|Noto+Serif+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif KR', serif;
+        }
+        .bmc-button img {
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+        .bmc-button {
+            line-height: 35px !important;
+            height: 35px !important;
+            min-width: 200px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #000000 !important;
+            background-color: #FFDD00 !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            font-size: 28px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Cookie', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
 
-    nav {
-      background: none;
-    }
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #000000 !important;
+        }
+        nav {
+            background: none;
+        }
 
-    button {
-      font-family: 'Arial Narrow Bold', sans-serif;
-      ;
-      background: royalblue;
-      color: #fff;
-      border: none;
-      position: relative;
-      height: 60px;
-      font-size: 1.6em;
-      padding: 0 2em;
-      cursor: pointer;
-      transition: 800ms ease all;
-      outline: none;
-    }
+        button {
+            font-family: 'Arial Narrow Bold', sans-serif;
+            ;
+            background: royalblue;
+            color: #fff;
+            border: none;
+            position: relative;
+            height: 60px;
+            font-size: 1.6em;
+            padding: 0 2em;
+            cursor: pointer;
+            transition: 800ms ease all;
+            outline: none;
+        }
 
-    button:hover {
-      background: initial;
-      color: #fff;
-    }
+        button:hover {
+            background: initial;
+            color: #fff;
+        }
 
-    button:before,
-    button:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 2px;
-      width: 0;
-      background: currentColor;
-      transition: 400ms ease all;
-    }
+        button:before,
+        button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 2px;
+            width: 0;
+            background: currentColor;
+            transition: 400ms ease all;
+        }
 
-    button:after {
-      right: inherit;
-      top: inherit;
-      left: 0;
-      bottom: 0;
-      background: currentColor;
-    }
+        button:after {
+            right: inherit;
+            top: inherit;
+            left: 0;
+            bottom: 0;
+            background: currentColor;
+        }
 
-    button:hover:before,
-    button:hover:after {
-      width: 100%;
-      transition: 800ms ease all;
-    }
+        button:hover:before,
+        button:hover:after {
+            width: 100%;
+            transition: 800ms ease all;
+        }
 
-    .searchField {
-      width: 10vw;
-    }
+        .searchField {
+            width: 10vw;
+        }
 
-    .searchField:focus {
-      animation: searchExpand 300ms ease-in;
-      width: 50vw !important;
-      background: seashell !important;
-      color: black !important;
-    }
+        .searchField:focus {
+            animation: searchExpand 300ms ease-in;
+            width: 50vw !important;
+            background: seashell !important;
+            color: black !important;
+        }
 
-    @keyframes searchExpand {
-      from {
-        width: 10vw
-      }
+        @keyframes searchExpand {
+            from {
+                width: 10vw
+            }
 
-      to {
-        width: 50vw
-      }
-    }
+            to {
+                width: 50vw
+            }
+        }
 
-    .navbar {
-      font-family: 'Arial Narrow Bold', sans-serif;
-    }
+        .navbar {
+            font-family: 'Arial Narrow Bold', sans-serif;
+        }
 
-    .nav-link:hover {
-      color: orange !important;
-    }
+        .nav-link:hover {
+            color: orange !important;
+        }
 
-    #loading {
-      width: 100%;
-      height: 100%;
-      top: 0px;
-      left: 0px;
-      position: fixed;
-      display: block;
-      opacity: 0.7;
-      background-color: #fff;
-      z-index: 99;
-      text-align: center;
-    }
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            display: block;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+            text-align: center;
+        }
 
-    #loading-image {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 100;
-    }
-
-  </style>
-  {% block css %}{% endblock css %}
+        #loading-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 100;
+        }
+    </style>
+    {% block css %}{% endblock css %}
 </head>
 
 <body>
-  {% block body %}{% endblock body %}
-  ​
-  <!-- javascript -->
-  <link
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-    crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-    crossorigin="anonymous"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-  <script>
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function () {
-      var currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
-        document.getElementById("navBar").style.top = "0";
-      } else {
-        document.getElementById("navBar").style.top = "-500px";
-      }
-      prevScrollpos = currentScrollPos;
-    }
+    {% block body %}{% endblock body %}
+    ​
+    <!-- javascript -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("navBar").style.top = "0";
+            } else {
+                document.getElementById("navBar").style.top = "-500px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+    </script>
 
-  </script>
-
-  {% block script %}{% endblock script %}
+    {% block script %}{% endblock script %}
 </body>
 
 </html>
