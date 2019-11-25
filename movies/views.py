@@ -175,7 +175,7 @@ def detail(request,movie_pk):
 def review(request,movie_pk):
     review = Review.objects.create(
         user = request.user,
-        content = request.POST.get('content'),
+        content = request.POST.get('content') or '',
         score = request.POST.get('score'),
         movie = get_object_or_404(Movie,pk=movie_pk)
     )
@@ -188,8 +188,8 @@ def review_delete(request,movie_pk, review_pk):
 
 def review_update(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    review.content = request.POST.get('content')
-    review.score = request.POST.get('score')
+    review.content = request.POST.get('content') or review.content or ''
+    review.score = request.POST.get('score') or review.score
     review.save()
     return redirect('movies:detail',movie_pk)
 
@@ -261,7 +261,7 @@ def make_fake(request,genre_id):
         password='password'
     )
     movies = list(genre.genre_movies.all())
-    for movie in np.random.choice(movies,min(30,len(movies)//2)):
+    for movie in np.random.choice(movies,min(30,len(movies)//2),replace =False):
         s = np.random.normal(movie.vote_average, 1)
         if s > 10:
             s = 10
@@ -269,7 +269,10 @@ def make_fake(request,genre_id):
             s = 0 - s
         Review.objects.create(
             score = round(s),
+            content = '',
             movie_id = movie.pk,
             user_id = u.id
         )
     return redirect('movies:genre_detail',genre_id)
+
+
