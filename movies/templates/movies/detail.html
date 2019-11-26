@@ -5,9 +5,12 @@
 <!-- <link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}"> -->
 <style>
     body {
-        background: #141414;
+        background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
         font-family: 'Arial Narrow Bold', sans-serif;
         color: white;
+    }
+    h3 {
+        text-shadow: black 1px 1px;
     }
 
     .blockquote-footer {
@@ -39,7 +42,8 @@
         font-weight: 200;
         text-indent: 2rem;
         font-size: 1.2rem;
-        background-color: #222222;
+        background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
+        color: #1f1f1f;
         box-shadow: 0.2rem 0.2rem white;
         border-top: 3px dotted white;
     }
@@ -66,7 +70,7 @@
     }
 
     .castActor:hover {
-        box-shadow: inset 0 0 15px 15px #1f1f1f;
+        box-shadow: inset spread 0 0 7px 15px #111111;
     }
 
     fieldset,
@@ -191,6 +195,7 @@
         transition: 10s;
         transform: translateX(calc(-200px - 100%));
     }
+
 </style>
 {% endblock %}
 
@@ -391,7 +396,7 @@
         starSubmit.click()
     }
     var done = false;
-    const APIKEY = 'AIzaSyDPnDtMx0BMQUBJ9XwpImGCHF_a53saP7s'
+    const APIKEY = 'AIzaSyASPiRLE_GGeu8Of4-ymS5HFDxH2D_OQuQ'
     window.onload = function() {
         let video
         const indiset = document.querySelectorAll('.genreIndicator')

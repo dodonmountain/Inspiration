@@ -15,6 +15,17 @@
         body {
             font-family: 'Noto Serif KR', serif;
         }
+        .githubButton{
+            width: 45px !important;
+            height: 45px !important;
+            background-color: black;
+            margin: 0 2rem;
+            overflow: hidden;
+            text-align: center;
+        }
+        .githubButton:hover{
+            background-color: orange;
+        }
         .bmc-button img {
             width: 35px !important;
             margin-bottom: 1px !important;
@@ -24,12 +35,12 @@
         }
         .bmc-button {
             line-height: 35px !important;
-            height: 35px !important;
+            height: 45px !important;
             min-width: 200px !important;
             text-decoration: none !important;
             display: inline-flex !important;
             color: #000000 !important;
-            background-color: #FFDD00 !important;
+            background-color: orange !important;
             border-radius: 5px !important;
             border: 1px solid transparent !important;
             font-size: 28px !important;
@@ -112,9 +123,11 @@
 
         .searchField:focus {
             animation: searchExpand 300ms ease-in;
-            width: 50vw !important;
+            width: 40vw !important;
             background: seashell !important;
             color: black !important;
+            text-align: right;
+            margin-right: 2rem;
         }
 
         @keyframes searchExpand {
@@ -123,7 +136,7 @@
             }
 
             to {
-                width: 50vw
+                width: 40vw
             }
         }
 
