@@ -157,10 +157,10 @@ def index(request):
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     all_review = Review.objects.filter(movie_id=movie_pk)
-    # if len(all_review):
-    #     avg = sum(map(lambda x:x.score,all_review))/len(all_review)
-    # else:
-    #     avg = "아직 별점이 없어요"
+    if len(all_review):
+        avg = sum(map(lambda x:x.score,all_review))/len(all_review)
+    else:
+        avg = "아직 별점이 없어요"
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
     if reviews:
         review = reviews[0]
@@ -173,7 +173,7 @@ def detail(request,movie_pk):
             'review' : False
         }
     context['movie'] = movie
-    # context['avg'] = avg
+    context['avg'] = avg
     context['credits'] = movie.credit_set.all().order_by('order')
 
     return render(request,'movies/detail.html',context)
@@ -212,12 +212,12 @@ def like(request,movie_pk):
 
 def search(request):
     query = request.GET.get('q')
-    # title_movies = Movie.objects.filter(title__contains=query)
-    search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
-    title_movies = requests.get(search_url).json().get('results')
+    title_movies = Movie.objects.filter(title__contains=query)
+    # search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
+    # title_movies = requests.get(search_url).json().get('results')
     
     asdf_movies = Movie.objects.filter(overview__contains=query)
-    # overview_movies = asdf_movies.difference(title_movies)
+    overview_movies = asdf_movies.difference(title_movies)
     actors = People.objects.filter(name__contains=query)
     context = {
         "title_movies" : title_movies,

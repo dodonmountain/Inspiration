@@ -6,6 +6,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
 from movies.models import Movie, Review
+import numpy as np
 
 # def my_page(request):
 def signup(request):
@@ -92,27 +93,41 @@ def vs_user(user):
         other_movies = Movie.objects.filter(review__user=other)
         other_review = Review.objects.filter(user=other)
         same_movies = my_movies & other_movies
-        A, B, C = 0,0,0
-        if len(same_movies) > 1:
+        X,Y, XX,YY,XY,cnt = 0,0,0,0,0,0
+        if len(same_movies) > 3:
             for movie in same_movies:
-                a = my_review.filter(movie=movie)[0].score *5
-                b = other_review.filter(movie=movie)[0].score * 5
-                A += a*a
-                B += b*b
-                C += a*b
+                a = my_review.filter(movie=movie)[0].score
+                b = other_review.filter(movie=movie)[0].score
+                X += a
+                Y += b
+                XX += a*a
+                YY += b*b
+                XY += a*b
+                cnt += 1
             try:
-                vs[other.id] = C / (A**(0.5) * B**(0.5))
-                # print(vs[other.id])
+                vs[other.id] = (XY-(X*Y)/cnt)/ (((XX-(X*X)/cnt) * (YY-(Y*Y)/cnt)) ** 0.5)
             except:
                 pass
     sorted_vs = sorted(vs.items(), key=lambda kv: kv[1],reverse=True)
-    for v in sorted_vs[:20]:
-        user = User.objects.get(pk=v[0])
-    for a in sorted_vs[:20]:
-        print(a)
-        for same in my_movies & Movie.objects.filter(review__user_id=a):
-            print(same.title)
-    return sorted_vs[:20]
+    movies = {}
+    for i in sorted_vs[2:15]:
+        for review in Review.objects.filter(user_id=i[0]):
+            if review.movie_id in movies:
+                if not Review.objects.filter(user=user).filter(movie_id=review.movie_id):
+                    movies[review.movie_id][0] += 1
+                    movies[review.movie_id][1] += review.score
+                    movies[review.movie_id][2] += i[1]
+            else:
+                movies[review.movie_id] = [1,review.score,i[1]]
+    sorted_movie = sorted(movies.items(),key=lambda x: x[1] ,reverse=True)[:60]
+    arr = []
+    for i in range(len(sorted_movie)):
+        tmp =[] # 쿼리, 예상평점, 정확도
+        tmp.append(Movie.objects.filter(pk=sorted_movie[i][0]))
+        tmp.append(round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
+        tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
+        arr.append(tmp)
+    return arr
 
 @login_required
 def userDetail(request, user_id):
@@ -126,9 +141,16 @@ def userDetail(request, user_id):
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
         'my_review' : my_review,
-        # 'vs' : vs_user(user)
+        'vs' : vs_user(user)
     }
     return render(request, 'accounts/detail.html', context)
     # return redirect('accounts:login')
-    
 
+def select(request, user_id):
+    # movies = Movie.objects.filter(vote_count__lt=3000).filter(popularity__gte=50)
+    count_movies = Movie.objects.filter(vote_count__gte=3000)
+    ko_movies = Movie.objects.filter(original_language='ko').filter(popularity__gte=5)
+    total = count_movies | ko_movies
+    total = np.random.choice(total,100,replace=False)
+    context = {'total':total}
+    return render(request,'accounts/select.html',context)

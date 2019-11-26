@@ -32,10 +32,10 @@ body {
 <hr>
 <h3>장르</h3>
 <br>
-{{ user_like_genre }}
-  {% for v in vs %}
-  {{ v }}
-  {% endfor %}
+{% for a in vs %}
+{{ a.0.0.title }} - {{ a.1 }}점 - {{ a.2 }}%
+<br>
+{% endfor %}
 <hr>
 <h3>리뷰</h3>
 {% for review in userinfo.review_set.all %}
