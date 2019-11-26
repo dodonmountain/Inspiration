@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Permanent+Marker&display=swap|Noto+Serif+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Noto Serif KR', serif;
         }
@@ -22,6 +25,7 @@
             margin: 0 2rem;
             overflow: hidden;
             text-align: center;
+            transition: 0.2s all linear !important;
         }
         .githubButton:hover{
             background-color: orange;
@@ -39,8 +43,8 @@
             min-width: 200px !important;
             text-decoration: none !important;
             display: inline-flex !important;
-            color: #000000 !important;
-            background-color: orange !important;
+            color: #ffffff !important;
+            background-color: #2f2f2f !important;
             border-radius: 5px !important;
             border: 1px solid transparent !important;
             font-size: 28px !important;
@@ -63,6 +67,7 @@
         .bmc-button:focus {
             -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
             text-decoration: none !important;
+            background-color: orange !important;
             box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
             opacity: 0.85 !important;
             color: #000000 !important;
@@ -166,6 +171,9 @@
             top: 50%;
             left: 50%;
             z-index: 100;
+        }
+        #lst {
+            transform: translateX(2em);
         }
     </style>
     {% block css %}{% endblock css %}

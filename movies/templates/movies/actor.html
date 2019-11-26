@@ -10,7 +10,7 @@
 
   .castActor {
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: stretch;
     height: 70vh;
     border-radius: 2rem;
   }
@@ -37,10 +37,11 @@
 
 {% block body %}
 {% include '_navbar.html' %}
-<div class="container mt-5">
+
+<div class="container mt-5 mb-0">
 
   <h1 class="text-white p-5">{{ people.name }}</h1>
-  <div class="row">
+  <div class="row h-100">
     <div class="col-6">
       <div class="castActor m-2" role="link"
         style="background-image: url('https://image.tmdb.org/t/p/w500{{people.profile_path}}');">
@@ -48,15 +49,18 @@
     </div>
     <div class="col-6">
         <div id="carouselExampleControls" class="carousel slide m-2" data-ride="carousel">
+            <ol id="idicator" class="carousel-indicators">
+              <li data-target="#carouselExampleControls" data-slide-to="0" class="active" style="height:65px !important;width:80px !important"></li>
+            </ol>
 						<div class="carousel-inner">
 						<div class="carousel-item active h-50">
-							<h2 style="height:50vh;padding-top:24vh" class="text-center">{{ people.name }}의 작품 목록</h2>
+							<h2 style="height:50vh;padding-top:24vh;padding-bottom:45vh" class="text-center">{{ people.name }}의 작품 목록</h2>
 						</div>
             {% for credit in people.credit_set.all %}
             <div class="carousel-item filmoBox">
               <h3 class="chrName">{{ credit.character }} 역</h3>
 							<a href="{% url 'movies:detail' credit.movie.id %}">
-              <img src="https://image.tmdb.org/t/p/w500{{ credit.movie.poster_path }}" class="mx-auto h-auto">
+                <img src="https://image.tmdb.org/t/p/w500{{ credit.movie.poster_path }}" class="mx-auto h-auto igsrc">
 							</a>
               
             </div>
@@ -66,4 +70,26 @@
         </div>
 			</div>
     </div>
+    <div id="filCount" class="d-none">{{ people.credit_set.all.count }}</div>
     {% endblock %}
+{% block script %}
+<script>
+  const filmoCount = parseInt(document.getElementById('filCount').innerText)
+  const indiCator = document.getElementById('idicator')
+  let iList = document.querySelectorAll('.igsrc')
+  let crPgs = function() {
+    let whereTo = indiCator.lastElementChild.getAttribute('data-slide-to')
+    let element = document.createElement("li")
+    element = document.createElement("li")   
+    element.setAttribute('data-target', "#carouselExampleControls");
+    element.setAttribute('data-slide-to', ++whereTo);
+    return element
+  }
+
+  for (i=0; i<filmoCount;i++){
+    let element = crPgs()
+    element.setAttribute('style', "background-size:cover;height:65px !important;width:80px !important;background-image:url('"+iList[i].src+"')")
+    indiCator.append(element)
+  }
+</script>
+{% endblock %}

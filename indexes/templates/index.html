@@ -68,23 +68,32 @@ body {
         }, 0);
     }
 
-
-    function scrollLst(scroll_pos) {
-        lst.scrollLeft = scroll_pos
+            
+    function sideScroll(direction,speed,distance,step){
+        scrollAmount = 0;
+        var slideTimer = setInterval(function(){
+            if(direction == 'left'){
+                lst.scrollLeft -= step;
+            } else {
+                lst.scrollLeft += step;
+            }
+            scrollAmount += step;
+            if(scrollAmount >= distance){
+                window.clearInterval(slideTimer);
+            }
+        }, speed);
     }
-
     window.addEventListener('wheel', function(e) {
-        if (last_known_scroll_position + e.deltaY > -1) {
-            last_known_scroll_position += e.deltaY;
+        if (e.deltaY > 0) {
+            sideScroll('right',3,360,5)
+        } else {
+            sideScroll('left',3,360,5)
         }
-        if (!flag) {
-            window.requestAnimationFrame(function() {
-                scrollLst(last_known_scroll_position);
-                flag = false;
-            });
-            flag = true;
-        }
-    });
+        })
+
+            
+
+        
 </script>
 
 {% endblock %}

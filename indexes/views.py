@@ -6,7 +6,7 @@ from random import shuffle
 @login_required
 def index(request):
     movies = Movie.objects.all()
-    movies = movies[300:500]
+    movies = movies[100:200]
     context = {
         'movies': movies
     }
