@@ -214,6 +214,7 @@
 {% block body %}
 {% include '../_navbar.html' %}
 <div class="container-fluid p-3 " style="margin-top: 10vh;">
+<span hidden id="score">{{ review.score }}</span>
     <div class="row px-5">
         <div class="col-4 container">
             <div id="carouselExampleControls" class="carousel slide mb-2" data-ride="carousel">
@@ -279,7 +280,9 @@
                     </div>
 
                     <div class="row mt-4">
+                        
                         <div class="col-8 align-content-center pl-5">
+                            <p class="m-0">YOUR RATING <span id="yourRate"></span></p> 
                             {% if review %}
                             <form class="ml-5" method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
                                 {% csrf_token %}
@@ -290,10 +293,16 @@
                                     {% include '_starFieldSet.html' %}
                                 {% endif %}
                         </div>
-                        <div class="col-4">
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-5 text-center">
+                            <h5 class="mt-4"><i class="fa fa-pie-chart mr-3"></i>{{ avg }}</h5>
+                            <small class="border-top">OUR RATING</small>
+
+                        </div>
+                        <div class="col">
                             <h5 class="mt-4"><i class="fa fa-check mr-3"></i>{{ movie.vote_average }}</h5>
-                            <small class="border-top">TMDB avg rate</small>
-                            {{ movie.status }}
+                            <small class="border-top">TMDB RATING</small>
                         </div>
                     </div>
                     <div class="row mt-3 pl-5">
@@ -302,6 +311,7 @@
                     </div>
                 </div>
                 <div class="col-5 ">
+                {{ dirnum }}
                     {% for people in movie.people.all %}
                     {% if people.job == 'Director' %}
                     <h3 class="text-left">DIRECTOR</h3>
@@ -371,7 +381,7 @@
     <div class="container-fluid">
         <div class="row p-0">
             <div class="col-3">
-                <span class="badge badge-danger badge-pill mx-2" id="score">{{ review.score }} 점</span>
+                <span class="badge badge-danger badge-pill mx-2">{{ review.score }} 점</span>
                 <span class="mr-3 pr-3 font-weight-bolder text-warning">{{ user.lastname }}</span>
             </div>
             <small class="col-7 mt-1 text-right w-100">{{ review.content }}</small>
@@ -409,18 +419,21 @@
     ]
     try {
         const starSubmit = document.querySelector('#starSubmit')
-        const score = document.querySelector('#score').innerText[0] + document.querySelector('#score').innerText[1]
-        const my_star = document.querySelector('#star' + score)
-        my_star.checked = true
-        function submit() {
-            starSubmit.click()
+        const score = document.querySelector('#score').innerText
+        if (score>0) {
+            const my_star = document.querySelector('#star' + score)
+            my_star.checked = true
+            const yourRate = document.querySelector('#yourRate')
+            yourRate.innerText = 'IS ' + my_star.value + ' POINT'
         }
     }
     catch{
-        score = null
+        score = 0
     }
-
-
+    function submit() {
+        starSubmit.click()
+    }
+    
     var done = false;
     const APIKEY = 'AIzaSyASPiRLE_GGeu8Of4-ymS5HFDxH2D_OQuQ'
     window.onload = function() {

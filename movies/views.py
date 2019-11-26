@@ -157,10 +157,10 @@ def index(request):
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     all_review = Review.objects.filter(movie_id=movie_pk)
-    # if len(all_review):
-    #     avg = sum(map(lambda x:x.score,all_review))/len(all_review)
-    # else:
-    #     avg = "아직 별점이 없어요"
+    if len(all_review):
+        avg = sum(map(lambda x:x.score,all_review))/len(all_review)
+    else:
+        avg = "아직 별점이 없어요"
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
     if reviews:
         review = reviews[0]
@@ -173,9 +173,8 @@ def detail(request,movie_pk):
             'review' : False
         }
     context['movie'] = movie
-    # context['avg'] = avg
+    context['avg'] = round(avg,2)
     context['credits'] = movie.credit_set.all().order_by('order')
-
     return render(request,'movies/detail.html',context)
 
 @require_POST
