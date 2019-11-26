@@ -8,12 +8,12 @@
 </head>
 <body>
 <br>
-    {{ genre.name }} {{count.count}}
+    {{ genre.name }} {{ filter.count }}  -  {{count}}
     <a href="{% url 'movies:genres' %}">모든 장르</a>
     <a href="{% url 'movies:make_fake' genre.id %}">만들기</a>
     <hr>
-    {% for movie in genre.genre_movies.all %}
-    <p>{{ movie.title }}</p>
+    {% for f in filter %}
+    <p>{{ f.title }}</p>
     <br>
     {% endfor %}
 </body>

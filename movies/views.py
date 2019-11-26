@@ -156,11 +156,16 @@ def index(request):
 
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
+    all_review = Review.objects.filter(movie_id=movie_pk)
+    # if len(all_review):
+    #     avg = sum(map(lambda x:x.score,all_review))/len(all_review)
+    # else:
+    #     avg = "아직 별점이 없어요"
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
     if reviews:
         review = reviews[0]
         context = {
-            'review' : review
+            'review' : review,
         }
     else:
         movie = get_object_or_404(Movie,pk=movie_pk)
@@ -168,7 +173,9 @@ def detail(request,movie_pk):
             'review' : False
         }
     context['movie'] = movie
+    # context['avg'] = avg
     context['credits'] = movie.credit_set.all().order_by('order')
+
     return render(request,'movies/detail.html',context)
 
 @require_POST
@@ -250,25 +257,53 @@ def genres(request):
 
 def genre_detail(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
-    count = User.objects.filter(username__contains=genre.name)
-    return render(request,'movies/genre_detail.html', {'genre':genre,'count':count})
+    count = User.objects.filter(username__contains=genre.name).count()
+
+    count_movies = Movie.objects.filter(vote_count__gte=3000)
+    ko_movies = Movie.objects.filter(original_language='ko').filter(popularity__gte=5)
+    total = count_movies | ko_movies
+    filter = total.filter(genres__id=genre_id)
+    context = {
+        'genre' : genre,
+        'filter' : filter,
+        'count' : count,
+    }
+    return render(request,'movies/genre_detail.html', context )
 
 def make_fake(request,genre_id):
     genre = get_object_or_404(Genre,pk=genre_id)
+    count_movies = Movie.objects.filter(vote_count__gte=3000)
+    ko_movies = Movie.objects.filter(original_language='ko').filter(popularity__gte=5)
+    total = count_movies | ko_movies
+    filter = total.filter(genres__id=genre_id)
+    other = count_movies.difference(filter)
+    others = other.exclude(genres__id=genre_id)
     count = User.objects.filter(username__contains=genre.name).count()
     u = User.objects.create(email=f'{genre.name}{count+1}@inspiration.com',
         username=f'{genre.name}{count+1}',
+        first_name = f'{genre.name}{count+1}',
         password='password'
     )
-    movies = list(genre.genre_movies.all())
-    for movie in np.random.choice(movies,min(30,len(movies)//2),replace =False):
-        s = np.random.normal(movie.vote_average, 1)
+    for movie in np.random.choice(filter,min(40,len(filter)//2),replace =False):
+            s = np.random.normal(movie.vote_average+0.7, 2)
+            if s > 10:
+                s = 10
+            elif s < 0:
+                s = 0 - s
+            Review.objects.create(
+                score = round(s+0.5),
+                content = '',
+                movie_id = movie.pk,
+                user_id = u.id
+            )
+    for movie in np.random.choice(other,min(30,len(other)//2),replace =False):
+        s = np.random.normal(movie.vote_average-1, 2)
         if s > 10:
             s = 10
-        elif s < 0:
-            s = 0 - s
+        elif s < 1:
+            s = 2 - s
         Review.objects.create(
-            score = round(s),
+            score = round(s-0.3),
             content = '',
             movie_id = movie.pk,
             user_id = u.id

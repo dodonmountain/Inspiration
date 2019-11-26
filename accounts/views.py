@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
+from movies.models import Movie, Review
 
 # def my_page(request):
 def signup(request):
@@ -84,37 +85,47 @@ def user_like_genre(user):
 
 def vs_user(user):
     users = User.objects.all()
-    # user_like_genre(user)
-    vs = {}
+    my_movies = Movie.objects.filter(review__user=user)
+    my_review = Review.objects.filter(user=user)
+    vs={}
     for other in users:
+        other_movies = Movie.objects.filter(review__user=other)
+        other_review = Review.objects.filter(user=other)
+        same_movies = my_movies & other_movies
         A, B, C = 0,0,0
-        my_genres = user_like_genre(user)
-        for my_genre in my_genres:
-            other_genres = user_like_genre(other)
-            if my_genre in other_genres:
-                a = my_genres[my_genre]
-                b = other_genres[my_genre]
+        if len(same_movies) > 1:
+            for movie in same_movies:
+                a = my_review.filter(movie=movie)[0].score *5
+                b = other_review.filter(movie=movie)[0].score * 5
                 A += a*a
                 B += b*b
                 C += a*b
-        try:
-            vs[other.id] = C / (A**(0.5) * B**(0.5))
-            print(vs[other.id])
-        except:
-            pass
+            try:
+                vs[other.id] = C / (A**(0.5) * B**(0.5))
+                # print(vs[other.id])
+            except:
+                pass
     sorted_vs = sorted(vs.items(), key=lambda kv: kv[1],reverse=True)
     for v in sorted_vs[:20]:
         user = User.objects.get(pk=v[0])
-        print(user_like_genre(user))
+    for a in sorted_vs[:20]:
+        print(a)
+        for same in my_movies & Movie.objects.filter(review__user_id=a):
+            print(same.title)
     return sorted_vs[:20]
 
 @login_required
 def userDetail(request, user_id):
     # if user_id == request.user.id:
     user = get_object_or_404(User, pk=user_id)
+    my_review = user.review_set.filter()
+    my_movies = Movie.objects.filter(review__user=user)
+    one_movies = Movie.objects.filter(review__user_id=1)
+    same_movie = my_movies & one_movies
     context = {
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
+        'my_review' : my_review,
         # 'vs' : vs_user(user)
     }
     return render(request, 'accounts/detail.html', context)
