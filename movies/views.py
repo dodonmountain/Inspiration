@@ -160,7 +160,7 @@ def detail(request,movie_pk):
     if len(all_review):
         avg = sum(map(lambda x:x.score,all_review))/len(all_review)
     else:
-        avg = "아직 별점이 없어요"
+        avg = 0
     reviews = Review.objects.filter(movie_id=movie_pk, user_id = request.user.pk)
     if reviews:
         review = reviews[0]
@@ -173,11 +173,7 @@ def detail(request,movie_pk):
             'review' : False
         }
     context['movie'] = movie
-<<<<<<< HEAD
     context['avg'] = round(avg,2)
-=======
-    context['avg'] = avg
->>>>>>> ebfecf5fdd36e283b165d06dd023ba4e7c694d2f
     context['credits'] = movie.credit_set.all().order_by('order')
     return render(request,'movies/detail.html',context)
 

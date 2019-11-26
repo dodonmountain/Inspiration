@@ -430,8 +430,16 @@
     catch{
         score = 0
     }
+
     function submit() {
-        starSubmit.click()
+        let tick = false
+        if (!tick){
+            setTimeOut({
+                starSubmit.click();
+                tick = true;
+            },100)
+            tick = false
+        }
     }
     
     var done = false;
