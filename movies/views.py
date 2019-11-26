@@ -173,7 +173,11 @@ def detail(request,movie_pk):
             'review' : False
         }
     context['movie'] = movie
+<<<<<<< HEAD
     context['avg'] = round(avg,2)
+=======
+    context['avg'] = avg
+>>>>>>> ebfecf5fdd36e283b165d06dd023ba4e7c694d2f
     context['credits'] = movie.credit_set.all().order_by('order')
     return render(request,'movies/detail.html',context)
 
@@ -211,12 +215,12 @@ def like(request,movie_pk):
 
 def search(request):
     query = request.GET.get('q')
-    # title_movies = Movie.objects.filter(title__contains=query)
-    search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
-    title_movies = requests.get(search_url).json().get('results')
+    title_movies = Movie.objects.filter(title__contains=query)
+    # search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
+    # title_movies = requests.get(search_url).json().get('results')
     
     asdf_movies = Movie.objects.filter(overview__contains=query)
-    # overview_movies = asdf_movies.difference(title_movies)
+    overview_movies = asdf_movies.difference(title_movies)
     actors = People.objects.filter(name__contains=query)
     context = {
         "title_movies" : title_movies,

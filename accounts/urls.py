@@ -9,5 +9,6 @@ urlpatterns = [
     path('logout/', views.logout, name="logout"),
     path('update/', views.update, name="update"),
     path('password/', views.update_password, name="update_password"),
-    path('detail/<int:user_id>', views.userDetail, name="detail"),
+    path('<int:user_id>/', views.userDetail, name="detail"),
+    path('<int:user_id>/select/',views.select,name="select")
 ]
