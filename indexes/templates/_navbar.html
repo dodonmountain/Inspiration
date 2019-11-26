@@ -17,6 +17,20 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto flex-nowrap justify-content-between">
                 <li class="nav-item">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Small button
+                        </button>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'indexes:genre_select' 1 %}">국산</a>
+
+                        {% for genre in genres %}
+                            <a class="dropdown-item" href="{% url 'indexes:genre_select' genre.id %}">{{genre.name}}</a>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
                 <div class="githubButton">
                     <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
                 </div>

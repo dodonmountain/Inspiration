@@ -7,5 +7,6 @@ app_name = 'indexes'
 urlpatterns = [
     path('index/',views.index,name="index"),
     path('',views.welcome, name="welcome"),
-    path('rater/', views.rater, name="rater")
+    path('rater/', views.rater, name="rater"),
+    path('index/<int:genre_id>/',views.genre_select,name="genre_select")
 ]
