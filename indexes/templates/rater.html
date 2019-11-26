@@ -3,6 +3,7 @@
 <style>
     html {
         height: 100vh;
+        overflow: hidden;
     }
 
     body {
@@ -18,12 +19,12 @@
         color: transparent;
         font-size: 9vw;
         text-shadow: white;
-        transition: 250ms;
         position: fixed;
     }
 
     .twinkle {
-        animation: twin 0.3s
+        animation: twin 3s;
+        shadow: 5px 5px white;
     }
 
     @keyframes twin {
@@ -34,7 +35,7 @@
 
         to {
             color: transparent;
-            transform: rotate(270deg);
+            transform: rotate(200deg);
         }
     }
 
@@ -46,7 +47,7 @@
         --carousel-tile-height: calc(var(--carousel-tile-width) / (16 / 9));
 
         /* Growth Factor */
-        --carousel-growth-factor: 2;
+        --carousel-growth-factor: 1.8;
 
         /* Fade to Opacity */
         --carousel-fade-opacity: 0.25;
@@ -133,11 +134,46 @@
     .car-body {
         font-family: 'Arial Narrow Bold', sans-serif;
     }
+
+    #overlay {
+        position: fixed;
+        /* Sit on top of the page content */
+        width: 100%;
+        /* Full width (cover the whole page) */
+        height: 100%;
+        /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+    }
+
+    #rateLeft {
+        margin: 0 30rem;
+        background-color: rgba(0, 0, 0, 0.3)
+    }
+		.scoreForNow{
+			font-size: 14rem;
+			color: white;
+			font-family: 'Impact';
+		}
 </style>
 {% endblock css %}
 
 {% block body %}
-<div id='car' class="carousel fadein mt-3 mb-0 h-100">
+<div id="overlay" class="container-fluid">
+    <h1 class="text-center text-white" id="rateLeft">15</h1>
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4 text-center">
+				<h1 class="mt-5 text-white">SCORE</h1>
+				<h1 class="scoreForNow">RATE NOW</h1>
+			</div>
+			<div class="col-4"></div>
+		</div>
+</div>
+<div id='car' class="carousel fadein mt-3 mb-0">
     <div class="carousel-row carousel-row-hover">
         {% for movie in movies %}
         <div class="carousel-tile">
@@ -154,8 +190,8 @@
         {% endfor %}
     </div>
 </div>
-<div class="starField container-fluid">
-    <div class="row justify-content-lg-around">
+<div class="starField container-fluid mb-0 overflow-hidden">
+    <div class="row justify-content-lg-around m-0">
         <div id="star1">★</div>
         <div id="star2">★</div>
         <div id="star3">★</div>
@@ -188,7 +224,8 @@
     let passThis = false;
     let movieNow = 1;
     let target = document.querySelectorAll('.carousel-tile')[movieNow]
-
+		let colors = ['royalblue', 'orange', 'darkviolet', 'hotpink', 'tomato','crimson',  'seagreen']
+		let random_color = colors[Math.floor(Math.random() * colors.length)];
     function sideScroll(direction, speed, distance, step) {
         scrollAmount = 0;
         var slideTimer = setInterval(function() {
@@ -203,45 +240,49 @@
             }
         }, speed);
     }
+    const rLeft = document.getElementById('rateLeft')
     window.onkeydown = function() {
-        if (event.keyCode == 81) {
+        pressedScore = 0
+        if (event.key == 'q') {
             pressedScore = 1
-        } else if (event.keyCode == 87) {
+        } else if (event.key == 'w') {
             pressedScore = 2
-        } else if (event.keyCode == 69) {
+        } else if (event.key == 'e') {
             pressedScore = 3
-        } else if (event.keyCode == 82) {
+        } else if (event.key == 'r') {
             pressedScore = 4
-        } else if (event.keyCode == 84) {
+        } else if (event.key == 't') {
             pressedScore = 5
-        } else if (event.keyCode == 89) {
+        } else if (event.key == 'y') {
             pressedScore = 6
-        } else if (event.keyCode == 85) {
+        } else if (event.key == 'u') {
             pressedScore = 7
-        } else if (event.keyCode == 73) {
+        } else if (event.key == 'i') {
             pressedScore = 8
-        } else if (event.keyCode == 79) {
+        } else if (event.key == 'o') {
             pressedScore = 9
-        } else if (event.keyCode == 80) {
+        } else if (event.key == 'p') {
             pressedScore = 10
         } else if (event.keyCode == 32) {
             passThis = true
         }
-        if (0 < pressedScore < 11) {
+        if (0 < pressedScore && pressedScore < 11) {
             for (let i = 0; i < pressedScore; i++) {
                 setTimeout(() => {
                     Stars[i].classList.add('twinkle')
                 }, 250)
-                	Stars[i].classList.remove('twinkle')
-								};
-						console.log(event)
-						car.scrollLeft += 629.2
-						pressedScore = 0
-						target = document.querySelectorAll('.carousel-tile')[movieNow]
-						target.classList.remove('carousel-tile-hover')
-						movieNow += 1
-						document.querySelectorAll('.carousel-tile')[movieNow].classList.add('carousel-tile-hover')
-					};
+                Stars[i].classList.remove('twinkle')
+            };
+            car.scrollLeft += 629.2
+            target = document.querySelectorAll('.carousel-tile')[movieNow]
+            target.classList.remove('carousel-tile-hover')
+            movieNow += 1
+            document.querySelectorAll('.carousel-tile')[movieNow].classList.add('carousel-tile-hover')
+            rLeft.innerText -= 1
+						document.querySelector('.scoreForNow').innerText = pressedScore
+						random_color = colors[Math.floor(Math.random() * colors.length)];
+						document.querySelector('.scoreForNow').style.color = random_color
         };
+    }
 </script>
 {% endblock script %}
