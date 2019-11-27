@@ -2,242 +2,341 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inspiration</title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Permanent+Marker|Yeon+Sung&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
-    <style>
-        html {
-            scroll-behavior: smooth;
-            font-family: 'Nanum Gothic', 'Permanent Marker','Yeon Sung', sans-serif;
-        }
-        .githubButton{
-            width: 60px !important;
-            height: 45px !important;
-            background: #3f3f3f;
-            margin: 0 1rem;
-            overflow: hidden;
-            text-align: center;
-            transition: 0.2s all linear !important;
-            border-radius: 5px !important;
-        }
-        .githubButton:hover{
-            background-color: #FAD961;
-            background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
-            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-        }
-        .bmc-button img {
-            width: 35px !important;
-            margin-bottom: 1px !important;
-            box-shadow: none !important;
-            border: none !important;
-            vertical-align: middle !important;
-            margin-left: 1rem;
-        }
-        .bmc-button {
-            line-height: 35px !important;
-            height: 45px !important;
-            min-width: 60px !important;
-            text-decoration: none !important;
-            display: inline-flex !important;
-            color: #ffffff !important;
-            background: #3f3f3f;
-            border-radius: 5px !important;
-            font-size: 28px !important;
-            letter-spacing: 0.6px !important;
-            margin: 0 auto !important;
-            font-family: 'Cookie', cursive !important;
-            -webkit-box-sizing: border-box !important;
-            box-sizing: border-box !important;
-            -o-transition: 0.3s all linear !important;
-            -webkit-transition: 0.3s all linear !important;
-            -moz-transition: 0.3s all linear !important;
-            -ms-transition: 0.3s all linear !important;
-            transition: 0.3s all linear !important;
-        }
-
-        .bmc-button:hover,
-        .bmc-button:active,
-        .bmc-button:focus {
-            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-            text-decoration: none !important;
-            background-color: #FAD961;
-            background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
-            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-            opacity: 0.85 !important;
-            color: #000000 !important;
-        }
-        nav {
-            background: none;
-        }
-
-        button {
-            font-family: 'Arial Narrow Bold', sans-serif;
-            ;
-            background: royalblue;
-            color: #fff;
-            border: none;
-            position: relative;
-            height: 60px;
-            font-size: 1.6em;
-            padding: 0 2em;
-            cursor: pointer;
-            transition: 800ms ease all;
-            outline: none;
-        }
-
-        button:hover {
-            background: initial;
-            color: #fff;
-        }
-
-        button:before,
-        button:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 2px;
-            width: 0;
-            background: currentColor;
-            transition: 400ms ease all;
-        }
-
-        button:after {
-            right: inherit;
-            top: inherit;
-            left: 0;
-            bottom: 0;
-            background: currentColor;
-        }
-
-        button:hover:before,
-        button:hover:after {
-            width: 100%;
-            transition: 800ms ease all;
-        }
-
-        .searchField {
-            width: 10vw;
-        }
-
-        .searchField:focus {
-            animation: searchExpand 300ms ease-in;
-            width: 40vw !important;
-            background: seashell !important;
-            color: black !important;
-            text-align: right;
-            margin-right: 2rem;
-        }
-
-        @keyframes searchExpand {
-            from {
-                width: 10vw
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Inspiration</title>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Permanent+Marker|Yeon+Sung&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        <style>
+            html {
+                scroll-behavior: smooth;
+                font-family: 'Nanum Gothic', 'Permanent Marker', 'Yeon Sung', sans-serif;
+            }
+            .githubButton {
+                width: 60px !important;
+                height: 45px !important;
+                background: #3f3f3f;
+                margin: 0 1rem;
+                overflow: hidden;
+                text-align: center;
+                transition: 0.2s all linear !important;
+                border-radius: 5px !important;
             }
 
-            to {
-                width: 40vw
+            .githubButton:hover {
+                background-color: #FAD961;
+                background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+                box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
             }
-        }
 
-        .navbar {
-            font-family: 'Arial Narrow Bold', sans-serif;
-        }
-
-        .nav-link:hover {
-            color: orange !important;
-        }
-
-        #loading {
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            left: 0px;
-            position: fixed;
-            display: block;
-            opacity: 0.7;
-            background-color: #fff;
-            z-index: 99;
-            text-align: center;
-        }
-
-        #loading-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 100;
-        }
-        #lst {
-            transform: translateX(2em);
-        }
-        .genreButton {
-            color: white;
-            height: 45px;
-            font-size: 1.1rem;
-            text-align: center;
-            transition: 200ms;
-            vertical-align: middle !important;
-            border-radius: 5px !important;
-            width: 10rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .genreButton:hover{
-            color: orange;
-
-        }
-        .ddm {
-            border: 0;
-            background: #2f2f2f;
-            border-radius: 4px;
-            opacity: 0.9;
-        }
-        .dropdon-item{
-            transition: 200ms;
-        }
-        .dropdown-item:hover{
-            background-color: #FAD961;
-            color: #2f2f2f !important;
-            font-weight: bolder;
-            text-align: center;
-            height: 2.3rem;
-            font-size: 1.2rem;
-            padding-top: 0.3rem;
-        }
-        .gitDiv {
-            margin-left: auto;
-        }
-    </style>
-    {% block css %}{% endblock css %}
-</head>
-
-<body>
-    {% block body %}{% endblock body %}
-    ​
-    <!-- javascript -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-    <script>
-        var prevScrollpos = window.pageYOffset;
-        window.onscroll = function() {
-            var currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                document.getElementById("navBar").style.top = "0";
-            } else {
-                document.getElementById("navBar").style.top = "-500px";
+            .bmc-button img {
+                width: 35px !important;
+                margin-bottom: 1px !important;
+                box-shadow: none !important;
+                border: none !important;
+                vertical-align: middle !important;
+                margin-left: 1rem;
             }
-            prevScrollpos = currentScrollPos;
-        }
-    </script>
 
-    {% block script %}{% endblock script %}
-</body>
+            .bmc-button {
+                line-height: 35px !important;
+                height: 45px !important;
+                min-width: 60px !important;
+                text-decoration: none !important;
+                display: inline-flex !important;
+                color: #ffffff !important;
+                background: #3f3f3f;
+                border-radius: 5px !important;
+                font-size: 28px !important;
+                letter-spacing: 0.6px !important;
+                margin: 0 auto !important;
+                font-family: 'Cookie', cursive !important;
+                -webkit-box-sizing: border-box !important;
+                box-sizing: border-box !important;
+                -o-transition: 0.3s all linear !important;
+                -webkit-transition: 0.3s all linear !important;
+                -moz-transition: 0.3s all linear !important;
+                -ms-transition: 0.3s all linear !important;
+                transition: 0.3s all linear !important;
+            }
+
+            .bmc-button:hover,
+            .bmc-button:active,
+            .bmc-button:focus {
+                -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+                text-decoration: none !important;
+                background-color: #FAD961;
+                background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+                box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+                opacity: 0.85 !important;
+                color: #000000 !important;
+            }
+
+            nav {
+                background: none;
+            }
+
+            button {
+                font-family: 'Arial Narrow Bold', sans-serif;
+                ;
+                background: royalblue;
+                color: #fff;
+                border: none;
+                position: relative;
+                height: 60px;
+                font-size: 1.6em;
+                padding: 0 2em;
+                cursor: pointer;
+                transition: 800ms ease all;
+                outline: none;
+            }
+
+            button:hover {
+                background: initial;
+                color: #fff;
+            }
+
+            button:before,
+            button:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 2px;
+                width: 0;
+                background: currentColor;
+                transition: 400ms ease all;
+            }
+
+            button:after {
+                right: inherit;
+                top: inherit;
+                left: 0;
+                bottom: 0;
+                background: currentColor;
+            }
+
+            button:hover:before,
+            button:hover:after {
+                width: 100%;
+                transition: 800ms ease all;
+            }
+
+            .searchField {
+                width: 10vw;
+            }
+
+            .searchField:focus {
+                animation: searchExpand 300ms ease-in;
+                width: 40vw !important;
+                background: seashell !important;
+                color: black !important;
+                text-align: right;
+                margin-right: 2rem;
+            }
+
+            @keyframes searchExpand {
+                from {
+                    width: 10vw
+                }
+
+                to {
+                    width: 40vw
+                }
+            }
+
+            .navbar {
+                font-family: 'Arial Narrow Bold', sans-serif;
+            }
+
+            .nav-link:hover {
+                color: orange !important;
+            }
+
+            #loading {
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+                position: fixed;
+                display: block;
+                opacity: 0.7;
+                background-color: #fff;
+                z-index: 99;
+                text-align: center;
+            }
+
+            #loading-image {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 100;
+            }
+
+            #lst {
+                transform: translateX(2em);
+            }
+
+            .genreButton {
+                color: white;
+                height: 45px;
+                font-size: 1.1rem;
+                text-align: center;
+                transition: 200ms;
+                vertical-align: middle !important;
+                border-radius: 5px !important;
+                width: 10rem;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .genreButton:hover {
+                color: orange;
+
+            }
+
+            .ddm {
+                border: 0;
+                background: #2f2f2f;
+                border-radius: 4px;
+                opacity: 0.9;
+            }
+
+            .dropdon-item {
+                transition: 200ms;
+            }
+
+            .dropdown-item:hover {
+                background-color: #FAD961;
+                color: #2f2f2f !important;
+                font-weight: bolder;
+                text-align: center;
+                height: 2.3rem;
+                font-size: 1.2rem;
+                padding-top: 0.3rem;
+            }
+
+            .gitDiv {
+                margin-left: auto;
+            }
+
+            @media screen and (max-width: 700px) {
+
+                /* in progress */
+                .queIndicator {
+                    display: none;
+                }
+
+                #ifFirstTime {
+                    display: none;
+                }
+
+                .gitDiv {
+                    display: none;
+                }
+
+                .bmcDiv {
+                    display: none;
+                }
+
+                .navbar-collapse {
+                    background: rgba(0, 0, 0, 0.7);
+                }
+
+                .genreButton {
+                    margin: 0 !important;
+                }
+
+                .nav-item>button {
+                    height: 30px !important;
+                    display: block !important;
+                }
+                .searchField {
+                width: 70%;
+                transition: none;
+                }
+                .searchField:focus {
+                    animation: none;
+                    width: 70% !important;
+                    margin-right: 0;
+                    background: none;
+                    text-align: left;
+                    background: none !important;
+                    color: white !important;
+                }
+            }
+    #myBtn {
+        display: none;
+        height: 3.3rem;
+        background-color: orange;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        cursor: pointer;
+        font-size: 3rem;
+        transition: 0.5s;
+        padding: 2rem 2rem;
+        border-radius: 7px 7px;
+    }
+
+    #myBtn > i {
+        position: fixed;
+        right: 40px;
+        bottom: 24px
+    }
+
+    #myBtn:hover {
+        background-color: #fff;
+        color: orange;
+    }
+        </style>
+        {% block css %}{% endblock css %}
+    </head>
+
+    <body>
+        {% block body %}{% endblock body %}
+        ​<div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-home"></i></div>
+        <!-- javascript -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <script>
+            let prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navBar").style.top = "0";
+                } else {
+                    document.getElementById("navBar").style.top = "-500px";
+                }
+                prevScrollpos = currentScrollPos;
+            }
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            const mybutton = document.getElementById("myBtn");
+            function scrollFunction() {
+                if (getCurrentScrollPercentage() > 100) {
+                    mybutton.style.display = "block";
+                    document.getElementById("navBar").hidden = true
+                } else {
+                    mybutton.style.display = "none";
+                    document.getElementById("navBar").hidden = false
+                }
+            }
+            function getCurrentScrollPercentage(){
+                return (window.scrollY + window.innerHeight) / document.body.clientHeight * 100
+            }
+        </script>
+
+        {% block script %}{% endblock script %}
+    </body>
 
 </html>

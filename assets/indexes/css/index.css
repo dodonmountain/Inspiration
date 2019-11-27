@@ -13,10 +13,14 @@ body {
 .queIndicator {
   font-weight: bold;
   position: fixed;
-  left: 4vw;
-  top: 13vh;
+  left: 43vw;
+  font-size: 2.3rem;
+  border-radius: 1rem 1rem;
   margin-bottom: 3vh;
   color: #fafafa;
+  background: rgba(0, 0, 0, 0.7);
+  font-family: 'Yeon Sung';
+  z-index: 99;
 }
 
 @keyframes fadeOut {
@@ -179,7 +183,23 @@ body {
   .queIndicator{
     display: none;
   }
-  nav {
-    display: block;
+  #ifFirstTime {
+    display: none;
+  }
+  .gitDiv {
+    display: none;
+  }
+  .bmcDiv {
+    display: none;
+  }
+  .navbar-collapse {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .genreButton {
+    margin: 0 !important;
+  }
+  .nav-item > button {
+    height: 30px !important;
+    display: block !important;
   }
 }

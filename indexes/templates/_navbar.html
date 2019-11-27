@@ -18,7 +18,7 @@
     </li>
     {% endif %}
     <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon mr-4">menu</span>
     </button>
 
     {% if user.is_authenticated %}
@@ -26,8 +26,8 @@
         <ul class="navbar-nav flex-nowrap w-100">
             <li class="nav-item mr-auto">
                 <div class="btn-group">
-                    <div class="nav-link text-white genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                        <p class="m-auto">장르별 인기 순위</p>
+                    <div class="nav-link genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <p class="m-auto font-weight-bold">장르별 인기 순위</p>
                     </div>
                     <div class="dropdown-menu ddm ml-5">
                         <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' 1 %}">한국 영화</a>
@@ -42,7 +42,7 @@
                     <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
                 </div>
             </li>
-            <li class="nav-item mr-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
+            <li class="nav-item mr-2 bmcDiv"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
             </li>
             <li class="nav-item mx-2">
                 <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:logout' %}">로그아웃</a>
@@ -53,7 +53,7 @@
             <li class="nav-item">
                 <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2 bg-transparent text-white searchField" type="search" name="q" placeholder="영화명, 장르, 배우">
-                    <button style="height:inherit; font-size: 1vw;background: none;" type="submit">찾아줘!</button>
+                    <button style="height:2.3rem;font-size:1rem;font-weight:bolder;background: none;" type="submit">찾아줘!</button>
                 </form>
             </li>
         </ul>

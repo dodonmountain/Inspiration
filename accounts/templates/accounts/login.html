@@ -11,7 +11,7 @@
         Inspiration
     </h1></a>
   <div class="row">
-    <form method="post" class="col-6 text-center loginBox flex-lg-nowrap">
+    <form method="post" class="col-12 col-xl-6 text-center loginBox flex-lg-nowrap">
       {% csrf_token %}
       <div class="mt-5 text-white">
         <h2 class="justify-content-center text-white">LOG IN TO <span class="ourAppName">INSPIRATION</span></h2>
@@ -31,7 +31,7 @@
           <div class="text-right text-muted copyright">
             copyright (c) 2019. SSAFY DJ-py-02-01
           </div>
-          <a href="{% provider_login_url 'kakao' %}"><img src="{% static 'img/kakao_login.png' %}" style="height: 40px;"></a>
+          <a href="{% provider_login_url 'kakao' %}"><img src="{% static 'img/kakao_login.png' %}" style="height: 40px;margin-right: 2rem;"></a>
           <a href="{% provider_login_url 'google' %}"><img src="{% static 'img/google_login.png' %}" style="height: 44px;"></a>
         </div>
       </div>

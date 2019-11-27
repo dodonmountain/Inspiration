@@ -60,14 +60,15 @@ window.onkeydown = function() {
         } else if (event.key == '0') {
             pressedScore = 10
         } else if (event.keyCode == 32) {
+            pressedScore = 11
             passThis = true
         }
         if (0 < pressedScore && pressedScore < 11) {
             for (let i = 0; i < pressedScore; i++) {
                 setTimeout(() => {
-                    Stars[i].classList.add('twinkle')
-                }, 250)
-                Stars[i].classList.remove('twinkle')
+                    Stars[i].classList.add('zoomOutUp')
+                }, 500)
+                Stars[i].classList.remove('zoomOutUp')
             };
             car.scrollLeft += 629.2
             target = document.querySelectorAll('.carousel-tile')[movieNow]
@@ -99,7 +100,26 @@ window.onkeydown = function() {
                 former.hidden = true
                 former.classList.remove('scoreForNow')
             }, 300);
-        };
+        } else if (pressedScore === 11) {
+            car.scrollLeft += 629.2
+            movieNow += 1
+            widthNow = 100
+            clearInterval()
+            target = document.querySelectorAll('.carousel-tile')[movieNow]
+            target.classList.remove('carousel-tile-hover')
+            former = document.querySelector('.scoreForNow')
+            document.querySelectorAll('.carousel-tile')[movieNow].classList.add('carousel-tile-hover')
+            random_color = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelector('.scoreForNow').style.color = random_color
+            former.innerText = 'PASS'
+            let cln = former.cloneNode(true)
+            former.parentNode.appendChild(cln)
+            former.classList.add('scoreFormer')
+            setTimeout(() => {
+                former.hidden = true
+                former.classList.remove('scoreForNow')
+            }, 300);
+        }
     }
 
 

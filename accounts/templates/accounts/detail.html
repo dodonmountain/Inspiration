@@ -2,26 +2,34 @@
 {% block css %}
 <style>
   body {
-    background-color: #1f1f1f;
-    color: #fff
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    color: #fff;
+    font-family: "Yeon Sung";
   }
 
   .movieSteel {
     border-radius: 5%;
-    height: 14rem;
-    width : 12rem;
+    height: 20rem;
+    width : 100%;
     margin: 0;
-    background-size: stretch;
+    background-size: cover;
     background-position: center;
-  }
-
-  .movie-row {
-    height : 10wh;
   }
 
   #stars > i {
     color : #FFD700;
-    font-size : 40px;
+    font-size : 2.3rem;
+    margin-top: 1rem;
+  }
+  .reviewField {
+    color: #1f1f1f;
+    background: aliceblue;
+    text-align: center;
+    word-wrap: auto;
+    border-radius: 5px 5px;
+  }
+  .row {
+    align-items: center;
   }
 </style>
 {% endblock %}
@@ -30,60 +38,43 @@
 {% include '_navbar.html' %}
 <div class="container mt-5 p-5">
   <div class="row text-white">
-    <h1 class="mt-5">{{ userinfo.first_name }} 님의 관심사</h1>
+    <h1 class="mt-5">{{ userinfo.first_name }}</h1>
   </div>
-  <h3>즐겨찾기</h3>
+  <h3>LIKEY MOVIES</h3>
   <div class="container">
-    {% for movie in userinfo.like_movies.all %}
     <div class="row movie-row">
-      <div class="col-3">
-        <a href="{% url 'movies:detail' movie.id %}">
-          <div class="movieSteel"
-            style="background-image: url('https://image.tmdb.org/t/p/w200{{movie.poster_path}}')">
-          </div>
-        </a>
-      </div>
-      <div class="col-9">
-        asdfasf
-      </div>
-    </div>
+    {% for movie in userinfo.like_movies.all %}
+      <a href="{% url 'movies:detail' movie.id %}">
+        <div class="col-12 col-xl-3">
+          <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{movie.poster_path}}')">
+        </div>
+      </a>
     {% endfor %}
-  </div>
-  <hr>
-  <h3>장르</h3>
-  <div class="container">
-  {% for a in vs %}
-    <div class="row movie-row mt-3">
-      <div class="col-3">
-        <a href="{% url 'movies:detail' a.0.id %}">
-          <div class="movieSteel"
-            style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.poster_path}}')">
-          </div>
-        </a>
-      </div>
-      <div class="col-3">
-        <p>{{ a.0 }}</p>
-        {{ a.1 }}점 - {{ a.2 }}%
-      </div>
     </div>
-  <br>
+  </div>
+  <hr class="border-white">
+  <h3>나의 장르별 선호도는?</h3>
+  <div class="row movie-row mt-3">
+    {% for a in vs %}
+    <a href="{% url 'movies:detail' a.0.id %}">
+      <div class="col-12 col-xl-3">
+        <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.poster_path}}')"></div>
+      <p>{{ a.0 }} >> {{ a.1 }}점 {{ a.2 }}%</p>
+    </div>
+  </a>
   {% endfor %}
   </div>
-  <hr>
-  <h3>나의 리뷰</h3>
-  <div class="container">
-    {% for review in userinfo.review_set.all %}
-    <div class="row movie-row mt-3">
-      <div class="col-3">
-        <a href="{% url 'movies:detail' review.movie_id %}">
-          <div class="movieSteel"
-            style="background-image: url('https://image.tmdb.org/t/p/w200{{review.movie.poster_path}}')">
-          </div>
+  <hr class="border-white">
+  <h3>MY REVIEW</h3>
+  <div class="container-fluid">
+      <div class="row movie-row mt-3">
+      {% for review in userinfo.review_set.all %}
+      <a href="{% url 'movies:detail' review.movie_id %}" class="text-decoration-none text-white">
+      <div class="col-12 col-xl-3">
+        <h3 class="text-center">{{ review.movie.title }}</h3>
+          <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{review.movie.poster_path}}')"></div>
         </a>
-      </div>
-      <div class="col-9">
-        <p>{{ review.movie.title }}</p>
-        <div id="stars">
+        <div class="ml-3" id="stars">
           <p hidden class="star">{{ review.score }}</p>
             <i id="star1" class="fa fa-star-o"></i>
             <i id="star2" class="fa fa-star-o"></i>
@@ -91,13 +82,14 @@
             <i id="star4" class="fa fa-star-o"></i>
             <i id="star5" class="fa fa-star-o"></i>
         </div>
-        {{ review.content }}
+        <p class="reviewField mt-1 mb-5">{{ review.content }}</p>
       </div>
-    </div>
+    </a>
     {% endfor %}
   </div>
   {% endblock %}
-
+</div>
+</div>  
   {% block script %}
   <script>
     const star =document.querySelectorAll('.star')

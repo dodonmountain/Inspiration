@@ -2,21 +2,26 @@
 {% load static %}
 
 {% block css %}
-<!-- <link rel="stylesheet" href="{% static 'movies/css/starrating.css' %}"> -->
+
 <style>
     body {
-        background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
-        background-blend-mode: multiply;
-        font-family: 'Arial Narrow Bold', sans-serif;
+        background-image: linear-gradient(to top, #1f1f1f 0%, #1e3c72 1%, #1f1f1f 100%);     
+        font-family: 'Nanum Gothic', sans-serif;   
         color: white;
     }
 
     h3 {
         text-shadow: black 1px 1px;
+        font-family: 'Yeon Sung', sans-serif;
+    }
+    @media screen and (max-width: 700px) {
+        h3{
+            display: none;
+        }
     }
 
     .blockquote-footer {
-        font-family: 'Noto Serif KR', serif;
+        font-family: 'Yeon Sung', sans-serif;
     }
 
     .posterBox {
@@ -28,6 +33,7 @@
 
     .genreIndicator {
         display: flexbox;
+        font-family: 'Nanum Gothic';
         padding: 7px;
         border-bottom-right-radius: 40%;
         border-top-right-radius: 40%;
@@ -41,13 +47,14 @@
     }
 
     .overview {
+        font-family: 'Nanum Gothic';
         font-weight: 700;
         text-indent: 3rem;
         font-size: 1.2rem;
         background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
         color: #2f2f2f;
         box-shadow: 0.2rem 0.2rem white;
-        border-top: 3px dotted white;
+        border-radius: 20px 20px;
     }
 
     .director {
@@ -191,7 +198,7 @@
         width: 100%;
         height: 4vh;
         text-align: center;
-        border-radius: 0;
+        border-radius: 10px 5px;
     }
 
     .review-button {
@@ -202,6 +209,7 @@
         height: 3.9vh;
         text-align: center;
         background-color: orange;
+        border-radius: 10px 10px;
     }
 
     .charName:hover {
@@ -221,7 +229,7 @@
 <div class="container-fluid p-3 " style="margin-top: 10vh;">
 <span hidden id="score">{{ review.score }}</span>
     <div class="row px-5">
-        <div class="col-4 container">
+        <div class="col-12 col-xl-4 container">
             <div id="carouselExampleControls" class="carousel slide mb-2" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active h-50">
@@ -262,9 +270,9 @@
                 <form action="{% url 'movies:like' movie.pk %}" method="post">
                     {% csrf_token %}
                     {% if not movie.like_user or user not in movie.like_user.all %}
-                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-up"></i>Likey</button>
+                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-up"></i><h3 class="d-inline">Likey</h3></button>
                     {% else %}
-                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-down"></i>Likey 취소</button>
+                    <button class="likeyButton" type="submit"><i class="fa fa-thumbs-down"></i><h3 class="d-inline">Likey 취소</h3></button>
                     {% endif %}
                 </form>
             </div>
@@ -272,9 +280,9 @@
                 <small>{{movie.like_user.count }} 명이 좋아합니다.</small>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-12 col-xl-8">
             <div class="row container-fluid">
-                <div class="col-7">
+                <div class="col-12 col-xl-7">
                     <h3>GENRE TAGS</h3>
                     <div class="row pl-5">
                         {% for genre in movie.genres.all %}
@@ -287,12 +295,11 @@
                         <div class="col-8 align-content-center pl-5">
                             <p class="m-0">YOUR RATING <span id="yourRate"></span></p> 
                             {% if review %}
-                            <form class="ml-5" method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
+                            <form class="ml-4" method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
                                 {% csrf_token %}
                                     {% include '_starFieldSet.html' %}
                                 {% else %}
-                                <form class="ml-5" method='post' action="{% url 'movies:review' movie.pk %}">
-
+                                <form class="ml-4" method='post' action="{% url 'movies:review' movie.pk %}">
                                 {% csrf_token %}
                                     {% include '_starFieldSet.html' %}
                                 {% endif %}
@@ -300,10 +307,9 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-5 text-center">
+                        <div class="col-6 col-xl-5 text-center">
                             <h5 class="mt-4"><i class="fa fa-pie-chart mr-3"></i>{{ avg }}</h5>
                             <small class="border-top">OUR RATING</small>
-
                         </div>
                         <div class="col">
                             <h5 class="mt-4"><i class="fa fa-check mr-3"></i>{{ movie.vote_average }}</h5>
@@ -315,14 +321,14 @@
                         <div class="mt-1" id="ytp"></div>
                     </div>
                 </div>
-                <div class="col-5 ">
+                <div class="col-12 col-xl-5 ">
                 {{ dirnum }}
                     {% for people in movie.people.all %}
                     {% if people.job == 'Director' %}
                     <h3 class="text-left">DIRECTOR</h3>
                     <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');">
                     </div>
-                    <h3 class="text-right mt-5 border-bottom">{{ people.name }}</h3>
+                    <h4 class="text-right mt-5 border-bottom">{{ people.name }}</h4>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -332,14 +338,12 @@
                     </h3>
                     <p class="overview p-4">{{ movie.overview }}</p>
                 </div>
-                <div class="row">
-                </div>
             </div>
         </div>
     </div>
-    <div class="container" style="font-family: Noto serif serif;">
+    <div class="container-fluid">
         <h3 class="text-center border-bottom">CASTS</h3>
-        <div class="row border-bottom mb-5">
+        <div class="row border-bottom mb-5 pl-5">
             {% for credit in credits %}
             <a href="{% url 'movies:actor' credit.people.id %}" class="text-decoration-none">
                 <div class="castActor m-2" role="link" style="background-image: url('https://image.tmdb.org/t/p/w200{{credit.people.profile_path}}');">
@@ -353,7 +357,7 @@
         </div>
     </div>
     <div class="container">
-        <h3 class="text-left border-bottom" style="font-family: 'Noto serif' serif;"> Reviews</h3>
+        <h3 class="text-left border-bottom"> REVIEWS</h3>
         {% if user.is_authenticated %}
             {% if review %}
                 <div class="row container">
@@ -379,9 +383,9 @@
                         <input name="content" value="{{ review.content }}" type="text" class="col-9 reviewInput" aria-describedby="reviewModButton">
                         <button class="review-button" id="reviewModButton" type="submit">리뷰 변경</button>
                     </form>
-                    <form class="col-2 justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+                    <form class="col-1 justify-content-center myReview p-0 m-0" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
                         {% csrf_token %}
-                        <button class="deleteButton" type="submit">삭제</button>   
+                        <button class="review-button bg-danger w-50 p-0 m-0" type="submit">삭제</button>   
                     </form>
                 </div>
                 <hr class="border-white">
@@ -395,7 +399,7 @@
                 </form>
             {% else %}
                 <div>
-                    <h2>리뷰를 작성하시려면 먼저 별점을 매겨주세요!</h2>
+                    <h2>&#x1F632;리뷰를 작성하시기 전에 별점을 매겨주세요!</h2>
                 </div>
                 <hr class="border-white">
             {% endif %}
@@ -424,7 +428,7 @@
             </div>
         {% endif %}
     {% endfor %}
-<div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-home"></i></div>
+
 {% endblock %}
 
 {% block script %}
@@ -483,21 +487,10 @@
         }
     }
 
-    mybutton = document.getElementById("myBtn");
+    
     window.onscroll = function() {
         scrollFunction()
     };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop >
-            100) {
-            mybutton.style.display = "block";
-            document.getElementById("navBar").style.top = "-200px";
-        } else {
-            mybutton.style.display = "none";
-            document.getElementById("navBar").style.top = "0";
-        }
-    }
     axios.get(`https://www.googleapis.com/youtube/v3/search`, {
             params: {
                 key: APIKEY,
@@ -534,11 +527,6 @@
 
     function stopVideo() {
         player.stopVideo()
-    }
-
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
     }
 
 </script>

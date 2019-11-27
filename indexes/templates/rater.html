@@ -177,6 +177,12 @@
         background: rgba(200,200,200,0.4);
         padding: 2rem;
     }
+    .animated {
+        animation-duration: 350ms;
+    }
+    .zoomOutUp {
+        color: orange;
+    }
 </style>
 {% endblock css %}
 {% block body %}
@@ -222,16 +228,16 @@
 </div>
 <div class="starField container-fluid mb-0 overflow-hidden">
     <div class="row justify-content-lg-around m-0">
-        <div id="star1">★</div>
-        <div id="star2">★</div>
-        <div id="star3">★</div>
-        <div id="star4">★</div>
-        <div id="star5">★</div>
-        <div id="star6">★</div>
-        <div id="star7">★</div>
-        <div id="star8">★</div>
-        <div id="star9">★</div>
-        <div id="star10">★</div>
+        <div class="animated " id="star1">★</div>
+        <div class="animated " id="star2">★</div>
+        <div class="animated " id="star3">★</div>
+        <div class="animated " id="star4">★</div>
+        <div class="animated " id="star5">★</div>
+        <div class="animated " id="star6">★</div>
+        <div class="animated " id="star7">★</div>
+        <div class="animated " id="star8">★</div>
+        <div class="animated " id="star9">★</div>
+        <div class="animated " id="star10">★</div>
     </div>
 </div>
 <form id="starForm" method='put' hidden action="{% url "indexes:rater_review" user.id %}">
