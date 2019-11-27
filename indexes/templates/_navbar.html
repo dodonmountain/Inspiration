@@ -1,58 +1,62 @@
-  <nav id="navBar" class="navbar-expand-xl navbar fixed-top">
-      <!-- 로고 -->
-      {% if user.is_authenticated %}
-      <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;"><a style="opacity:0.8;text-shadow:1px 1px black;color:white;text-decoration: none;" href="{% url 'indexes:index' %}">
-              Inspiration
-          </a></h1>
-      {% else %}
-      <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
-          Inspiration
-      </h1>
-        <li class="nav-item mx-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
-        </li>
-      {% endif %}
-      <!-- 로고 끝 -->
+<nav id="navBar" class="navbar-expand-xl navbar fixed-top">
+    {% if user.is_authenticated %}
+    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
+        <a style="opacity:0.8;text-shadow:1px 1px black;color:white;text-decoration: none;" href="{% url 'indexes:index' %}">
+            Inspiration
+        </a>
+    </h1>
+    {% else %}
+    <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
+        Inspiration
+    </h1>
+    <li class="nav-item mx-2">
+        <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL">
+            <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee">
+            <span style="margin-left:15px;font-size:28px !important;">
+            </span>
+        </a>
+    </li>
+    {% endif %}
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-
-      {% if user.is_authenticated %}
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav flex-nowrap w-100">
-              <li class="nav-item mr-auto">
-                  <div class="btn-group">
-                      <div class="nav-link text-white genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                          <p class="m-auto">장르별 인기 순위</p>
-                      </div>
-                      <div class="dropdown-menu ddm ml-5">
-                          <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' 1 %}">한국 영화</a>
-                          {% for genre in genres %}
-                          <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' genre.id %}">{{genre.name}}</a>
-                          {% endfor %}
-                      </div>
-                  </div>
-              </li>
-              <li class="nav-item gitDiv mr-1">
-                  <div class="githubButton">
-                      <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
-                  </div>
-              </li>
-              <li class="nav-item mr-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
-              </li>
-              <li class="nav-item mx-2">
-                  <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:logout' %}">로그아웃</a>
-              </li>
-              <li class="nav-item mx-2">
-                  <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:detail' user.id %}" tabindex="-1">나의 영화</a>
-              </li>
-              <li class="nav-item">
-                  <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
-                      <input class="form-control mr-sm-2 bg-transparent text-white searchField" type="search" name="q" placeholder="영화명, 장르, 배우">
-                      <button style="height:inherit; font-size: 1vw;background: none;" type="submit">찾아줘!</button>
-                  </form>
-              </li>
-          </ul>
-          {% endif %}
-      </div>
-  </nav>
+    {% if user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav flex-nowrap w-100">
+            <li class="nav-item mr-auto">
+                <div class="btn-group">
+                    <div class="nav-link text-white genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <p class="m-auto">장르별 인기 순위</p>
+                    </div>
+                    <div class="dropdown-menu ddm ml-5">
+                        <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' 1 %}">한국 영화</a>
+                        {% for genre in genres %}
+                        <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' genre.id %}">{{genre.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item gitDiv mr-1">
+                <div class="githubButton">
+                    <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
+                </div>
+            </li>
+            <li class="nav-item mr-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:logout' %}">로그아웃</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:detail' user.id %}" tabindex="-1">나의 영화</a>
+            </li>
+            <li class="nav-item">
+                <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2 bg-transparent text-white searchField" type="search" name="q" placeholder="영화명, 장르, 배우">
+                    <button style="height:inherit; font-size: 1vw;background: none;" type="submit">찾아줘!</button>
+                </form>
+            </li>
+        </ul>
+        {% endif %}
+    </div>
+</nav>

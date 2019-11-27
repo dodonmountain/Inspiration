@@ -2,11 +2,6 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
-<style>
-body {
-    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
-}
-</style>
 {% endblock %}
 
 {% block body %}
@@ -19,15 +14,20 @@ body {
     <div class="carousel-row">
         {% for movie in movies %}
         <div class="carousel-tile">
-            <a href="{% url 'movies:detail' movie.0.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.0.poster_path }}" style="height: 40vh;"></a>
-            <div class="text-white text-center mt-3 overflow-hidden">
-                <h3 class="car-body">{{ movie.0.title }}</h3>
-                <!--<p>예상 평점:<span class='rand'></span></p>-->
+            <a href="{% url 'movies:detail' movie.0.id %}" class="text-decoration-none">
+                <h3 class="position-absolute">{{ movie.1 }} 점 | {{ movie.2 }}%</h3>
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.0.poster_path }}" style="height: 40vh;">
+
+            </a>
+            <div class="text-white text-center mt-3 p-0">
+                <h3 class="car-body overflow-hidden">{{ movie.0.title }}</h3>
                 <i class="fa fa-clock-o">{{ movie.0.runtime }}분</i>
                 <br>
+                <div class="row m-0 p-3">
                 {% for genre in movie.0.genres.all %}
-                <span style="font-family: sans serif" class="p-1 ">| {{ genre.name }} |</span>
+                    <p class="col badge badge-info ">{{ genre.name }}</p>
                 {% endfor %}
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -40,69 +40,56 @@ body {
         {% endif %}
     </div>
 </div>
-</div>
 
-<div id="popup1" class="overlay">
-	<div class="popup">
-		<h2>Here i am</h2>
-		<a class="close" href="#">&times;</a>
-		<div class="content">
-			Thank to pop me out of that button, but now i'm done so you can close this window.
-		</div>
-	</div>
-</div>
+
 {% endblock %}
 
 {% block script %}
-
 <script>
     const lst = document.querySelector('#car')
     const app = document.querySelector('#app')
     const navbar = document.querySelector('#navBar')
     const rand = document.querySelectorAll('.rand')
     const tiles = document.querySelectorAll('.carousel-tile')
+    const tags = document.querySelectorAll('.badge-info')
     let last_known_scroll_position = 0;
-    let flag = false;
+    let flag = false
+    const colors = ['primary', 'danger', 'success', 'warning', 'info', 'light']
     window.onload = function() {
-        for (let r in rand) {
-            rand[r].innerText = (5 + (Math.random() * 5)).toFixed(2)
-            // rand[r].innerText = "{{ movie.vote_average }}"
-        }
         navbar.hidden = true
         lst.hidden = true
         setTimeout(function() {
             navbar.classList.add('fadein')
             lst.hidden = false
             navbar.hidden = false
-        }, 0);
+            for (i=0; i<tags.length; i++) {
+                tags[i].classList.replace('badge-info', 'badge-' + colors[Math.floor(Math.random() * colors.length)])
+            }
+        }, 50);
     }
 
-            
-    function sideScroll(direction,speed,distance,step){
+
+    function sideScroll(direction, speed, distance, step) {
         scrollAmount = 0;
-        var slideTimer = setInterval(function(){
-            if(direction == 'left'){
+        var slideTimer = setInterval(function() {
+            if (direction == 'left') {
                 lst.scrollLeft -= step;
             } else {
                 lst.scrollLeft += step;
             }
             scrollAmount += step;
-            if(scrollAmount >= distance){
+            if (scrollAmount >= distance) {
                 window.clearInterval(slideTimer);
             }
         }, speed);
     }
     window.addEventListener('wheel', function(e) {
         if (e.deltaY > 0) {
-            sideScroll('right',3,360,5)
+            sideScroll('right', 3, 340, 5)
         } else {
-            sideScroll('left',3,360,5)
+            sideScroll('left', 3, 340, 5)
         }
-        })
-
-            
-
-        
+    })
 </script>
 
 {% endblock %}
