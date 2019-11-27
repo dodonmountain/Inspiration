@@ -1,14 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    {% for movie in movies %}
-    {{ movie.title}}
-    {% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
+<style>
+html {
+    overflow: auto;
+}
+body {
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+}
+.movieSteel {
+    border-radius: 5%;
+    height: 14rem;
+    width : 12rem;
+    margin: 0;
+    background-size: stretch;
+    background-position: center;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<br>
+<hr>
+    <div class="container">
+        <div class="row flex-wrap">
+            {% for movie in movies %}
+                <div class="col-3">
+                <a href="{% url 'movies:detail' movie.id %}">
+                    <div class="movieSteel"
+                        style="background-image: url('https://image.tmdb.org/t/p/w200{{movie.poster_path}}')">
+                    </div>
+                </a>
+                    {{ movie.popularity}}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

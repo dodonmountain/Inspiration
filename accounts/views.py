@@ -142,7 +142,7 @@ def userDetail(request, user_id):
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
         'my_review' : my_review,
-        'vs' : vs_user(user)
+        # 'vs' : vs_user(user)
     }
     return render(request, 'accounts/detail.html', context)
     # return redirect('accounts:login')

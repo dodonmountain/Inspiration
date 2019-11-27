@@ -84,12 +84,12 @@
       <div class="col-9">
         <p>{{ review.movie.title }}</p>
         <div id="stars">
-        <p hidden class="star">{{ review.score }}</p>
-          <i id="star1" class="fa fa-star-o"></i>
-          <i id="star2" class="fa fa-star-o"></i>
-          <i id="star3" class="fa fa-star-o"></i>
-          <i id="star4" class="fa fa-star-o"></i>
-          <i id="star5" class="fa fa-star-o"></i>
+          <p hidden class="star">{{ review.score }}</p>
+            <i id="star1" class="fa fa-star-o"></i>
+            <i id="star2" class="fa fa-star-o"></i>
+            <i id="star3" class="fa fa-star-o"></i>
+            <i id="star4" class="fa fa-star-o"></i>
+            <i id="star5" class="fa fa-star-o"></i>
         </div>
         {{ review.content }}
       </div>
@@ -105,11 +105,11 @@
     for (i=0; i< star.length; i++) {
       var point = 0
       while (star[i].innerText > point) {
-        stars[i].children[(point/2)].classList.replace('fa-star-o','fa-star')
         point += 2
+        stars[i].children[(point/2)].classList.replace('fa-star-o','fa-star')
       }
       if (point != star[i].innerText) {
-        stars[i].children[(parseInt(star[i].innerText) + 1)/2].classList.replace('fa-star-o','fa-star-half-o')
+        stars[i].children[(parseInt(star[i].innerText)+1)/2].classList.replace('fa-star','fa-star-half-o')
       }
     }
 

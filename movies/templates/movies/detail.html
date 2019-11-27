@@ -208,6 +208,11 @@
         transition: 10s;
         transform: translateX(calc(-200px - 100%));
     }
+
+    #stars > i {
+        color : #FFD700;
+        font-size : 20px;
+    }
 </style>
 {% endblock %}
 
@@ -381,7 +386,14 @@
     <div class="container-fluid">
         <div class="row p-0">
             <div class="col-3">
-                <span class="badge badge-danger badge-pill mx-2">{{ review.score }} 점</span>
+                <div id="stars">
+                    <p hidden class="star">{{ review.score }}</p>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                </div>
                 <span class="mr-3 pr-3 font-weight-bolder text-warning">{{ user.lastname }}</span>
             </div>
             <small class="col-7 mt-1 text-right w-100">{{ review.content }}</small>
@@ -397,7 +409,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <span class="badge badge-danger badge-pill hidden mx-2">{{ r.score }}</span>
+                <div id="stars">
+                    <p hidden class="star">{{ r.score }}</p>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
+                </div>
                 <span class="badge badge-pill starBadge"></span>
                 <span class="mr-3 pr-3 font-weight-bolder">{{ r.user.first_name }}</span>
                 <small class"ml-auto">{{ r.content }}</small>
@@ -413,6 +432,18 @@
 {% block script %}
 {% comment %} <script src="https://unpkg.com/axios/dist/axios.min.js"></script> {% endcomment %}
 <script>
+    const star = document.querySelectorAll('.star')
+    const stars = document.querySelectorAll('#stars')
+    for (i=0; i< star.length; i++) {
+      var point = 0
+      while (star[i].innerText > point) {
+        point += 2
+        stars[i].children[(point/2)].classList.replace('fa-star-o','fa-star')
+      }
+      if (point != star[i].innerText) {
+        stars[i].children[(parseInt(star[i].innerText)+1)/2].classList.replace('fa-star','fa-star-half-o')
+      }
+    }
     const starBadges = document.querySelectorAll('.starBadge')
     let colors = ['royalblue', 'orange', 'darkviolet', 'hotpink', 'tomato',
         'crimson',  'seagreen'
@@ -511,7 +542,6 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
-
 
 </script>
 <script></script>

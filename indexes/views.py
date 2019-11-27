@@ -23,10 +23,9 @@ def index(request):
 
 def genre_select(request,genre_id):
     if genre_id == 1:
-        movies = Movie.objects.filter(original_language='ko')
+        movies = Movie.objects.filter(original_language='ko').order_by('-vote_count')
     else:
-        print(genre_id)
-        movies = Movie.objects.filter(genres__id=genre_id)
+        movies = Movie.objects.filter(genres__id=genre_id).order_by('-vote_count')
     context = {
         'movies':movies
     }
