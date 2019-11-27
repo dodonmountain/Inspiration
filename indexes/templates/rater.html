@@ -196,7 +196,9 @@
             <h3><i class="fa fa-keyboard-o fa-4x mr-3"></i>숫자패드를 이용해주세요</h3>
 
             <h3>1~9번은 1~9점, 0번은 10점입니다</h3>
-
+            <h3>혹시 아직 안보신 영화가 있다면</h3>
+            <h3 class="text-info font-weight-bolder">스페이스 바</h3>
+            <h3>를 눌러 패스해주세요!</h3>
             </div>
 		</div>
 </div>
@@ -232,10 +234,9 @@
         <div id="star10">★</div>
     </div>
 </div>
-<form id="starForm" method='post' hidden action="">
-    {% csrf_token %}
-    <div name='score' value=""></div>
-    <input class='starSubmit' type="submit">
+<form id="starForm" method='put' hidden action="{% url "indexes:rater_review" user.id %}">
+    <input type="text" name="v">
+    <input id='starSubmit' type="submit">
 </form>
 {% endblock body %}
 

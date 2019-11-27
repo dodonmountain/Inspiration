@@ -14,7 +14,8 @@ body {
 {% include '_navbar.html' %}
 {% if user.is_authenticated %}
 <div id='car' class="carousel fadein mt-3 mb-0">
-    <h2 class="queIndicator">{{ user.first_name }} <small>님의 맞춤 대기열</small></h2>
+    <h2 class="queIndicator">{{ user.first_name }} <small>님의 맞춤 대기열</small> </h2>
+    <p class="d-flex mt-5 ml-4 position-fixed"><small class="mt-4 text-white-50">만약 영감이 처음이시라면? </small> <a class="text-white ml-2 mt-4" href="/rater/">초기평가 하러가기</a></p>
     <div class="carousel-row">
         {% for movie in movies %}
         <div class="carousel-tile">
@@ -41,7 +42,15 @@ body {
 </div>
 </div>
 
-
+<div id="popup1" class="overlay">
+	<div class="popup">
+		<h2>Here i am</h2>
+		<a class="close" href="#">&times;</a>
+		<div class="content">
+			Thank to pop me out of that button, but now i'm done so you can close this window.
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block script %}

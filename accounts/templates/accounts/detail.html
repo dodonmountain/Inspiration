@@ -55,14 +55,14 @@
   {% for a in vs %}
     <div class="row movie-row mt-3">
       <div class="col-3">
-        <a href="{% url 'movies:detail' a.0.0.id %}">
+        <a href="{% url 'movies:detail' a.0.id %}">
           <div class="movieSteel"
-            style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.0.poster_path}}')">
+            style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.poster_path}}')">
           </div>
         </a>
       </div>
       <div class="col-3">
-        <p>{{ a.0.0.title }}</p>
+        <p>{{ a.0 }}</p>
         {{ a.1 }}점 - {{ a.2 }}%
       </div>
     </div>

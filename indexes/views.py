@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from movies.models import Movie,Review, Genre
 from django.contrib.auth.decorators import login_required
 from random import shuffle
@@ -42,3 +42,18 @@ def rater(request):
         'movies': movies
     }
     return render(request, 'rater.html', context)
+
+def rater_review(request,user_id):
+    rater_star_list = list(map(int, list(map(str, request.GET.get('v').split('/')))[1:]))
+    rsl = []
+    for i in range(30):
+        if not i & 1:
+            rsl.append((rater_star_list[i], rater_star_list[i+1]))
+    for sc, mv in rsl:
+        Review.objects.create(
+            user = request.user,
+            content = '',
+            score = sc,
+            movie = get_object_or_404(Movie,pk=mv)
+        )
+    return redirect('indexes:index')

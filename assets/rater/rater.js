@@ -8,6 +8,7 @@ const star7 = document.getElementById('star7')
 const star8 = document.getElementById('star8')
 const star9 = document.getElementById('star9')
 const star10 = document.getElementById('star10')
+let sendList = [];
 let isStopped = false;
 const Stars = [star1, star2, star3, star4, star5, star6, star7, star8, star9, star10]
 let pressedScore;
@@ -36,6 +37,7 @@ const rLeft = document.getElementById('rateLeft')
 let former;
 window.onkeydown = function() {
     if (!isStopped) {
+        document.querySelector('.RaterDescription').hidden = true
         pressedScore = 0
         if (event.key == '1') {
             pressedScore = 1
@@ -71,10 +73,8 @@ window.onkeydown = function() {
             target = document.querySelectorAll('.carousel-tile')[movieNow]
             target.classList.remove('carousel-tile-hover')
             let movie_id = target.firstElementChild.innerText
-            document.getElementById('starForm').attributes.action = "{% url 'movies:review' " + movie_id + " %}"
-            document.getElementById('starForm').children[1].value = pressedScore
-            let formClone = document.getElementById('starForm').cloneNode(true)
-            car.append(formClone)
+            document.getElementById('starForm').firstElementChild.value += '/'+ String(pressedScore) + '/' + movie_id
+            sendList.push([parseInt(movie_id),pressedScore])
             movieNow += 1
             document.querySelectorAll('.carousel-tile')[movieNow].classList.add('carousel-tile-hover')
             if (parseInt(rLeft.innerText) <= 1) {
@@ -83,10 +83,7 @@ window.onkeydown = function() {
                 former.parentNode.append(thx)
                 isStopped = true
                 car.hidden = true
-                let inputs = document.querySelectorAll('.starSubmit')
-                for (i in inputs){
-                    inputs[i].click()
-                }
+                document.getElementById('starSubmit').click()
             }
             rLeft.innerText -= 1
             former = document.querySelector('.scoreForNow')

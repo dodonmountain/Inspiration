@@ -8,7 +8,7 @@
       <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
           Inspiration
       </h1>
-        <li class="nav-item mx-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;">buy us a coffee</span></a>
+        <li class="nav-item mx-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
         </li>
       {% endif %}
       <!-- 로고 끝 -->
@@ -22,10 +22,10 @@
           <ul class="navbar-nav flex-nowrap w-100">
               <li class="nav-item mr-auto">
                   <div class="btn-group">
-                      <div class="nav-link text-white font-weight-bold genreButton mr-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                          <p class="m-auto">장르</p>
+                      <div class="nav-link text-white genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                          <p class="m-auto">장르별 인기 순위</p>
                       </div>
-                      <div class="dropdown-menu ddm">
+                      <div class="dropdown-menu ddm ml-5">
                           <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' 1 %}">한국 영화</a>
                           {% for genre in genres %}
                           <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' genre.id %}">{{genre.name}}</a>
@@ -33,12 +33,12 @@
                       </div>
                   </div>
               </li>
-              <li class="nav-item gitDiv mr-2">
+              <li class="nav-item gitDiv mr-1">
                   <div class="githubButton">
                       <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
                   </div>
               </li>
-              <li class="nav-item mx-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;">buy us a coffee</span></a>
+              <li class="nav-item mr-2"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
               </li>
               <li class="nav-item mx-2">
                   <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:logout' %}">로그아웃</a>
