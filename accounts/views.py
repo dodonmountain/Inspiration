@@ -84,52 +84,6 @@ def user_like_genre(user):
         user_genres[idx] = value[0]/value[1]
     return user_genres
 
-def vs_user(user):
-    users = User.objects.all()
-    my_movies = Movie.objects.filter(review__user=user)
-    my_review = Review.objects.filter(user=user)
-    vs={}
-    for other in users:
-        other_movies = Movie.objects.filter(review__user=other)
-        other_review = Review.objects.filter(user=other)
-        same_movies = my_movies & other_movies
-        X,Y, XX,YY,XY,cnt = 0,0,0,0,0,0
-        if len(same_movies) > 2:
-            for movie in same_movies:
-                a = my_review.filter(movie=movie)[0].score
-                b = other_review.filter(movie=movie)[0].score
-                X += a
-                Y += b
-                XX += a*a
-                YY += b*b
-                XY += a*b
-                cnt += 1
-            try:
-                vs[other.id] = (XY-(X*Y)/cnt)/ (((XX-(X*X)/cnt) * (YY-(Y*Y)/cnt)) ** 0.5)
-            except:
-                pass
-    sorted_vs = sorted(vs.items(), key=lambda kv: kv[1],reverse=True)
-    movies = {}
-    for i in sorted_vs[2:15]:
-        for review in Review.objects.filter(user_id=i[0]):
-            if review.movie_id in movies and review.score > 6:
-                if not Review.objects.filter(user=user).filter(movie_id=review.movie_id):
-                    movies[review.movie_id][0] += 1
-                    movies[review.movie_id][1] += review.score
-                    movies[review.movie_id][2] += i[1]
-            else:
-                movies[review.movie_id] = [1,review.score,i[1]]
-    sorted_movie = sorted(movies.items(),key=lambda x: x[1] ,reverse=True)[:60]
-    arr = []
-    for i in range(len(sorted_movie)):
-        tmp =[] # 쿼리, 예상평점, 정확도
-        tmp.append(Movie.objects.filter(pk=sorted_movie[i][0]))
-        tmp.append(round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
-        tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
-        if tmp[1] > 6 and tmp[2] > 10 :
-            arr.append(tmp)
-    return arr
-
 @login_required
 def userDetail(request, user_id):
     # if user_id == request.user.id:
@@ -142,7 +96,6 @@ def userDetail(request, user_id):
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
         'my_review' : my_review,
-        'vs' : vs_user(user)
     }
     return render(request, 'accounts/detail.html', context)
     # return redirect('accounts:login')
