@@ -21,14 +21,16 @@
         .githubButton{
             width: 45px !important;
             height: 45px !important;
-            background-color: black;
+            background-color: #2f2f2f;
             margin: 0 2rem;
             overflow: hidden;
             text-align: center;
             transition: 0.2s all linear !important;
+            border-radius: 5px !important;
         }
         .githubButton:hover{
             background-color: orange;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
         }
         .bmc-button img {
             width: 35px !important;
@@ -49,8 +51,6 @@
             border: 1px solid transparent !important;
             font-size: 28px !important;
             letter-spacing: 0.6px !important;
-            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
-            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
             margin: 0 auto !important;
             font-family: 'Cookie', cursive !important;
             -webkit-box-sizing: border-box !important;
@@ -174,6 +174,42 @@
         }
         #lst {
             transform: translateX(2em);
+        }
+        .genreButton {
+            color: white;
+            height: 45px;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: 200ms;
+            vertical-align: middle !important;
+            border-radius: 5px !important;
+            width: 10rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .genreButton:hover{
+            color: orange;
+
+        }
+        .ddm {
+            border: 0;
+            background-color: #2f2f2f;
+            border-radius: 4px;
+            opacity: 0.9;
+        }
+        .dropdon-item{
+            transition: 200ms;
+        }
+        .dropdown-item:hover{
+            background-color: orange;
+            color: #2f2f2f !important;
+            font-weight: bolder;
+            text-align: center;
+            height: 3rem;
+            font-size: 1.6rem;
+        }
+        .gitDiv {
+            margin-left: auto;
         }
     </style>
     {% block css %}{% endblock css %}

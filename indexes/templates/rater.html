@@ -137,11 +137,8 @@
 
     #overlay {
         position: fixed;
-        /* Sit on top of the page content */
         width: 100%;
-        /* Full width (cover the whole page) */
         height: 100%;
-        /* Full height (cover the whole page) */
         top: 0;
         left: 0;
         right: 0;
@@ -153,24 +150,53 @@
         margin: 0 30rem;
         background-color: rgba(0, 0, 0, 0.3)
     }
-		.scoreForNow{
-			font-size: 14rem;
-			color: white;
-			font-family: 'Impact';
-		}
+    .scoreForNow{
+        font-size: 14rem;
+        color: white;
+        font-family: 'Impact';
+        transition: 200ms;
+    }
+    .scoreFormer {
+        transform: translateX(-2.3em) translateY(-0.4em) rotate(35deg);
+        position:fixed;
+    }
+    .progress {
+        height: 2rem;
+        opacity: 0.8;
+    }
+    .progress-bar {
+        transition: 1000ms;
+        height: 2rem;
+        background-color: #FAD961;
+        background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+    }
+    .RaterDescription {
+        border-radius: 20px 20px;
+        border: 4px dotted white;
+        background: rgba(200,200,200,0.4);
+        padding: 2rem;
+    }
 </style>
 {% endblock css %}
-
 {% block body %}
 <div id="overlay" class="container-fluid">
     <h1 class="text-center text-white" id="rateLeft">15</h1>
+    <div class="progress">
+        <div class="progress-bar" id="timer" role="progressbar" aria-valuenow="333" aria-valuemin="0" aria-valuemax="333"></div>
+    </div>
 		<div class="row">
 			<div class="col-4"></div>
 			<div class="col-4 text-center">
 				<h1 class="mt-5 text-white">SCORE</h1>
 				<h1 class="scoreForNow">RATE NOW</h1>
 			</div>
-			<div class="col-4"></div>
+			<div class="col-4 text-white mt-5 RaterDescription text-center pt-5">
+            <h2>당신의 취향을 '빠르게' 알려주세요.</h2>
+            <h3><i class="fa fa-keyboard-o fa-4x mr-3"></i>숫자패드를 이용해주세요</h3>
+
+            <h3>1~9번은 1~9점, 0번은 10점입니다</h3>
+
+            </div>
 		</div>
 </div>
 <div id='car' class="carousel fadein mt-3 mb-0">
@@ -218,6 +244,7 @@
     const star8 = document.getElementById('star8')
     const star9 = document.getElementById('star9')
     const star10 = document.getElementById('star10')
+    let isStopped = false;
     const Stars = [star1, star2, star3, star4, star5, star6, star7, star8, star9, star10]
     let pressedScore;
     pressedScore = 0
@@ -241,27 +268,30 @@
         }, speed);
     }
     const rLeft = document.getElementById('rateLeft')
+    let former;
     window.onkeydown = function() {
+        if (!isStopped)
+        {
         pressedScore = 0
-        if (event.key == 'q') {
+        if (event.key == '1') {
             pressedScore = 1
-        } else if (event.key == 'w') {
+        } else if (event.key == '2') {
             pressedScore = 2
-        } else if (event.key == 'e') {
+        } else if (event.key == '3') {
             pressedScore = 3
-        } else if (event.key == 'r') {
+        } else if (event.key == '4') {
             pressedScore = 4
-        } else if (event.key == 't') {
+        } else if (event.key == '5') {
             pressedScore = 5
-        } else if (event.key == 'y') {
+        } else if (event.key == '6') {
             pressedScore = 6
-        } else if (event.key == 'u') {
+        } else if (event.key == '7') {
             pressedScore = 7
-        } else if (event.key == 'i') {
+        } else if (event.key == '8') {
             pressedScore = 8
-        } else if (event.key == 'o') {
+        } else if (event.key == '9') {
             pressedScore = 9
-        } else if (event.key == 'p') {
+        } else if (event.key == '0') {
             pressedScore = 10
         } else if (event.keyCode == 32) {
             passThis = true
@@ -278,11 +308,48 @@
             target.classList.remove('carousel-tile-hover')
             movieNow += 1
             document.querySelectorAll('.carousel-tile')[movieNow].classList.add('carousel-tile-hover')
+            if (parseInt(rLeft.innerText) <= 1) {
+                document.querySelector('.scoreForNow').innerText = 'THANK YOU'
+                let thx = document.querySelector('.scoreForNow').innerText = 'THANK YOU'.cloneNode(true)
+                former.parentNode.appendChild(thx)
+                isStopped = true
+                car.hidden = true
+            }
             rLeft.innerText -= 1
-						document.querySelector('.scoreForNow').innerText = pressedScore
-						random_color = colors[Math.floor(Math.random() * colors.length)];
-						document.querySelector('.scoreForNow').style.color = random_color
+            former = document.querySelector('.scoreForNow')
+            random_color = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelector('.scoreForNow').style.color = random_color
+            former.innerText = pressedScore
+            let cln = former.cloneNode(true)
+            former.parentNode.appendChild(cln)
+            former.classList.add('scoreFormer')
+            widthNow = 100
+            clearInterval()
+            setTimeout(() => {
+                former.hidden = true
+                former.classList.remove('scoreForNow')
+            }, 300);
         };
+        }
+    }
+    const timer = document.getElementById('timer')
+    let widthNow;
+    setInterval(() => {
+        timer.style.width = widthNow + "%" 
+        if (widthNow < 0) {
+            stopAll()
+            document.querySelector('.scoreForNow').innerText = 'TRY AGAIN'
+
+        }
+    }, 1000);
+    setInterval(() => {
+        widthNow -= 1
+        console.log(widthNow)
+    }, 150);
+    function stopAll() {
+        isStopped = true
+        timer.hidden = true
+        timer.parentElement.hidden = true
     }
 </script>
 {% endblock script %}

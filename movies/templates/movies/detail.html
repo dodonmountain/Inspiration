@@ -433,11 +433,12 @@
 
     function submit() {
         let tick = false
-        if (!tick){
-            setTimeOut({
+        if (!tick)
+        {
+            setTimeOut(()=>{
                 starSubmit.click();
                 tick = true;
-            },100)
+            }, 100)
             tick = false
         }
     }
