@@ -94,7 +94,7 @@ def vs_user(user):
         other_review = Review.objects.filter(user=other)
         same_movies = my_movies & other_movies
         X,Y, XX,YY,XY,cnt = 0,0,0,0,0,0
-        if len(same_movies) > 3:
+        if len(same_movies) > 2:
             for movie in same_movies:
                 a = my_review.filter(movie=movie)[0].score
                 b = other_review.filter(movie=movie)[0].score
@@ -112,7 +112,7 @@ def vs_user(user):
     movies = {}
     for i in sorted_vs[2:15]:
         for review in Review.objects.filter(user_id=i[0]):
-            if review.movie_id in movies:
+            if review.movie_id in movies and review.score > 6:
                 if not Review.objects.filter(user=user).filter(movie_id=review.movie_id):
                     movies[review.movie_id][0] += 1
                     movies[review.movie_id][1] += review.score
@@ -126,7 +126,8 @@ def vs_user(user):
         tmp.append(Movie.objects.filter(pk=sorted_movie[i][0]))
         tmp.append(round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
         tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
-        arr.append(tmp)
+        if tmp[1] > 6 and tmp[2] > 10 :
+            arr.append(tmp)
     return arr
 
 @login_required

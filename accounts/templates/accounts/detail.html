@@ -1,56 +1,117 @@
 {% extends 'base.html' %}
 {% block css %}
 <style>
-body {
-  background-color: #1f1f1f;
-  color: #fff
-}
-.movieSteel {
-  border-radius: 50%;
-  height: 9vw;
-  width: 9vw;
-  margin: 0;
-  background-size: cover;
-  background-position: center;
-}
+  body {
+    background-color: #1f1f1f;
+    color: #fff
+  }
+
+  .movieSteel {
+    border-radius: 5%;
+    height: 14rem;
+    width : 12rem;
+    margin: 0;
+    background-size: stretch;
+    background-position: center;
+  }
+
+  .movie-row {
+    height : 10wh;
+  }
+
+  #stars > i {
+    color : #FFD700;
+    font-size : 40px;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 {% include '_navbar.html' %}
 <div class="container mt-5 p-5">
-<div class="row text-white">
-<h1 class="mt-5">{{ userinfo.first_name }} 님의 관심사</h1>
-</div>
-<h3>영화</h3>
-  {% for like_movie in userinfo.like_movies.all %}
-    <a href="{% url 'movies:detail' like_movie.id %}">{{ like_movie.title }}
-    <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}')"></div>
-    </a>
+  <div class="row text-white">
+    <h1 class="mt-5">{{ userinfo.first_name }} 님의 관심사</h1>
+  </div>
+  <h3>즐겨찾기</h3>
+  <div class="container">
+    {% for movie in userinfo.like_movies.all %}
+    <div class="row movie-row">
+      <div class="col-3">
+        <a href="{% url 'movies:detail' movie.id %}">
+          <div class="movieSteel"
+            style="background-image: url('https://image.tmdb.org/t/p/w200{{movie.poster_path}}')">
+          </div>
+        </a>
+      </div>
+      <div class="col-9">
+        asdfasf
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <hr>
+  <h3>장르</h3>
+  <div class="container">
+  {% for a in vs %}
+    <div class="row movie-row mt-3">
+      <div class="col-3">
+        <a href="{% url 'movies:detail' a.0.0.id %}">
+          <div class="movieSteel"
+            style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.0.poster_path}}')">
+          </div>
+        </a>
+      </div>
+      <div class="col-3">
+        <p>{{ a.0.0.title }}</p>
+        {{ a.1 }}점 - {{ a.2 }}%
+      </div>
+    </div>
+  <br>
   {% endfor %}
-  
-<hr>
-<h3>장르</h3>
-<br>
-{% for a in vs %}
-{{ a.0.0.title }} - {{ a.1 }}점 - {{ a.2 }}%
-<br>
-{% endfor %}
-<hr>
-<h3>리뷰</h3>
-{% for review in userinfo.review_set.all %}
-<p><a href="{% url 'movies:detail' review.movie.id %}">{{ review.movie.title }}</a> - {{review.score}} 점 - {{ review.content }}</p>
-{% endfor %}
-<hr>
-{% comment %} <h4>팔로잉</h4>
-{{ userinfo.followings.all.count }}
-{% for user in userinfo.followings.all %}
-{{ user }}
-{% endfor %}
-<h4>팔로워</h4>
-{{ userinfo.followers.all.count }}
-{% for user in userinfo.followers.all %}
-{{ user }}
-{% endfor %} {% endcomment %}
-</div>
-{% endblock %}
+  </div>
+  <hr>
+  <h3>나의 리뷰</h3>
+  <div class="container">
+    {% for review in userinfo.review_set.all %}
+    <div class="row movie-row mt-3">
+      <div class="col-3">
+        <a href="{% url 'movies:detail' review.movie.id %}">
+          <div class="movieSteel"
+            style="background-image: url('https://image.tmdb.org/t/p/w200{{review.movie.poster_path}}')">
+          </div>
+        </a>
+      </div>
+      <div class="col-9">
+        <p>{{ review.movie.title }}</p>
+        <div id="stars">
+        <p hidden class="star">{{ review.score }}</p>
+          <i id="star1" class="fa fa-star-o"></i>
+          <i id="star2" class="fa fa-star-o"></i>
+          <i id="star3" class="fa fa-star-o"></i>
+          <i id="star4" class="fa fa-star-o"></i>
+          <i id="star5" class="fa fa-star-o"></i>
+        </div>
+        {{ review.content }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endblock %}
+
+  {% block script %}
+  <script>
+    const star =document.querySelectorAll('.star')
+    const stars = document.querySelectorAll('#stars')
+    for (i=0; i< star.length; i++) {
+      var point = 0
+      while (star[i].innerText > point) {
+        stars[i].children[(point/2)].classList.replace('fa-star-o','fa-star')
+        point += 2
+      }
+      if (point != star[i].innerText) {
+        stars[i].children[(parseInt(star[i].innerText) + 1)/2].classList.replace('fa-star-o','fa-star-half-o')
+      }
+    }
+
+  </script>
+  {% endblock script %}

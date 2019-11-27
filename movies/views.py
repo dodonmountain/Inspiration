@@ -179,12 +179,13 @@ def detail(request,movie_pk):
 
 @require_POST
 def review(request,movie_pk):
-    review = Review.objects.create(
-        user = request.user,
-        content = request.POST.get('content') or '',
-        score = request.POST.get('score'),
-        movie = get_object_or_404(Movie,pk=movie_pk)
-    )
+    if request.POST.get('score'):
+        review = Review.objects.create(
+            user = request.user,
+            content = request.POST.get('content') or '',
+            score = request.POST.get('score'),
+            movie = get_object_or_404(Movie,pk=movie_pk)
+        )
     return redirect('movies:detail',movie_pk)
 
 def review_delete(request,movie_pk, review_pk):
