@@ -8,7 +8,7 @@
 </head>
 <body>
 <br>
-    {{ genre.name }} {{ filter.count }}  -  {{count}}
+    {{ genre.name }} <span id="M">{{ filter.count }}</span>  -  <span id ="m">{{count}}</span>
     <a href="{% url 'movies:genres' %}">모든 장르</a>
     <a href="{% url 'movies:make_fake' genre.id %}">만들기</a>
     <hr>
@@ -16,5 +16,15 @@
     <p>{{ f.title }}</p>
     <br>
     {% endfor %}
+    <script>
+        const M = document.querySelector('#M').innerText
+        var m = document.querySelector('#m').innerText
+        {% comment %} while (M >= 3* m) {
+            setTimeout(function() {
+                console.log(m)
+                m ++
+            },10)
+        } {% endcomment %}
+    </script>
 </body>
 </html>
