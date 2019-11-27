@@ -208,10 +208,10 @@
         transition: 10s;
         transform: translateX(calc(-200px - 100%));
     }
-
+    
     #stars > i {
         color : #FFD700;
-        font-size : 20px;
+        font-size : 1.5rem;
     }
 </style>
 {% endblock %}
@@ -283,9 +283,7 @@
                         </div>
                         {% endfor %}
                     </div>
-
                     <div class="row mt-4">
-                        
                         <div class="col-8 align-content-center pl-5">
                             <p class="m-0">YOUR RATING <span id="yourRate"></span></p> 
                             {% if review %}
@@ -294,9 +292,11 @@
                                     {% include '_starFieldSet.html' %}
                                 {% else %}
                                 <form class="ml-5" method='post' action="{% url 'movies:review' movie.pk %}">
+
                                 {% csrf_token %}
                                     {% include '_starFieldSet.html' %}
                                 {% endif %}
+                            </form>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -326,9 +326,6 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-
-
-
                 <div class="row p-5 ">
                     <h3 class="movieTitle blockquote">OVERVIEW
                         <footer class="blockquote-footer">{{ movie.tagline }}</footer>
@@ -356,76 +353,77 @@
         </div>
     </div>
     <div class="container">
-        <h3 class="text-left border-bottom" style="font-family: 'Noto serif' serif;">
-            Reviews</h3>
+        <h3 class="text-left border-bottom" style="font-family: 'Noto serif' serif;"> Reviews</h3>
         {% if user.is_authenticated %}
-        {% if review %}
-        <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
+            {% if review %}
+                <div class="row container">
+                    <div class="col-2">
+                        <div id="stars">
+                            <p hidden class="star">{{ review.score }}</p>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span class="badge badge-pill starBadge"></span>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <p class"ml-auto">{{ review.content }}</p>
+                    </div>
+                </div>
+                <div class="row container">
+                    <div class="col-2"></div>
+                    <form class="col-8" action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
+                        {% csrf_token %}
+                        <input name="content" value="{{ review.content }}" type="text" class="col-9 reviewInput" aria-describedby="reviewModButton">
+                        <button class="review-button" id="reviewModButton" type="submit">리뷰 변경</button>
+                    </form>
+                    <form class="col-2 justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+                        {% csrf_token %}
+                        <button class="deleteButton" type="submit">삭제</button>   
+                    </form>
+                </div>
+                <hr class="border-white">
+            {% elif review.score %}
+                <form action="{% url 'movies:review' movie.pk %}" method="post">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">
+                        <div class="col-10"><input name="content" type="text" class="col reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="reviewCButton"></div>
+                        <div class="col-2"><button class="review-button" id="reviewCButton" type="submit">리뷰 등록</button></div>
+                    </div>
+                </form>
+            {% else %}
+                <div>
+                    <h2>리뷰를 작성하시려면 먼저 별점을 매겨주세요!</h2>
+                </div>
+                <hr class="border-white">
+            {% endif %}
+        {% endif %}
+    {% for r in movie.review_set.all %}
+        {% if r.user != user and r.content != '#Display:None' %}
             {% csrf_token %}
-            <div class="row">
-                <div class="col-10"><input name="content" value="{{ review.content }}" type="text" class="col reviewInput" aria-describedby="reviewModButton"></div>
-                <div class="col-2"><button class="review-button " id="reviewModButton" type="submit">리뷰 등록</button></div>
-        </form>
-    </div>
-    {% elif review.score %}
-    <form action="{% url 'movies:review' movie.pk %}" method="post">
-        {% csrf_token %}
-        <div class="row justify-content-center">
-            <div class="col-10"><input name="content" type="text" class="col reviewInput" placeholder="이 영화는 어떠셨나요?" aria-describedby="reviewCButton"></div>
-            <div class="col-2"><button class="review-button" id="reviewCButton" type="submit">리뷰 등록</button></div>
-    </form>
-    {% else %}
-    <h2>리뷰를 작성하시려면 먼저 별점을 매겨주세요!</h2>
-</div>
-
-{% endif %}
-{% endif %}
-{% if review.content %}
-<form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
-    {% csrf_token %}
-    <div class="container-fluid">
-        <div class="row p-0">
-            <div class="col-3">
-                <div id="stars">
-                    <p hidden class="star">{{ review.score }}</p>
+            <div class="my-2 row align-items-center container">
+                <div class="col-2">
+                    <div id="stars">
+                        <p hidden class="star">{{ r.score }}</p>
                         <i class="fa fa-star-o"></i>
                         <i class="fa fa-star-o"></i>
                         <i class="fa fa-star-o"></i>
                         <i class="fa fa-star-o"></i>
                         <i class="fa fa-star-o"></i>
+                        <span class="badge badge-pill starBadge"></span>
+                    </div>
                 </div>
-                <span class="mr-3 pr-3 font-weight-bolder text-warning">{{ user.lastname }}</span>
-            </div>
-            <small class="col-7 mt-1 text-right w-100">{{ review.content }}</small>
-            <button class="deleteButton col-1" type="submit">삭제</button>
-        </div>
-    </div>
-</form>
-{% endif %}
-{% for r in movie.review_set.all %}
-{% if r.user.id != review.user_id and r.content %}
-<form class="row justify-content-center myReview p-0 m-0" style="font-family: Noto serif serif;" action="{% url 'movies:review_delete' movie.pk r.pk %}" method="post">
-    {% csrf_token %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div id="stars">
-                    <p hidden class="star">{{ r.score }}</p>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
+                <div class="col-1">
+                        <span class="mr-3 pr-3 font-weight-bolder">{{ r.user.first_name }}</span>
                 </div>
-                <span class="badge badge-pill starBadge"></span>
-                <span class="mr-3 pr-3 font-weight-bolder">{{ r.user.first_name }}</span>
-                <small class"ml-auto">{{ r.content }}</small>
+                <div class="col-6">
+                    <small class"ml-auto">{{ r.content }}</small>
+                </div>
             </div>
-        </div>
-    </div>
-</form>
-{% endif %}
-{% endfor %}
+        {% endif %}
+    {% endfor %}
 <div onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-home"></i></div>
 {% endblock %}
 

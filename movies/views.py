@@ -255,6 +255,10 @@ def name_change(request,people_id):
 
 def genres(request):
     genres = Genre.objects.all()
+    reviews = Review.objects.filter(user__password='password')
+    for review in reviews:
+        review.content = "#Display:None"
+        review.save()
     return render(request, 'movies/genres.html',{'genres':genres})
 
 def genre_detail(request, genre_id):
@@ -287,17 +291,17 @@ def make_fake(request,genre_id):
         password='password'
     )
     for movie in np.random.choice(filter,min(40,len(filter)//2),replace =False):
-            s = np.random.normal(movie.vote_average+0.7, 2)
-            if s > 10:
-                s = 10
-            elif s < 0:
-                s = 0 - s
-            Review.objects.create(
-                score = round(s+0.5),
-                content = '',
-                movie_id = movie.pk,
-                user_id = u.id
-            )
+        s = np.random.normal(movie.vote_average+0.7, 2)
+        if s > 10:
+            s = 10
+        elif s < 0:
+            s = 0 - s
+        Review.objects.create(
+            score = round(s+0.5),
+            content = '#Display:None',
+            movie_id = movie.pk,
+            user_id = u.id
+        )
     for movie in np.random.choice(other,min(30,len(other)//2),replace =False):
         s = np.random.normal(movie.vote_average-1, 2)
         if s > 10:
@@ -306,7 +310,7 @@ def make_fake(request,genre_id):
             s = 2 - s
         Review.objects.create(
             score = round(s-0.3),
-            content = '',
+            content = '#Display:None',
             movie_id = movie.pk,
             user_id = u.id
         )
