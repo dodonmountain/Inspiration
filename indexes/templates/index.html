@@ -19,13 +19,13 @@ body {
     <div class="carousel-row">
         {% for movie in movies %}
         <div class="carousel-tile">
-            <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;"></a>
+            <a href="{% url 'movies:detail' movie.0.id %}"><img src="https://image.tmdb.org/t/p/w500{{ movie.0.poster_path }}" style="height: 40vh;"></a>
             <div class="text-white text-center mt-3 overflow-hidden">
-                <h3 class="car-body">{{ movie.title }}</h3>
+                <h3 class="car-body">{{ movie.0.title }}</h3>
                 <!--<p>예상 평점:<span class='rand'></span></p>-->
-                <i class="fa fa-clock-o">{{ movie.runtime }}분</i>
+                <i class="fa fa-clock-o">{{ movie.0.runtime }}분</i>
                 <br>
-                {% for genre in movie.genres.all %}
+                {% for genre in movie.0.genres.all %}
                 <span style="font-family: sans serif" class="p-1 ">| {{ genre.name }} |</span>
                 {% endfor %}
             </div>

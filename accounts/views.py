@@ -84,6 +84,7 @@ def user_like_genre(user):
         user_genres[idx] = value[0]/value[1]
     return user_genres
 
+<<<<<<< HEAD
 def vs_user(user):
     users = User.objects.all()
     my_movies = Movie.objects.filter(review__user=user)
@@ -130,6 +131,8 @@ def vs_user(user):
             arr.append(tmp)
     return arr
 
+=======
+>>>>>>> b9c2fe31982e590617d5f556e53b778fa89878dd
 @login_required
 def userDetail(request, user_id):
     # if user_id == request.user.id:
@@ -142,7 +145,6 @@ def userDetail(request, user_id):
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
         'my_review' : my_review,
-        'vs' : vs_user(user)
     }
     return render(request, 'accounts/detail.html', context)
     # return redirect('accounts:login')

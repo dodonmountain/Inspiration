@@ -75,7 +75,7 @@
     {% for review in userinfo.review_set.all %}
     <div class="row movie-row mt-3">
       <div class="col-3">
-        <a href="{% url 'movies:detail' review.movie.id %}">
+        <a href="{% url 'movies:detail' review.movie_id %}">
           <div class="movieSteel"
             style="background-image: url('https://image.tmdb.org/t/p/w200{{review.movie.poster_path}}')">
           </div>
