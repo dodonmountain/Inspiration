@@ -63,7 +63,7 @@
 					<div class="row p-5">
 						<div class="col-4 offset-1 text-center">
 							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
-								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
+								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}');" class="row posterBox"></div>
 								<h3>{{ movie.title }}</h3>
 							</a>
 						</div>
@@ -95,7 +95,7 @@
 					<div class="row p-5 posterRow">
 						<div class="col-6 text-center ">
 							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
-								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
+								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.backdrop_path }}');" class="row posterBox"></div>
 								<h3>{{ movie.title }}</h3>
 							</a>
 						</div>

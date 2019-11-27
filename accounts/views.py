@@ -5,7 +5,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import User
-from movies.models import Movie, Review
+from movies.models import Movie, Review, Genre
 import numpy as np
 
 # def my_page(request):
@@ -74,37 +74,30 @@ def update_password(request):
 def user_like_genre(user):
     user_genres = {}
     for review in user.review_set.all(): # 유저의 리뷰들을 다 가져와서
-        if review.score:
-            for genre in review.movie.genres.all():
-                if genre.name not in user_genres:
-                    user_genres[genre.name] = [0,0]
-                user_genres[genre.name][0] += review.score
-                user_genres[genre.name][1] += 1
+        for genre in review.movie.genres.all():
+            if genre.name not in user_genres:
+                user_genres[genre.name] = [0,0]
+            user_genres[genre.name][0] += review.score
+            user_genres[genre.name][1] += 1
     for idx,value in user_genres.items():
-        user_genres[idx] = value[0]/value[1]
-    return user_genres
+        user_genres[idx] = [round(value[0]/value[1],2),value[1]]
+    genres = sorted(user_genres.items(),key=lambda x:x[1][0],reverse=True)
+    return genres
 
 @login_required
 def userDetail(request, user_id):
     # if user_id == request.user.id:
+    genres = Genre.objects.all()
     user = get_object_or_404(User, pk=user_id)
     my_review = user.review_set.filter()
     my_movies = Movie.objects.filter(review__user=user)
     one_movies = Movie.objects.filter(review__user_id=1)
     same_movie = my_movies & one_movies
     context = {
+        'genres' : genres,
         'userinfo' : user,
         'user_like_genre' : user_like_genre(user),
         'my_review' : my_review,
     }
     return render(request, 'accounts/detail.html', context)
     # return redirect('accounts:login')
-
-def select(request, user_id):
-    # movies = Movie.objects.filter(vote_count__lt=3000).filter(popularity__gte=50)
-    count_movies = Movie.objects.filter(vote_count__gte=3000)
-    ko_movies = Movie.objects.filter(original_language='ko').filter(popularity__gte=5)
-    total = count_movies | ko_movies
-    total = np.random.choice(total,100,replace=False)
-    context = {'total':total}
-    return render(request,'accounts/select.html',context)

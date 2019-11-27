@@ -5,23 +5,36 @@ from random import shuffle
 from django.contrib.auth.decorators import login_required
 import numpy as np
 from accounts.models import User
+from django.db.models import Avg, Count
 
 # Create your views here.
 @login_required
 def index(request):
     genres = Genre.objects.all()
+    movies = Movie.objects.values().annotate(
+        count = Count('review'),
+        avg = Avg('review__score')
+    ).filter(count__gte=30).order_by('-avg')[:30]
+    context = {
+        'genres' : genres,
+        'movies' : movies
+    }
     # count_movies = Movie.objects.filter(vote_count__gte=3000)
     # ko_movies = Movie.objects.filter(original_language='ko').filter(popularity__gte=5)
     # total = count_movies | ko_movies
     # my_review_movie = Movie.objects.filter(review__user=request.user)
     # total = total.difference(my_review_movie)
     # total = np.random.choice(total,50,replace =False)
-    print(request.user)
+    return render(request,'index.html',context)
+
+def myindex(request):
+    genres = Genre.objects.all()
     context = {
         'genres' : genres,
         'movies' : vs_user(request.user)
     }
-    return render(request, 'index.html', context)
+    return render(request, 'myindex.html', context)
+
 
 def genre_select(request,genre_id):
     if genre_id == 1:
@@ -81,7 +94,7 @@ def vs_user(user):
             tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
             if tmp[1] > 6 and tmp[2] > 30 :
                 arr.append(tmp)
-            arr = sorted(arr, key=lambda x: x[1] * x[2],reverse=True)
+            # arr = sorted(arr, key=lambda x: x[1] * x[2],reverse=True)
     return arr
 
 @login_required

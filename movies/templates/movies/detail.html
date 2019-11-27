@@ -326,8 +326,10 @@
                     {% for people in movie.people.all %}
                     {% if people.job == 'Director' %}
                     <h3 class="text-left">DIRECTOR</h3>
+                    <a href="{% url 'movies:actor' people.id %}">
                     <div class="director mx-auto" style="background-image: url('https://image.tmdb.org/t/p/w200{{people.profile_path}}');">
                     </div>
+                    </a>
                     <h4 class="text-right mt-5 border-bottom">{{ people.name }}</h4>
                     {% endif %}
                     {% endfor %}

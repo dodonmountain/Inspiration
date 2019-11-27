@@ -49,11 +49,6 @@ class Credit(models.Model):
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
     people = models.ForeignKey(People,on_delete=models.CASCADE)
 
-class Trailer(models.Model):
-    key = models.CharField(max_length=50,primary_key=True)
-    name = models.CharField(max_length=100)
-    movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
-
 class MovieImage(models.Model):
     file_path = models.CharField(max_length=140,primary_key=True)
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)

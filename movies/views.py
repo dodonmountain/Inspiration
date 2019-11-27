@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Movie, Review,Genre , People, Credit, Trailer, MovieImage
+from .models import Movie, Review,Genre , People, Credit, MovieImage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import requests
@@ -104,7 +104,6 @@ def movies_data(page_num): # popular,top_rated 중에서 페이지에 있는 영
         id = r.get('id')
         movie_save(id)
         image_save(id)
-        trailer_save(id)
         people_save(id)
         credit_save(id)
     print('등록 ',tmp , '개')
@@ -119,18 +118,6 @@ def name_change(en):
     except:
         print(en)
         pass
-
-def trailer_save(id):
-    if not Trailer.objects.filter(movie_id=id):
-        trailers_url = f'https://api.themoviedb.org/3/movie/{id}/videos?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR'
-        trailers = requests.get(trailers_url).json().get('results')
-        for trailer in trailers:
-            if trailer['site'] =='YouTube' and trailer['type'] == 'Trailer':
-                Trailer.objects.create(
-                    key = trailer['key'],
-                    name = trailer['name'],
-                    movie_id = id
-                )
 
 def image_save(id):
     if not MovieImage.objects.filter(movie_id=id):
@@ -148,8 +135,6 @@ def image_save(id):
 # Create your views here.
 def index(request):
     movies = Movie.objects.all()
-    # for i in range(15,18):
-    #     movies_data(i)
     return render(request,'movies/index.html',{
         'movies':movies
     })
@@ -217,11 +202,11 @@ def search(request):
     title_movies = Movie.objects.filter(title__contains=query)
     # search_url = f'https://api.themoviedb.org/3/search/movie?api_key=f115f7077bf79f6f7fd3227c5ba7f281&language=ko-KR&query={query}&page=1&include_adult=false'
     # title_movies = requests.get(search_url).json().get('results')
-    
     asdf_movies = Movie.objects.filter(overview__contains=query)
     overview_movies = asdf_movies.difference(title_movies)
     actors = People.objects.filter(name__contains=query)
     context = {
+        'genres' : Genre.objects.all(),
         "title_movies" : title_movies,
         "overview_movies" : asdf_movies,
         'actors' : actors,
@@ -231,20 +216,19 @@ def search(request):
 
 def actor(request,id):
     people = get_object_or_404(People,pk=id)
-    print(people)
     context = {
-        'people' : people
+        'people' : people,
+        'genres' : Genre.objects.all()
     }
     return render(request,'movies/actor.html',context)
 
 def create(request,id):
     if not Movie.objects.filter(pk=id):
-        print('없')
+        print('없음')
         movie_save(id)
-    image_save(id)
-    trailer_save(id)
-    people_save(id)
-    credit_save(id)
+        image_save(id)
+        people_save(id)
+        credit_save(id)
     return redirect('movies:detail',id)
 
 def name_change(request,people_id):
@@ -255,10 +239,6 @@ def name_change(request,people_id):
 
 def genres(request):
     genres = Genre.objects.all()
-    reviews = Review.objects.filter(user__password='password')
-    for review in reviews:
-        review.content = "#Display:None"
-        review.save()
     return render(request, 'movies/genres.html',{'genres':genres})
 
 def genre_detail(request, genre_id):
@@ -275,7 +255,7 @@ def genre_detail(request, genre_id):
         'count' : count,
     }
     return render(request,'movies/genre_detail.html', context )
-
+'''
 def make_fake(request,genre_id):
     genre = get_object_or_404(Genre,pk=genre_id)
     count_movies = Movie.objects.filter(vote_count__gte=3000)
@@ -285,25 +265,25 @@ def make_fake(request,genre_id):
     other = count_movies.difference(filter)
     others = other.exclude(genres__id=genre_id)
     count = User.objects.filter(username__contains=genre.name).count()
-    u = User.objects.create(email=f'{genre.name}{count+1}@inspiration.com',
-        username=f'{genre.name}{count+1}',
-        first_name = f'{genre.name}{count+1}',
+    u = User.objects.create(email=f'hate18@inspiration.com',
+        username=f'hate18',
+        first_name = f' hate{count+1}',
         password='password'
     )
-    for movie in np.random.choice(filter,min(40,len(filter)//2),replace =False):
+    for movie in np.random.choice(count_movies,20,replace =False):
         s = np.random.normal(movie.vote_average+0.7, 2)
         if s > 10:
             s = 10
         elif s < 0:
             s = 0 - s
         Review.objects.create(
-            score = round(s+0.5),
+            score = round(s+0.3),
             content = '#Display:None',
             movie_id = movie.pk,
             user_id = u.id
         )
-    for movie in np.random.choice(other,min(30,len(other)//2),replace =False):
-        s = np.random.normal(movie.vote_average-1, 2)
+    for movie in np.random.choice(ko_movies,35,replace =False):
+        s = np.random.normal(movie.vote_average-5, 2)
         if s > 10:
             s = 10
         elif s < 1:
@@ -315,5 +295,4 @@ def make_fake(request,genre_id):
             user_id = u.id
         )
     return redirect('movies:genre_detail',genre_id)
-
-
+'''

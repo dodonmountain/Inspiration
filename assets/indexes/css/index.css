@@ -62,12 +62,13 @@ body {
 
 .carousel-row {
     white-space: nowrap;
-    margin-top: 20vh;
+    margin-top: 10vh;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     transition: var(--carousel-transition-2);
 }
+
 .carousel-card {
     width: 18rem;
     height: 40vh;

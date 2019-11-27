@@ -14,5 +14,5 @@ urlpatterns = [
     path('create/<int:id>/',views.create,name="create"),
     path('genres/',views.genres,name='genres'),
     path('genres/<int:genre_id>',views.genre_detail,name='genre_detail'),
-    path('genres/<int:genre_id>/fake/',views.make_fake,name="make_fake")
+    # path('genres/<int:genre_id>/fake/',views.make_fake,name="make_fake")
 ]

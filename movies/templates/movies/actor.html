@@ -32,6 +32,7 @@
     font-family: 'Impact', sans serif;
     background-color: rgba(0,0,0,0.7);
   }
+
 </style>
 {% endblock %}
 
@@ -39,8 +40,13 @@
 {% include '_navbar.html' %}
 
 <div class="container mt-5 mb-0">
+  {% if people.job == "Actor" %}
 
   <h1 class="text-white p-5">{{ people.name }}</h1>
+  {% else %}
+  <h1 class="text-white p-5">{{ people.name }} 감독</h1>
+  {% endif %}
+
   <div class="row h-100">
     <div class="col-6">
       <div class="castActor m-2" role="link"
@@ -49,28 +55,45 @@
     </div>
     <div class="col-6">
         <div id="carouselExampleControls" class="carousel slide m-2" data-ride="carousel">
-            <ol id="idicator" class="carousel-indicators">
-              <li data-target="#carouselExampleControls" data-slide-to="0" class="active" style="height:65px !important;width:80px !important"></li>
-            </ol>
 						<div class="carousel-inner">
 						<div class="carousel-item active h-50">
-							<h2 style="height:50vh;padding-top:24vh;padding-bottom:45vh" class="text-center">{{ people.name }}의 작품 목록</h2>
-						</div>
-            {% for credit in people.credit_set.all %}
-            <div class="carousel-item filmoBox">
-              <h3 class="chrName">{{ credit.character }} 역</h3>
-							<a href="{% url 'movies:detail' credit.movie.id %}">
-                <img src="https://image.tmdb.org/t/p/w500{{ credit.movie.poster_path }}" class="mx-auto h-auto igsrc">
-							</a>
-              
+              <h2 style="height:50vh;padding-top:24vh;padding-bottom:45vh" class="text-center">{{ people.name }}의 작품 목록</h2>
             </div>
-            {% endfor %}
+            {% if people.job == "Actor" %}
+              {% for credit in people.credit_set.all %}
+              <div class="carousel-item filmoBox">
+                <h3 class="chrName">{{ credit.character }} 역</h3>
+                <a href="{% url 'movies:detail' credit.movie.id %}">
+                  <img src="https://image.tmdb.org/t/p/w500{{ credit.movie.poster_path }}" class="mx-auto h-auto igsrc">
+                </a>
+                
+              </div>
+              {% endfor %}
+            {% else %}
+              {% for movie in people.movie_set.all %}
+              <div class="carousel-item filmoBox">
+                <a href="{% url 'movies:detail' movie.id %}">
+                  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="mx-auto h-auto igsrc">
+                </a>
+                
+              </div>
+              {% endfor %}
+              {% endif %}
           <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"></a>
           <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"></a>
         </div>
-			</div>
+      </div>
+      <ol id="idicator" class="carousel-indicators">
+          <li data-target="#carouselExampleControls" data-slide-to="0" class="active" style="height:65px !important;width:80px !important"></li>
+        </ol>
     </div>
+    {% if people.job == "Actor" %}
+
     <div id="filCount" class="d-none">{{ people.credit_set.all.count }}</div>
+    {% else %}
+    <div id="filCount" class="d-none">{{ people.movie_set.all.count }}</div>
+
+    {% endif %}
     {% endblock %}
 {% block script %}
 <script>

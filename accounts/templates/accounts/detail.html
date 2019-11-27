@@ -54,15 +54,11 @@
   </div>
   <hr class="border-white">
   <h3>나의 장르별 선호도는?</h3>
-  <div class="row movie-row mt-3">
-    {% for a in vs %}
-    <a href="{% url 'movies:detail' a.0.id %}">
-      <div class="col-12 col-xl-3">
-        <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{a.0.poster_path}}')"></div>
-      <p>{{ a.0 }} >> {{ a.1 }}점 {{ a.2 }}%</p>
-    </div>
-  </a>
-  {% endfor %}
+  <div class="mt-3">
+    {% for genre in user_like_genre %}
+      {{ genre.0 }} - {{genre.1.0}} 점 ! - {{genre.1.1}}개의 {{genre.0}}영화에 리뷰달았ㅅ브니다
+      <br>
+      {% endfor %}
   </div>
   <hr class="border-white">
   <h3>MY REVIEW</h3>

@@ -2,6 +2,13 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
+<style>
+.pagebutton {
+    margin-top:15vh;
+    margin-left:40vw;
+    margin-right:40vw;
+}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -9,24 +16,36 @@
 {% include '_navbar.html' %}
 {% if user.is_authenticated %}
 <div id='car' class="carousel fadein mt-3 mb-0">
-    <h2 class="queIndicator">{{ user.first_name }} <small>님의 맞춤 대기열</small></h2>
+    <h2 class="queIndicator"><small>평점 순 영화 추천</small></h2>
     <div id="ifFirstTime">
     <p class="d-flex mt-5 ml-4 position-fixed"><small class="mt-4 text-white-50">만약 영감이 처음이시라면? </small> <a class="text-white ml-2 mt-4" href="/rater/">초기평가 하러가기</a></p>
+    </div>
+    <div class="pagebutton">
+        <a href="/index/">
+        <button>
+            평점순
+        </button>
+        </a>
+        <a href="/index/my">
+        <button>
+            추천 순
+        </button>
+    </a>
     </div>
     <div class="carousel-row">
         {% for movie in movies %}
         <div class="carousel-tile">
-            <a href="{% url 'movies:detail' movie.0.id %}" class="text-decoration-none">
-                <h3 class="position-absolute">{{ movie.1 }} 점 | {{ movie.2 }}%</h3>
-                <img src="https://image.tmdb.org/t/p/w500{{ movie.0.poster_path }}" style="height: 40vh;">
+            <a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none">
+                <h3 class="position-absolute"><span id="avgscore">{{ movie.avg }}</span> 점</h3>
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;">
 
             </a>
             <div class="text-white text-center mt-3 p-0">
-                <h3 class="car-body overflow-hidden">{{ movie.0.title }}</h3>
-                <i class="fa fa-clock-o">{{ movie.0.runtime }}분</i>
+                <h3 class="car-body overflow-hidden">{{ movie.title }}</h3>
+                <i class="fa fa-clock-o">{{ movie.runtime }}분</i>
                 <br>
                 <div class="row m-0 p-3">
-                {% for genre in movie.0.genres.all %}
+                {% for genre in movie.genres.all %}
                     <p class="col badge badge-info ">{{ genre.name }}</p>
                 {% endfor %}
                 </div>
@@ -48,6 +67,7 @@
 
 {% block script %}
 <script>
+    const avgscore = document.querySelectorAll('#avgscore')
     const lst = document.querySelector('#car')
     const app = document.querySelector('#app')
     const navbar = document.querySelector('#navBar')
@@ -57,6 +77,10 @@
     let last_known_scroll_position = 0;
     let flag = false
     const colors = ['primary', 'danger', 'success', 'warning', 'info', 'light']
+    for (i=0;i<avgscore.length;i++) {
+        var avg = avgscore[i].innerText * 1
+        avgscore[i].innerText = avg.toFixed(2);
+    }
     window.onload = function() {
         navbar.hidden = true
         lst.hidden = true
