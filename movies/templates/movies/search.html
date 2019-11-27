@@ -10,26 +10,33 @@
 	}
 	.titleButton {
 		background-color: seagreen;
+		border-radius: 20px 20px;
 	}
 	.overviewButton {
 		background-color: slateblue;
 		float: right;
+		border-radius: 20px 20px;
 	}
 	.actorButton {
 		background-color: royalblue;
+		border-radius: 20px 20px;
 	}
 	.posterBox {
 		height: 30vh;
 		background-position: center bottom !important;
 		background-repeat: no-repeat !important;
 	}
-	.posterBox:hover{
+	.posterBox:hover {
 		border: 3px solid orange;
 	}
 	.query {
 		color: white;
 		text-shadow: orange 0.2rem 0.1rem;
 	}
+	#card-header {
+		border: 0 !important;
+	}
+
 </style>
 {% endblock %}
 
@@ -39,7 +46,7 @@
 	<h1>"{{ query }}" 에 대한 검색결과입니다.</h1>
 	<h4 class="ml-5 text-muted">띄어쓰기를 꼭 해주셔야해요!</h4>
 	<hr>
-	<div class="accordion bg-transparent" id="accordionExample">
+	<div class="accordion bg-transparent border-0" id="accordionExample">
 		<div class="card bg-transparent">
 			<div class="card-header" id="headingOne">
 				<h3 class="mb-0">
@@ -54,13 +61,14 @@
 					{% if title_movies %}
 					{% for movie in title_movies %}
 					<div class="row p-5">
-						<div class="col-6 text-center">
+						<div class="col-4 offset-1 text-center">
 							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
 								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
 								<h3>{{ movie.title }}</h3>
 							</a>
 						</div>
-						<div class="col-6">
+						<div class="col-6 offset-1">
+							<h5 class="text-muted border-bottom"><em>{{ movie.tagline }}</em></h5>
 							<p>{{ movie.overview }}</p>
 						</div>
 					</div>
@@ -84,20 +92,20 @@
 				<div class="card-body">
 					{% if overview_movies %}
 					{% for movie in overview_movies %}
-					<div class="row p-5">
-						<div class="col-6 text-center">
+					<div class="row p-5 posterRow">
+						<div class="col-6 text-center ">
 							<a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none text-white font-weight-bold">
 								<div style="background: url('https://image.tmdb.org/t/p/w500{{ movie.poster_path }}');" class="row posterBox"></div>
 								<h3>{{ movie.title }}</h3>
 							</a>
 						</div>
-						<div class="col-6">
-							<p>{{ movie.overview }}</p>
+						<div class="col-6 align-middle">
+							<h6 class="mt-5">{{ movie.overview }}</h6>
 						</div>
 					</div>
 					{% endfor %}
 					{% else %}
-					<h2>검색 결과가 없습니다.</h2>
+					<h2 class="text-center">검색 결과가 없습니다.</h2>
 					{% endif %}
 				</div>
 			</div>
@@ -126,7 +134,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<h2>검색 결과가 없습니다.</h2>
+					<h2 class="text-center">검색 결과가 없습니다.</h2>
 					{% endif %}
 				</div>
 			</div>

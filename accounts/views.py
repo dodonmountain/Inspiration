@@ -123,7 +123,7 @@ def vs_user(user):
     arr = []
     for i in range(len(sorted_movie)):
         tmp =[] # 쿼리, 예상평점, 정확도
-        tmp.append(Movie.objects.filter(pk=sorted_movie[i][0]))
+        tmp.append(Movie.objects.filter(pk=sorted_movie[i][0])[0])
         tmp.append(round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
         tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
         if tmp[1] > 6 and tmp[2] > 10 :
