@@ -155,6 +155,7 @@ def index(request):
     })
 
 def detail(request,movie_pk):
+    genres = Genre.objects.all()
     movie = get_object_or_404(Movie,pk=movie_pk)
     all_review = Review.objects.filter(movie_id=movie_pk)
     if len(all_review):
@@ -175,6 +176,7 @@ def detail(request,movie_pk):
     context['movie'] = movie
     context['avg'] = round(avg,2)
     context['credits'] = movie.credit_set.all().order_by('order')
+    context['genres'] = genres
     return render(request,'movies/detail.html',context)
 
 @require_POST
