@@ -6,12 +6,14 @@
 {% endblock %}
 
 {% block body %}
+<div id="topImg"></div>
 {% include '_navbar.html' %}
 
 <div class="container-fluid">
+	
 	{% if gid.0	%}
-		<p class="display-1 font-weight-bolder">{{ gid.0.name }} </p>
-		<p class="display-3 text-right">TOTAL {{movies.count}}</p>
+		<p style="color:white;text-shadow:2px 2px black" class="display-1 text-center border-bottom font-weight-bolder">{{ gid.0.name }} </p>
+		<p class="display-3 text-right text-white-50">TOTAL {{movies.count}}</p>
 	{% else %}
 		<p class="display-1 font-weight-bolder">한국영화</p>
 		<p class="display-3 text-right">TOTAL {{movies.count}}</p>

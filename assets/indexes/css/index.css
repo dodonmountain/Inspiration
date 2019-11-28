@@ -1,18 +1,23 @@
 body {
-  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
-  background-color: linear-gradient(to top, #09203f 0%, #537895 100%);
-  background-size: 100%;
+  background: url("/static/img/index_bg.jpg");
+  background-size: cover;
+  box-shadow: inset 0 0 0 100vw rgba(0, 0, 0, 0.7);
   overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Nanum Gothic";
 }
 
 #app {
   height: 100vh;
 }
+.page-item {
+  width: 15rem !important;
+  text-align: center;
+}
+
 .pgnat{
   position: fixed;
   font-weight: bold;
-  width: 12rem;
+  width: fit-content;
   margin-top: 4rem !important;
   margin-left: 1rem;
   font-family: 'Nanum Gothic';
@@ -22,11 +27,10 @@ body {
   font-weight: bold;
   position: fixed;
   left: 37vw;
-  font-size: 4rem;
+  font-size: 3rem;
   border-radius: 10px 10px;
-  margin-bottom: 3vh;
-  color: #5f5f5f;
-  background: rgba(255, 255, 255, 0.95);
+  color: #fff;
+  background: transparent;
   font-family: 'Yeon Sung';
   font-weight: 800;
   z-index: 1;
@@ -35,7 +39,20 @@ body {
   padding-right: 2rem;
   padding-bottom: 5px;
 }
-
+.helpText {
+  font-weight: bold;
+  position: fixed;
+  left: 34vw;
+  top: 15vh;
+  font-size: 1rem;
+  border-radius: 10px 10px;
+  color: #fff;
+  background: transparent;
+  font-family: 'Yeon Sung';
+  z-index: 1;
+  transition: 1s;
+  padding-left: 2rem;
+}
 @keyframes fadeOut {
   from{opacity: 1;}
   to{opacity: 0;}
@@ -75,7 +92,7 @@ body {
 
 .carousel-row {
     white-space: nowrap;
-    margin-top: 23.5vh;
+    margin-top: 12rem;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
@@ -172,6 +189,7 @@ body {
   margin-top: 0 !important;
   width: 18rem !important;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis !important;
   font-family: 'Nanum Gothic', sans-serif;
 }
@@ -205,6 +223,23 @@ body {
 .overlay:target {
   visibility: visible;
   opacity: 1;
+}
+
+#ifFirstTime > a{
+  text-decoration: none;
+  color: orange;
+  font-weight: 900;
+  border: 2px dotted orange;
+  padding: 3px;
+  transition: 1s;
+  position: fixed;
+}
+#ifFirstTime > a:hover{
+  text-decoration: none;
+  color: skyblue;
+  font-weight: 900;
+  border: 2px dotted orange;
+  padding: 3px;
 }
 
 @media screen and (max-width: 700px){

@@ -2,12 +2,12 @@
     {% if user.is_authenticated %}
     <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
         <a style="opacity:0.8;text-shadow:1px 1px black;color:white;text-decoration: none;" href="{% url 'indexes:index' %}">
-            Inspiration
+            Inspiration <span class="spanLogo">영감</span>
         </a>
     </h1>
     {% else %}
     <h1 class='text-white' style="font-family: 'Permanent Marker', cursive;">
-        Inspiration
+        Inspiration 
     </h1>
     <li class="nav-item mx-2">
         <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL">
@@ -52,7 +52,7 @@
             </li>
             <li class="nav-item">
                 <form action="{% url 'movies:search' %}" class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2 bg-transparent text-white searchField" type="search" name="q" placeholder="영화명, 장르, 배우">
+                    <input class="form-control mr-sm-2 bg-transparent text-white searchField" type="search" name="q" placeholder="영화명, 영화 설명, 배우">
                     <button style="height:2.3rem;font-size:1rem;font-weight:bolder;background: none;" type="submit">찾아줘!</button>
                 </form>
             </li>

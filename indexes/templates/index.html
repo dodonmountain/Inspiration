@@ -16,18 +16,18 @@
         <ul class="pagination justify-content-center">
 
             <li class="page-item disabled">
-                <a class="page-link" href="/index/" tabindex="-1" aria-disabled="true">평점순</a>
+                <a class="page-link" href="/index/" tabindex="-1" aria-disabled="true">영감순위보기</a>
             </li>
 
             <li class="page-item">
-                <a style="color:orange" class="page-link" href="/index/my">추천순</a>
+                <a style="color:orange" class="page-link" href="/index/my">추천영화목록</a>
             </li>
         </ul>
 
     </div>
 
     <div id="ifFirstTime">
-        <p class="d-flex position-fixed"><small class="text-white-50">만약 영감이 처음이시라면? </small> <a class="text-white" href="/rater/">초기평가 하러가기</a></p>
+        <a href="/rater/">초기평가 하러가기</a>
     </div>
 
     <div class="carousel-row">
@@ -73,7 +73,7 @@
     const tags = document.querySelectorAll('.badge-info')
     let last_known_scroll_position = 0;
     let flag = false
-    const colors = ['primary', 'danger', 'success', 'warning', 'info', 'light']
+    const colors = ['primary', 'danger', 'success', 'warning', 'info', 'light','dark']
     for (i=0;i<avgscore.length;i++) {
         var avg = avgscore[i].innerText * 1
         avgscore[i].innerText = avg.toFixed(2);

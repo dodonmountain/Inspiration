@@ -9,14 +9,15 @@
 {% include '_navbar.html' %}
 <div id='car' class="carousel fadein mt-3 mb-0">
     <h2 class="queIndicator mt-5">{{ user.first_name }} <small>님의 맞춤 대기열</small></h2>
+    <small class="helpText">회원님이 매길 것으로 <span class="text-info">예상되는 평점</span> / 해당 평점의 <span class="text-danger">예상 정확도</span>에요!</small>
 
     <div class="pgnat">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a style="color:orange" class="page-link" href="/index/" tabindex="-1" aria-disabled="true">평점순</a>
+                <a style="color:orange" class="page-link" href="/index/" tabindex="-1" aria-disabled="true">영감순위보기</a>
             </li>
             <li class="page-item disabled">
-                <a class="page-link" href="/index/my">추천순</a>
+                <a class="page-link" href="/index/my">추천영화목록</a>
             </li>
         </ul>
     </div>
@@ -48,7 +49,7 @@
                 회원님의 평가가 부족해요! 저희에게 회원님을 더 알려주세요. 
             </h1>
             <h1>
-                <a style="color:orange" href="/rater/">초기평가 하러가기</a>
+                <a class="toRater" href="/rater/">초기평가 하러가기</a>
             </h1>
         </div>
         {% endif %}
