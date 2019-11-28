@@ -16,7 +16,7 @@ class People(models.Model):
 class Movie(models.Model):
     adult = models.BooleanField(null=True)
     backdrop_path = models.CharField(max_length=140,null=True)
-    budget = models.IntegerField()
+    budget = models.BigIntegerField()
     genres = models.ManyToManyField(Genre,related_name='genre_movies',blank=True)
     id = models.IntegerField(primary_key=True)
     original_language = models.CharField(max_length=10)
@@ -24,7 +24,7 @@ class Movie(models.Model):
     popularity = models.FloatField()
     poster_path = models.CharField(max_length=140,null=True)
     release_date = models.DateField()
-    revenue = models.IntegerField()
+    revenue = models.BigIntegerField()
     runtime = models.IntegerField(null=True)
     status = models.CharField(max_length=40)
     tagline = models.TextField(null=True)
