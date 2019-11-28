@@ -265,12 +265,12 @@ def make_fake(request,genre_id):
     other = count_movies.difference(filter)
     others = other.exclude(genres__id=genre_id)
     count = User.objects.filter(username__contains=genre.name).count()
-    u = User.objects.create(email=f'hate18@inspiration.com',
-        username=f'hate18',
-        first_name = f' hate{count+1}',
+    u = User.objects.create(email=f'{genre.name}@inspiration.com',
+        username=f'{genre.name}18',
+        first_name = f'{genre.name}{count+1}',
         password='password'
     )
-    for movie in np.random.choice(count_movies,20,replace =False):
+    for movie in np.random.choice(filter,40,replace =False):
         s = np.random.normal(movie.vote_average+0.7, 2)
         if s > 10:
             s = 10
@@ -283,7 +283,7 @@ def make_fake(request,genre_id):
             user_id = u.id
         )
     for movie in np.random.choice(ko_movies,35,replace =False):
-        s = np.random.normal(movie.vote_average-5, 2)
+        s = np.random.normal(movie.vote_average-1, 2)
         if s > 10:
             s = 10
         elif s < 1:
