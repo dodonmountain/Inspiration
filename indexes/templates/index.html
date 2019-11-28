@@ -36,10 +36,9 @@
             <a href="{% url 'movies:detail' movie.id %}" class="text-decoration-none">
                 <h3 class="position-absolute"><span id="avgscore">{{ movie.avg }}</span> 점</h3>
                 <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="height: 40vh;">
-
             </a>
-            <div class="text-white text-center mt-3 p-0">
-                <h3 class="car-body overflow-hidden">{{ movie.title }}</h3>
+            <div class="text-white text-center p-0 pt-3">
+                <h3 class="car-body">{{ movie.title }}</h3>
                 <i class="fa fa-clock-o">{{ movie.runtime }}분</i>
                 <br>
                 <div class="row m-0 p-3">

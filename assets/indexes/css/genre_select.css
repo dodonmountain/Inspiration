@@ -1,38 +1,46 @@
 html {
-  overflow: auto;
+    overflow: auto;
 }
+
 body {
-background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);}
+    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+}
+
 .movieSteel {
-  border-radius: 5%;
-  height: 30rem;
-  width : 20rem;
-  background-repeat: no-repeat;
-  margin: 0;
-  background-size: cover;
-  background-position: center;
-  margin-left: 3rem;
-  transition: 200ms linear;
+    border-radius: 5%;
+    height: 30rem;
+    width: 20rem;
+    background-repeat: no-repeat;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+    margin-left: 3rem;
+    transition: 200ms linear;
 }
+
 .movieSteel:hover {
-  transform: rotate(8deg);
+    transform: rotate(8deg);
 }
+
 .container-fluid {
-  margin-top: 6rem;
-  padding: 0 10%;
+    margin-top: 6rem;
+    padding: 0 10%;
 }
+
 .exScore {
-  text-align:center;
-  color: white;
-  text-shadow: 2px 2px black;
-  font-family: 'Impact';
-  background: rgba(0,0,0,0.6);
-  width: 7rem;
-  margin-left: 1rem;
-  border-radius: 10px 10px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px black;
+    font-family: 'Impact';
+    background: rgba(0, 0, 0, 0.6);
+    width: 7rem;
+    margin-left: 1rem;
+    border-radius: 10px 10px;
 }
-@media screen and (max-width: 700px){
-  .container-fluid {
-    padding: 0;
-  }
+
+
+@media screen and (max-width: 700px) {
+    .container-fluid {
+        padding: 0;
+    }
 }
