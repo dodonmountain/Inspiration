@@ -4,6 +4,80 @@
 
 Inspiration is a Django application for make up with movie recommendations.
 
+영감은 영화 추천을 위해 만든 장고 어플리케이션입니다.
+
+### ⅰ) 팀원 정보 및 업무 분담 내역 (Teams and Works)
+
+* 이 경호
+
+  * UI 개발 위주
+  * Javascript가 필요한 로직
+  * accounts / rater 앱 제작
+  * 인터페이스 로직 제작
+
+  
+
+*  [이 승열](https://github.com/Ssong10)
+  * 데이터 및 핵심 로직 구현
+  * 장고 orm 쿼리 관리 
+  * 관리자 페이지// 개발용 페이지 구현 관리
+  * 리뷰 작성 컴포넌트 제작
+
+
+
+### ⅱ) 목표 서비스 구현 및 실제 구현 정도 (Our Goal)
+
+*  초기 목표
+  * 완전 반응형 웹사이트.
+  * 영화추천, 별점 리뷰, 협업 필터링 기반 추천 시스템, 사용자 친화적인 인터페이스 구현
+* 달성한 목표
+  * 초기 목표 달성
+  * 개발 중에 게이미피케이션 적용한 평가 기능을 추가하기로 하였고 추가 완료
+* 실패한 목표
+  * 영화마다 다른 파비콘(Favicon) 적용 
+  * 위키 백과 등 웹 파싱으로 배우나 영화의 상세정보 출력 (시간 부족)
+
+### ⅲ) 데이터베이스 모델링(ERD)
+
+![](graphviz.png)
+
+> powered by graphviz 
+
+> [Graphviz]( https://www.graphviz.org/ )
+
+
+
+### ⅳ) 핵심 기능 (Functions)
+
+#### 협업 필터링 기반 영화 추천 시스템
+
+
+
+#### 파도타기 기능
+
+
+
+#### 빠른 평가 기능
+
+
+
+
+
+### ⅴ) 배포 서버 URL 
+
+#### [영감, Inspiration 배포 URL](http://15.165.19.28/ )
+
+
+
+![image-20191128175259023](welcome.png)
+
+
+
+
+### ⅵ) 기타 (Others)
+
+
+
 
 
 ## Installation
@@ -38,15 +112,7 @@ We'll deploy it on AWS or Heroku. So you can get it.
 
 ### 1. ERD
 
-[](/graphviz.png)
-
-![graphviz](graphviz.png)
-
-
-
-> powered by graphviz 
->
-> [Graphviz]( https://www.graphviz.org/ )
+Look Above
 
 
 
@@ -68,5 +134,5 @@ We'll deploy it on AWS or Heroku. So you can get it.
 
 
 
-### 4. Other
+
 
