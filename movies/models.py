@@ -28,7 +28,7 @@ class Movie(models.Model):
     runtime = models.IntegerField(null=True)
     status = models.CharField(max_length=40)
     tagline = models.TextField(null=True)
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=70)
     video = models.BooleanField()
     vote_average = models.FloatField()
     vote_count = models.IntegerField()
@@ -37,14 +37,14 @@ class Movie(models.Model):
 
 
 class Review(models.Model):
-    content = models.CharField(max_length=100, blank=True, null=True)
+    content = models.CharField(max_length=140, blank=True, null=True)
     score = models.IntegerField(blank=True, null=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Credit(models.Model):
     credit_id = models.CharField(max_length=30,primary_key=True)
-    character = models.CharField(max_length=50)
+    character = models.CharField(max_length=60)
     order = models.IntegerField()
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
     people = models.ForeignKey(People,on_delete=models.CASCADE)
