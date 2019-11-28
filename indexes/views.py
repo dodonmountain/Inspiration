@@ -11,7 +11,7 @@ from django.db.models import Avg, Count
 @login_required
 def index(request):
     genres = Genre.objects.all()
-    movies = Movie.objects.values().annotate(
+    movies = Movie.objects.all().annotate(
         count = Count('review'),
         avg = Avg('review__score')
     ).filter(count__gte=30).order_by('-avg')[:30]
@@ -37,12 +37,15 @@ def myindex(request):
 
 
 def genre_select(request,genre_id):
+    genres = Genre.objects.all()
     if genre_id == 1:
         movies = Movie.objects.filter(original_language='ko').order_by('-vote_count')
     else:
         movies = Movie.objects.filter(genres__id=genre_id).order_by('-vote_count')
     context = {
-        'movies':movies
+        'movies':movies,
+        'genres': genres,
+        'gid': Genre.objects.filter(pk=genre_id)
     }
     return render(request,'genre_select.html',context)
 
@@ -76,7 +79,8 @@ def vs_user(user):
     sorted_vs = sorted(vs.items(), key=lambda kv: kv[1],reverse=True)
     movies = {}
     for i in sorted_vs[1:15]:
-        for review in Review.objects.filter(user_id=i[0]):
+        iFilter = Review.objects.filter(user_id=i[0])
+        for review in iFilter:
             if review.movie_id in movies and review.score > 6:
                 if not Review.objects.filter(user=user).filter(movie_id=review.movie_id):
                     movies[review.movie_id][0] += 1
@@ -88,10 +92,10 @@ def vs_user(user):
     arr = []
     for i in range(len(sorted_movie)):
         if sorted_movie[i][1][0] > 1:
-            tmp =[] # 쿼리, 예상평점, 정확도
-            tmp.append(Movie.objects.filter(pk=sorted_movie[i][0])[0])
-            tmp.append(round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
-            tmp.append(round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
+            tmp = np.array([]) # 쿼리, 예상평점, 정확도
+            tmp = np.append(tmp, Movie.objects.filter(pk=sorted_movie[i][0])[0])
+            tmp = np.append(tmp, round(sorted_movie[i][1][1]/sorted_movie[i][1][0],2))
+            tmp = np.append(tmp, round(sorted_movie[i][1][2]/sorted_movie[i][1][0] * 100,1))
             if tmp[1] > 6 and tmp[2] > 30 :
                 arr.append(tmp)
             # arr = sorted(arr, key=lambda x: x[1] * x[2],reverse=True)

@@ -47,6 +47,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'PJTmovie.urls'
 
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -42,12 +42,12 @@
                     <a class="text-white" href="https://github.com/dodonmountain/pjt10"><i class="fa fa-github fa-3x"></i></a>
                 </div>
             </li>
-            <li class="nav-item mr-2 bmcDiv"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
+            <li class="nav-item mr-2 bmcDiv"><a class="bmc-button" id="lotto" target="_blank" href="https://www.buymeacoffee.com/wHexPZL"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="buy me a coffee"><span style="margin-left:15px;font-size:28px !important;"></span></a>
             </li>
             <li class="nav-item mx-2">
                 <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:logout' %}">로그아웃</a>
             </li>
-            <li class="nav-item mx-2">
+            <li class="nav-item mx-2 mr-4">
                 <a class="nav-link text-white font-weight-bold" href="{% url 'accounts:detail' user.id %}" tabindex="-1">나의 영화</a>
             </li>
             <li class="nav-item">

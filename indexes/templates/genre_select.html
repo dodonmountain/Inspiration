@@ -7,8 +7,15 @@
 
 {% block body %}
 {% include '_navbar.html' %}
-<h1>{{ genre.name }}</h1>
+
 <div class="container-fluid">
+	{% if gid.0	%}
+		<p class="display-1 font-weight-bolder">{{ gid.0.name }} </p>
+		<p class="display-3 text-right">TOTAL {{movies.count}}</p>
+	{% else %}
+		<p class="display-1 font-weight-bolder">한국영화</p>
+		<p class="display-3 text-right">TOTAL {{movies.count}}</p>
+	{% endif %}
 	<div class="row flex-wrap mt-5">
 		{% for movie in movies %}
 			<div class="col-12 col-xl-3 my-3">

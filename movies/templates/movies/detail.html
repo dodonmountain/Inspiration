@@ -80,6 +80,10 @@
         align-content: center;
         justify-content: center;
         text-shadow: black 1px 1px;
+        transition: 120ms;
+    }
+    .genreIndicator:hover {
+        transform: rotate(-5deg);
     }
 
     .overview {
@@ -323,7 +327,9 @@
                     <div class="row pl-5">
                         {% for genre in movie.genres.all %}
                         <div class="genreIndicator">
-                            <i class="fa fa-tag"></i> {{ genre.name }}
+                            <a href="{% url 'indexes:genre_select' genre.id %}" class="m-0 p-0 text-decoration-none text-white">
+                                <i class="fa fa-tag"></i> {{ genre.name }}
+                            </a>
                         </div>
                         {% endfor %}
                     </div>

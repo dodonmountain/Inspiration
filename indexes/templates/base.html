@@ -195,7 +195,10 @@
                 margin-left: 3rem;
             }
             
-
+            #ifFirstTime {
+                margin-top: 7rem;
+                margin-left: 2.5rem;
+            }
             .genreButton:hover {
                 color: orange;
 
@@ -326,12 +329,16 @@
         <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
         <script>
             let prevScrollpos = window.pageYOffset;
+            lotto.href = "https://www.buymeacoffee.com/SzjHO0Q"
+            lotto.href = "https://www.buymeacoffee.com/wHexPZL"
             window.onscroll = function() {
                 var currentScrollPos = window.pageYOffset;
                 if (prevScrollpos > currentScrollPos) {
                     document.getElementById("navBar").style.top = "0";
+                    
                 } else {
                     document.getElementById("navBar").style.top = "-500px";
+                    
                 }
                 prevScrollpos = currentScrollPos;
             }
@@ -347,6 +354,7 @@
                 } else {
                     mybutton.style.display = "none";
                     document.getElementById("navBar").hidden = false
+                    
                 }
             }
             function getCurrentScrollPercentage(){

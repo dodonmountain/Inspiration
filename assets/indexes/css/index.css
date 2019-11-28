@@ -13,23 +13,23 @@ body {
   position: fixed;
   font-weight: bold;
   width: 12rem;
-  margin-top: 6vh !important;
-  margin-left: 42.5vw;
+  margin-top: 4rem !important;
+  margin-left: 1rem;
   font-family: 'Nanum Gothic';
 }
 .queIndicator {
+  box-shadow: 4px 1px;
   font-weight: bold;
   position: fixed;
-  left: 41vw;
-  font-size: 2rem;
-  border-radius: 0rem 1rem;
+  left: 37vw;
+  font-size: 4rem;
+  border-radius: 10px 10px;
   margin-bottom: 3vh;
-  color: white;
-  text-shadow: 1px 0px orange;
-  background: rgba(200, 200, 200, 0.7);
-  font-family: 'Nanum Gothic';
-  font-weight: bolder;
-  z-index: 99;
+  color: #5f5f5f;
+  background: rgba(255, 255, 255, 0.95);
+  font-family: 'Yeon Sung';
+  font-weight: 800;
+  z-index: 1;
   transition: 1s;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -55,7 +55,7 @@ body {
 }
 :root {
   --carousel-tile-spacing: 10px;
-  --carousel-tile-width:   250px;
+  --carousel-tile-width:   300px;
   --carousel-tile-height:  calc(var(--carousel-tile-width) / (16 / 9));
   --carousel-growth-factor: 1.5;
   --carousel-fade-opacity:   0.25;
@@ -67,15 +67,15 @@ body {
   --carousel-transition-3: 0.3s;
 }
 .carousel {
-    margin: 5vh 0 0 0;
+    margin: 4vh 0 0 0;
     overflow: hidden;
     white-space: nowrap;
-    height: 100vh;
+    height: 105vh;
 }
 
 .carousel-row {
     white-space: nowrap;
-    margin-top: 25vh;
+    margin-top: 23.5vh;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
@@ -84,13 +84,14 @@ body {
 
 .carousel-card {
     width: 18rem;
-    height: 40vh;
+    height: 25rem;
 }
 
 .carousel-tile {
     position: relative;
     display: inline-block;
     margin-left: 2vw;
+    margin-bottom:0;
     width: 18rem;
     height: var(--carousel-tile-height);
     margin-right: var(--carousel-tile-spacing);
@@ -107,6 +108,7 @@ body {
 
 .carousel-tile * {
     width: 18rem;
+    transition: 1s;
 }
 
 .carousel-tile>a>img{
@@ -120,24 +122,29 @@ body {
 
 .carousel-tile>a>h3{
   font-family: 'Yeon Sung', sans-serif;
-  font-size: 1.2rem;
+  font-size: 2rem;
   text-align: center !important;
-  margin: -2rem 0 !important;
+  margin: -2.3rem 0 !important;
   color: white;
   text-shadow: black 2px 2px;
+  pointer-events: none;
 }
+
 .carousel-tile:hover ~  .carousel-tile>a>h3{
-  font-size: 3rem;
+  font-size: 1.2rem !important;
   text-align: center !important;
-  margin: 4rem 0 !important;
+  margin: 0 0 !important;
 }
-.carousel-tile:hover  .carousel-tile>a>h3{
-  font-size: 3rem;
+
+.carousel-row:hover  .carousel-tile>a>h3{
+  font-size: 1.2rem !important;
   text-align: center !important;
-  margin: 4rem 0 !important;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin: 0 0 !important;
 }
+
 @keyframes tileRect {
-  from {border-radius: 35%;}
+  from {border-radius: 25%;}
   to {border-radius: 0%;}
 }
 
@@ -161,7 +168,15 @@ body {
     transform: translate3d(var(--carousel-offset-right), 0, 0);
 }
 .car-body {
-  font-family: 'Arial Narrow Bold', sans-serif;
+  pointer-events: none;
+  margin-top: 0 !important;
+  width: 18rem !important;
+  white-space: nowrap;
+  text-overflow: ellipsis !important;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.car-body:hover {
+  transform: translateX(-100%) 20s;
 }
 .opener {
   font-family: 'Permanent Marker', cursive;
