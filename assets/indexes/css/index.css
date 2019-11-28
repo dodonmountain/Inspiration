@@ -23,10 +23,10 @@ body {
   font-family: 'Nanum Gothic';
 }
 .queIndicator {
-  box-shadow: 4px 1px;
+  box-shadow: -4px 1px;
   font-weight: bold;
   position: fixed;
-  left: 37vw;
+  right: 2vw;
   font-size: 3rem;
   border-radius: 10px 10px;
   color: #fff;
