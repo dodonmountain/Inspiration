@@ -46,21 +46,22 @@
     {% for movie in userinfo.like_movies.all %}
       <a href="{% url 'movies:detail' movie.id %}">
         <div class="col-12 col-xl-3">
-          <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/w200{{movie.poster_path}}')">
+          <div class="movieSteel" style="background-image: url('https://image.tmdb.org/t/p/500{{movie.poster_path}}')">
         </div>
       </a>
     {% endfor %}
     </div>
   </div>
   <hr class="border-white">
-  <h3>나의 장르별 선호도는?</h3>
+  <h3>내가 리뷰한 영화들</h3>
   <div class="mt-3">
     {% for genre in user_like_genre %}
-      {{ genre.0 }} - {{genre.1.0}} 점 ! - {{genre.1.1}}개의 {{genre.0}}영화에 리뷰달았ㅅ브니다
-      <br>
+    <p class="m-2 border-bottom p-2">
+      <span style="color:orange;">{{ genre.0 }}</span> - {{genre.1.0}} 점 ! - {{genre.1.1}}개의 {{genre.0}}영화를 리뷰했어요!
+    </p>
       {% endfor %}
   </div>
-  <hr class="border-white">
+  <hr class="border-info">
   <h3>MY REVIEW</h3>
   <div class="container-fluid">
       <div class="row movie-row mt-3">

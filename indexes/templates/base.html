@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Permanent+Marker|Yeon+Sung&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon">
         <style>
             html {
                 scroll-behavior: smooth;
@@ -185,14 +186,15 @@
                 color: white;
                 height: 45px;
                 font-size: 1.1rem;
-                text-align: center;
                 transition: 200ms;
                 vertical-align: middle !important;
                 border-radius: 5px !important;
                 width: 10rem;
                 font-weight: 500;
                 cursor: pointer;
+                margin-left: 3rem;
             }
+            
 
             .genreButton:hover {
                 color: orange;
@@ -204,6 +206,7 @@
                 background: #2f2f2f;
                 border-radius: 4px;
                 opacity: 0.9;
+                margin-left: 3rem;
             }
 
             .dropdon-item {
@@ -245,10 +248,25 @@
 
                 .navbar-collapse {
                     background: rgba(0, 0, 0, 0.7);
+                    font-size: 1rem !important;
+                    font-weight: 500 !important;
+                    padding: 0.5rem !important;
+                    font-family: 'Nanum Gothic';
+                    margin-bottom: 1.3rem !important;
                 }
-
                 .genreButton {
                     margin: 0 !important;
+                    background: rgba(0, 0, 0, 0.7);
+                    font-size: 1rem !important;
+                    font-weight: bolder !important;
+                    padding: 0.5rem !important;
+                    font-family: 'Nanum Gothic';
+                }
+                .ddm {
+                    width: 100vh !important;
+                }
+                .dropdown-item:hover {
+                    text-align: left !important;
                 }
 
                 .nav-item>button {
@@ -256,8 +274,8 @@
                     display: block !important;
                 }
                 .searchField {
-                width: 70%;
-                transition: none;
+                    width: 70%;
+                    transition: none;
                 }
                 .searchField:focus {
                     animation: none;

@@ -26,10 +26,10 @@
         <ul class="navbar-nav flex-nowrap w-100">
             <li class="nav-item mr-auto">
                 <div class="btn-group">
-                    <div class="nav-link genreButton ml-5" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                        <p class="m-auto font-weight-bold">장르별 인기 순위</p>
+                    <div class="nav-link genreButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        장르별 인기 순위
                     </div>
-                    <div class="dropdown-menu ddm ml-5">
+                    <div class="dropdown-menu ddm">
                         <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' 1 %}">한국 영화</a>
                         {% for genre in genres %}
                         <a class="dropdown-item text-white" href="{% url 'indexes:genre_select' genre.id %}">{{genre.name}}</a>

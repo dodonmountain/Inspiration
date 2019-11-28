@@ -9,18 +9,31 @@ body {
 #app {
   height: 100vh;
 }
-
+.pgnat{
+  position: fixed;
+  font-weight: bold;
+  width: 12rem;
+  margin-top: 6vh !important;
+  margin-left: 42.5vw;
+  font-family: 'Nanum Gothic';
+}
 .queIndicator {
   font-weight: bold;
   position: fixed;
-  left: 43vw;
-  font-size: 2.3rem;
-  border-radius: 1rem 1rem;
+  left: 41vw;
+  font-size: 2rem;
+  border-radius: 0rem 1rem;
   margin-bottom: 3vh;
-  color: #fafafa;
-  background: rgba(0, 0, 0, 0.7);
-  font-family: 'Yeon Sung';
+  color: white;
+  text-shadow: 1px 0px orange;
+  background: rgba(200, 200, 200, 0.7);
+  font-family: 'Nanum Gothic';
+  font-weight: bolder;
   z-index: 99;
+  transition: 1s;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 5px;
 }
 
 @keyframes fadeOut {
@@ -62,7 +75,7 @@ body {
 
 .carousel-row {
     white-space: nowrap;
-    margin-top: 10vh;
+    margin-top: 25vh;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
@@ -183,6 +196,9 @@ body {
   /* in progress */
   .queIndicator{
     display: none;
+  }
+  .pgnat {
+    margin-left: 30vw !important;  
   }
   #ifFirstTime {
     display: none;

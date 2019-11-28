@@ -17,7 +17,43 @@
     @media screen and (max-width: 700px) {
         h3{
             display: none;
+            font-size: 0;
         }
+        .director {
+            border-radius: 50%;
+            height: 8rem !important;
+            width: 8rem !important;
+            margin: 0;
+            background-size: cover;
+            background-position: center;
+        }
+        .row {
+            padding: 15px;
+        }
+        .overview {
+            font-size: 1rem !important;
+            margin: 0 0 !important;
+            padding: 15px !important;
+        }
+        .likeyButton {
+            width: 9rem !important;
+        }
+        .align-content-center > p {
+            display: none;
+        }
+        .review-button {
+            font-size: 0;
+            display: none;
+        }
+        #stars > i {
+            font-size: 1rem !important;
+        }
+        .rUserName {
+            font-size: 10px !important;
+        }
+        .score>label:before {
+        font-size: 2rem !important;
+    }
     }
 
     .blockquote-footer {
@@ -292,7 +328,7 @@
                         {% endfor %}
                     </div>
                     <div class="row mt-4">
-                        <div class="col-8 align-content-center pl-5">
+                        <div class="col-12 col-xl-8 align-content-center pl-5">
                             <p class="m-0">YOUR RATING <span id="yourRate"></span></p> 
                             {% if review %}
                             <form class="ml-4" method='post' action="{% url 'movies:review_update' movie.pk review.pk %}">
@@ -363,7 +399,7 @@
         {% if user.is_authenticated %}
             {% if review %}
                 <div class="row container">
-                    <div class="col-2">
+                    <div class="col-5 col-xl-2">
                         <div id="stars">
                             <p hidden class="star">{{ review.score }}</p>
                             <i class="fa fa-star-o"></i>
@@ -374,18 +410,18 @@
                             <span class="badge badge-pill starBadge"></span>
                         </div>
                     </div>
-                    <div class="col-10">
+                    <div class="col col-xl-10">
                         <p class"ml-auto">{{ review.content }}</p>
                     </div>
                 </div>
                 <div class="row container">
-                    <div class="col-2"></div>
-                    <form class="col-8" action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
+                    <div class="col-12 col-xl-2"></div>
+                    <form class="row col-xl-8" action="{% url 'movies:review_update' movie.pk review.pk %}" method="post">
                         {% csrf_token %}
-                        <input name="content" value="{{ review.content }}" type="text" class="col-9 reviewInput" aria-describedby="reviewModButton">
-                        <button class="review-button" id="reviewModButton" type="submit">리뷰 변경</button>
+                        <input name="content" value="{{ review.content }}" type="text" class="col col-xl-9 reviewInput" aria-describedby="reviewModButton">
+                        <button class="col-xl-3 review-button" id="reviewModButton" type="submit">리뷰 변경</button>
                     </form>
-                    <form class="col-1 justify-content-center myReview p-0 m-0" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
+                    <form class="col col-xl-2 justify-content-center myReview p-0 m-0" action="{% url 'movies:review_delete' movie.pk review.pk %}" method="post">
                         {% csrf_token %}
                         <button class="review-button bg-danger w-50 p-0 m-0" type="submit">삭제</button>   
                     </form>
@@ -410,7 +446,7 @@
         {% if r.user != user and r.content != '#Display:None' %}
             {% csrf_token %}
             <div class="my-2 row align-items-center container">
-                <div class="col-2">
+                <div class="col-4 col-xl-2">
                     <div id="stars">
                         <p hidden class="star">{{ r.score }}</p>
                         <i class="fa fa-star-o"></i>
@@ -421,10 +457,10 @@
                         <span class="badge badge-pill starBadge"></span>
                     </div>
                 </div>
-                <div class="col-1">
-                        <span class="mr-3 pr-3 font-weight-bolder">{{ r.user.first_name }}</span>
+                <div class="col-2">
+                    <span class="rUserName mr-3 pr-3 font-weight-bolder">{{ r.user.first_name }}</span>
                 </div>
-                <div class="col-6">
+                <div class="col">
                     <small class"ml-auto">{{ r.content }}</small>
                 </div>
             </div>
