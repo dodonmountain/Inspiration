@@ -86,7 +86,7 @@
             lst.hidden = false
             navbar.hidden = false
             for (i=0; i<tags.length; i++) {
-                tags[i].classList.remove('badge-info', 'badge-' + colors[Math.floor(Math.random() * colors.length)])
+                tags[i].classList.replace('badge-info', 'badge-' + colors[Math.floor(Math.random() * colors.length)])
             }
         }, 50);
     }
