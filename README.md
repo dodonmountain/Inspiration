@@ -13,7 +13,7 @@ Inspiration is a Django application for make up with movie recommendations.
   * UI 개발 위주
   * Javascript가 필요한 로직
   * accounts / rater 앱 제작
-  * 인터페이스 로직 제작
+  * 인터페이스 로직 제작a
 
   
 
