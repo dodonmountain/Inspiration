@@ -11,7 +11,7 @@ from django.db.models import Avg, Count
 @login_required
 def index(request):
     genres = Genre.objects.all()
-    movies = Movie.objects.values().annotate(
+    movies = Movie.objects.all().annotate(
         count = Count('review'),
         avg = Avg('review__score')
     ).filter(count__gte=30).order_by('-avg')[:30]

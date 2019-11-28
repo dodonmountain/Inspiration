@@ -2,13 +2,6 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'indexes/css/index.css' %}">
-<style>
-.pagebutton {
-    margin-top:15vh;
-    margin-left:40vw;
-    margin-right:40vw;
-}
-</style>
 {% endblock %}
 
 {% block body %}
@@ -16,12 +9,9 @@
 {% include '_navbar.html' %}
 {% if user.is_authenticated %}
 <div id='car' class="carousel fadein mt-3 mb-0">
-    <h2 class="queIndicator"><small>평점 순 영화 추천</small></h2>
-    <div id="ifFirstTime">
-    <p class="d-flex mt-5 ml-4 position-fixed"><small class="mt-4 text-white-50">만약 영감이 처음이시라면? </small> <a class="text-white ml-2 mt-4" href="/rater/">초기평가 하러가기</a></p>
-    </div>
+    <h2 class="queIndicator mt-5"><small>평점 순 영화 추천</small></h2>
 
-    <div class="mt-5 pgnat">
+    <div class="pgnat">
 
         <ul class="pagination justify-content-center">
 
@@ -36,7 +26,9 @@
 
     </div>
 
-
+    <div id="ifFirstTime">
+        <p class="d-flex position-fixed"><small class="text-white-50">만약 영감이 처음이시라면? </small> <a class="text-white" href="/rater/">초기평가 하러가기</a></p>
+    </div>
 
     <div class="carousel-row">
         {% for movie in movies %}

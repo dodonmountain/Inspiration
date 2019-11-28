@@ -13,23 +13,23 @@ body {
   position: fixed;
   font-weight: bold;
   width: 12rem;
-  margin-top: 6vh !important;
-  margin-left: 42.5vw;
+  margin-top: 4rem !important;
+  margin-left: 1rem;
   font-family: 'Nanum Gothic';
 }
 .queIndicator {
+  box-shadow: 7px 9px orange;
   font-weight: bold;
   position: fixed;
   left: 41vw;
   font-size: 2rem;
-  border-radius: 0rem 1rem;
+  border-radius: 10px 10px;
   margin-bottom: 3vh;
-  color: white;
-  text-shadow: 1px 0px orange;
-  background: rgba(200, 200, 200, 0.7);
+  color: #5f5f5f;
+  background: rgba(255, 255, 255, 0.95);
   font-family: 'Nanum Gothic';
-  font-weight: bolder;
-  z-index: 99;
+  font-weight: 800;
+  z-index: 1;
   transition: 1s;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -67,7 +67,7 @@ body {
   --carousel-transition-3: 0.3s;
 }
 .carousel {
-    margin: 5vh 0 0 0;
+    margin: 4vh 0 0 0;
     overflow: hidden;
     white-space: nowrap;
     height: 100vh;
@@ -75,7 +75,7 @@ body {
 
 .carousel-row {
     white-space: nowrap;
-    margin-top: 25vh;
+    margin-top: 23.5vh;
     margin-bottom: calc((var(--carousel-tile-height) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-left: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
     margin-right: calc((var(--carousel-tile-width) * (var(--carousel-growth-factor) - 1)) / 2);
@@ -106,7 +106,7 @@ body {
 }
 
 .carousel-tile * {
-    width: 18rem;
+    width: 16rem;
 }
 
 .carousel-tile>a>img{
@@ -125,17 +125,22 @@ body {
   margin: -2rem 0 !important;
   color: white;
   text-shadow: black 2px 2px;
+  pointer-events: none;
 }
+
 .carousel-tile:hover ~  .carousel-tile>a>h3{
   font-size: 3rem;
   text-align: center !important;
-  margin: 4rem 0 !important;
+  margin: 1rem 0 !important;
 }
-.carousel-tile:hover  .carousel-tile>a>h3{
+
+.carousel-row:hover  .carousel-tile>a>h3{
   font-size: 3rem;
   text-align: center !important;
-  margin: 4rem 0 !important;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin: 1rem 0 !important;
 }
+
 @keyframes tileRect {
   from {border-radius: 35%;}
   to {border-radius: 0%;}
@@ -161,7 +166,7 @@ body {
     transform: translate3d(var(--carousel-offset-right), 0, 0);
 }
 .car-body {
-  font-family: 'Arial Narrow Bold', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 .opener {
   font-family: 'Permanent Marker', cursive;
