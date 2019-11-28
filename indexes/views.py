@@ -51,21 +51,19 @@ def genre_select(request,genre_id):
 
 def welcome(request):
     return render(request, 'welcome.html')
-
+    
+from math import sqrt
 def vs_user(user):
     users = User.objects.all()
     my_movies = Movie.objects.filter(review__user=user)
-    my_review = Review.objects.filter(user=user)
     vs={}
     for other in users:
-        other_movies = Movie.objects.filter(review__user=other)
-        other_review = Review.objects.filter(user=other)
-        same_movies = my_movies & other_movies
-        X,Y, XX,YY,XY,cnt = 0,0,0,0,0,0
+        same_movies = my_movies.filter(review__user=other)
         if len(same_movies) > 2:
+            X,Y, XX,YY,XY,cnt = 0,0,0,0,0,0
             for movie in same_movies:
-                a = my_review.filter(movie=movie)[0].score
-                b = other_review.filter(movie=movie)[0].score
+                a = movie.review_set.filter(user=user)[0].score
+                b = movie.review_set.filter(user=other)[0].score
                 X += a
                 Y += b
                 XX += a*a
@@ -73,7 +71,7 @@ def vs_user(user):
                 XY += a*b
                 cnt += 1
             try:
-                vs[other.id] = (XY-(X*Y)/cnt)/ (((XX-(X*X)/cnt) * (YY-(Y*Y)/cnt)) ** 0.5)
+                vs[other.id] = (XY-(X*Y)/cnt)/ sqrt((XX-(X*X)/cnt) * (YY-(Y*Y)/cnt)) 
             except:
                 pass
     sorted_vs = sorted(vs.items(), key=lambda kv: kv[1],reverse=True)
